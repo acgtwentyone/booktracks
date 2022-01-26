@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="48dp"
+    android:background="@drawable/background_splash">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/slogan"
+        android:layout_gravity="center"/> 
+
+    <TextView
+        android:id="@+id/launch_textview_poweredby"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="By acgtwentyone"
+        android:layout_gravity="bottom|center"
+        android:textFontWeight="500"
+        android:textSize="15sp"
+        android:textColor="@color/primary"/>
+
+</FrameLayout>

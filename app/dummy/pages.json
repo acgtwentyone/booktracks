@@ -1,0 +1,37 @@
+[
+  {
+    "id": "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+    "page": "1",
+    "book": "The Fantasy",
+    "created_at": "2 years ago",
+    "updated_at": "1 month ago"
+  },
+  {
+    "id": "bd7acbea-c1b1-46c2-aed5-3ad53abb28bb",
+    "page": "2",
+    "book": "The Chemickist",
+    "created_at": "2 years ago",
+    "updated_at": "1 month ago"
+  },
+  {
+    "id": "bd7acbea-c1b1-46c2-aed5-3ad53abb28bc",
+    "page": "1",
+    "book": "Material",
+    "created_at": "2 years ago",
+    "updated_at": "1 month ago"
+  },
+  {
+    "id": "bd7acbea-c1b1-46c2-aed5-3ad53abb28bd",
+    "page": "6",
+    "book": "Looser",
+    "created_at": "2 years ago",
+    "updated_at": "1 month ago"
+  },
+  {
+    "id": "bd7acbea-c1b1-46c2-aed5-3ad53abb28be",
+    "page": "99",
+    "book": "The Capitalism",
+    "created_at": "2 years ago",
+    "updated_at": "1 month ago"
+  }
+]
