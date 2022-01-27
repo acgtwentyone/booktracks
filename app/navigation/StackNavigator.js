@@ -119,7 +119,6 @@ const SettingsStack = () => {
 };
 
 const RootNavigator = ({user}) => {
-  console.log(user);
   const {auth, tab} = NAVIGATORS_NAME;
   let appScreens = [{name: auth, component: AuthStack}];
   appScreens = user

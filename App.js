@@ -33,7 +33,7 @@ const App = () => {
 
   const customTheme = extendTheme({config});
 
-  const [loggedUser, setLoggedUser] = useState(); // {name: 'Antonio'}
+  const [loggedUser, setLoggedUser] = useState({name: 'Antonio'}); // {name: 'Antonio'}
   const [loading, setLoading] = useState(false);
 
   if (loading) {
@@ -42,7 +42,6 @@ const App = () => {
 
   // Handle user state changes
   const onAuthStateChanged = user => {
-    console.log(user);
     setLoggedUser(user);
   };
 

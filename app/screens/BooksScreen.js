@@ -1,6 +1,6 @@
-import {useDisclose, FormControl} from 'native-base';
+import {useDisclose, FormControl, View, useColorModeValue} from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {ActivityIndicator, StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm, Controller} from 'react-hook-form';
 import firestore from '@react-native-firebase/firestore';
@@ -16,17 +16,20 @@ import {
   VList,
 } from '../components';
 import {NewBookSchema} from '../validation/Validations';
-import {SCHEMA_NAMES} from '../realm/RealmUtils';
 import {BookStatus} from '../realm/Schemas';
-
-const {book} = SCHEMA_NAMES;
+import {
+  addNew,
+  COLLECTION_NAMES,
+  serTimestamp,
+} from '../firebase/FirebaseUtils';
 
 // const books = require('../dummy/books.json');
 
 const BooksScreen = () => {
   const {isOpen, onOpen, onClose} = useDisclose();
+  const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [books, setBooks] = useState([]);
-  // const realm = __initRealm();
+  const activityIndicatorBg = useColorModeValue('#FFF', '#000');
 
   const {
     control,
@@ -42,55 +45,58 @@ const BooksScreen = () => {
     // resolver: yupResolver(NewBookSchema),
   });
 
-  const __registerBook = async data => {
-    try {
-      // const _realm = await Realm.open({
-      //   schema: [BookSchema],
-      //   sync: {
-      //     user: realmApp.currentUser,
-      //     partitionValue: REALM_PARTITION_NAME,
-      //   },
-      // });
-      // _realm.write(() => {
-      //   _realm.create(book, data);
-      // });
-      // const dogs = _realm.objects(book);
-      // console.log(dogs);
-    } catch (error) {
-      console.error('Failed to log in', error);
-    }
-  };
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection(COLLECTION_NAMES.books)
+      .onSnapshot(querySnapshot => {
+        const _books = [];
+        querySnapshot.forEach(documentSnapshot => {
+          _books.push(documentSnapshot);
+        });
+        setBooks(_books);
+        setLoading(false);
+      });
+
+    // Unsubscribe from events when no longer in use
+    return () => subscriber();
+  }, []);
 
   const onSubmit = data => {
     const {title, author, year, isbn} = data;
-    const _data = {
-      // _id: new BSON.ObjectID(),
-      title: title,
-      author: author,
-      year: Number(year),
-      isbn: isbn,
-      created_at: new Date(),
-      updated_at: new Date(),
-      status: BookStatus.active,
-      favourity: false,
-    };
-    __registerBook(_data);
+    addNew(
+      {
+        id: 'wqlgswr_1',
+        title: title,
+        author: author,
+        year: Number(year),
+        isbn: isbn,
+        created_at: serTimestamp,
+        updated_at: serTimestamp,
+        status: BookStatus.active,
+        favourity: false,
+      },
+      COLLECTION_NAMES.books,
+    );
   };
 
-  const __testFirestore = () => {
-    console.log('test firestore');
-  };
+  if (loading) {
+    return (
+      <View bg={activityIndicatorBg} flex={1}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
 
   return (
     <Screen style={styles.container}>
       <VList
         data={books}
-        renderItem={({item}) => (
-          <BookItem name={item.title} author={item.author} />
+        renderItem={({item: {_data}}) => (
+          <BookItem name={_data.title} author={_data.author} />
         )}
         ListHeaderComponent={<ListTitle title="My Books" />}
       />
-      <AppFab label="Book" onPress={__testFirestore} />
+      <AppFab label="Book" onPress={onOpen} />
       <ActionSheet isOpen={isOpen} onClose={onClose}>
         <FormControl>
           <Controller

@@ -15,7 +15,6 @@ const AppFab = ({style, props, label, iconName, iconSize, onPress}) => {
       <Box
         justifyContent="center"
         alignItems="center"
-        w="30%"
         {...props}
         borderRadius="full"
         backgroundColor={bgColor}

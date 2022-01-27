@@ -37,6 +37,10 @@ const AuthForm = ({navigation, signin = true}) => {
     // resolver: yupResolver(SigninSchema),
   });
 
+  const navigateTab = () => {
+    navigation.replace(NAVIGATORS_NAME.tab);
+  };
+
   const __processSiginOrSignup = async data => {
     if (signin) {
       auth()
@@ -46,6 +50,7 @@ const AuthForm = ({navigation, signin = true}) => {
         )
         .then(() => {
           console.log('User account created & signed in!');
+          navigateTab();
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
@@ -66,6 +71,7 @@ const AuthForm = ({navigation, signin = true}) => {
         )
         .then(() => {
           console.log('User account created & signed in!');
+          navigateTab();
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
