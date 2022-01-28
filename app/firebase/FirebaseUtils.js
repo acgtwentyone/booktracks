@@ -10,7 +10,7 @@ export const ERROR_MESSAGES = {
 
 export const serTimestamp = firestore.FieldValue.serverTimestamp();
 
-export const addNew = async (data, path) => {
+export const add = async (data, path) => {
   try {
     await firestore()
       .collection(path)

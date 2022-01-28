@@ -4,6 +4,7 @@ import {ActivityIndicator, StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm, Controller} from 'react-hook-form';
 import firestore from '@react-native-firebase/firestore';
+import {uuid} from '../Utils';
 
 import {
   ActionSheet,
@@ -17,18 +18,14 @@ import {
 } from '../components';
 import {NewBookSchema} from '../validation/Validations';
 import {BookStatus} from '../realm/Schemas';
-import {
-  addNew,
-  COLLECTION_NAMES,
-  serTimestamp,
-} from '../firebase/FirebaseUtils';
-
-// const books = require('../dummy/books.json');
+import {add, COLLECTION_NAMES, serTimestamp} from '../firebase/FirebaseUtils';
 
 const BooksScreen = () => {
   const {isOpen, onOpen, onClose} = useDisclose();
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [books, setBooks] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const activityIndicatorBg = useColorModeValue('#FFF', '#000');
 
   const {
@@ -45,27 +42,32 @@ const BooksScreen = () => {
     // resolver: yupResolver(NewBookSchema),
   });
 
-  useEffect(() => {
+  const _loadBooks = () => {
     const subscriber = firestore()
       .collection(COLLECTION_NAMES.books)
       .onSnapshot(querySnapshot => {
         const _books = [];
         querySnapshot.forEach(documentSnapshot => {
-          _books.push(documentSnapshot);
+          _books.push(documentSnapshot.data());
         });
         setBooks(_books);
         setLoading(false);
       });
 
+    return subscriber;
+  };
+
+  useEffect(() => {
+    const subscriber = _loadBooks();
     // Unsubscribe from events when no longer in use
     return () => subscriber();
   }, []);
 
   const onSubmit = data => {
     const {title, author, year, isbn} = data;
-    addNew(
+    add(
       {
-        id: 'wqlgswr_1',
+        id: uuid(),
         title: title,
         author: author,
         year: Number(year),
@@ -87,12 +89,18 @@ const BooksScreen = () => {
     );
   }
 
+  const _onRefresh = () => {
+    _loadBooks();
+  };
+
   return (
     <Screen style={styles.container}>
       <VList
+        onRefresh={_onRefresh}
+        refreshing={refreshing}
         data={books}
-        renderItem={({item: {_data}}) => (
-          <BookItem name={_data.title} author={_data.author} />
+        renderItem={({item}) => (
+          <BookItem name={item.title} author={item.author} />
         )}
         ListHeaderComponent={<ListTitle title="My Books" />}
       />

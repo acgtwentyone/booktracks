@@ -2,9 +2,19 @@ import {FlatList} from 'native-base';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 
-const VList = ({style, props, data, ListHeaderComponent, renderItem}) => {
+const VList = ({
+  style,
+  props,
+  data,
+  ListHeaderComponent,
+  renderItem,
+  refreshing,
+  onRefresh,
+}) => {
   return (
     <FlatList
+      refreshing={refreshing}
+      onRefresh={onRefresh}
       style={[styles.container, {...style}]}
       data={data}
       renderItem={renderItem}
