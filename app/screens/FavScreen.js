@@ -10,10 +10,11 @@ const FavScreen = () => {
     <Screen style={styles.container}>
       <VList
         data={favourities}
-        renderItem={({item: {title, author}}) => (
+        renderItem={({item: {title, author, favourity}}) => (
           <BookItem
             name={title}
             author={author}
+            favourity={favourity}
             showFavIcon={false}
             showEdit={false}
           />

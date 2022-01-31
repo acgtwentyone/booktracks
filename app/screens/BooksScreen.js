@@ -5,6 +5,7 @@ import {
   useColorModeValue,
   useToast,
   Text,
+  Button,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet} from 'react-native';
@@ -28,9 +29,11 @@ import {BookStatus} from '../realm/Schemas';
 import {
   add,
   COLLECTION_NAMES,
+  remove,
   serTimestamp,
   update,
 } from '../firebase/FirebaseUtils';
+import {useRef} from 'react';
 
 const BooksScreen = () => {
   const {isOpen, onOpen, onClose} = useDisclose();
@@ -41,6 +44,9 @@ const BooksScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const activityIndicatorBg = useColorModeValue('#FFF', '#000');
   const toast = useToast();
+  const addEditAS = useRef();
+  const [currentAS, setCurrentAS] = useState(null);
+  const [bookToDelete, setBookToDelete] = useState(null);
 
   const {
     control,
@@ -66,7 +72,6 @@ const BooksScreen = () => {
   const _loadBooks = () => {
     const subscriber = firestore()
       .collection(COLLECTION_NAMES.books)
-      .where('favourity', '==', false)
       .onSnapshot(querySnapshot => {
         const _books = [];
         querySnapshot.forEach(documentSnapshot => {
@@ -87,11 +92,8 @@ const BooksScreen = () => {
   };
 
   const _onSuccess = msg => {
-    onClose();
+    _onClose();
     _showToastMsg(msg);
-    reset();
-    setCurrentId(null);
-    setEdit(false);
   };
 
   const onSubmit = data => {
@@ -127,14 +129,16 @@ const BooksScreen = () => {
     }
   };
 
-  const _onStarPress = ({_data: {title}, id}) => {
+  const _onStarPress = ({_data: {title, favourity}, id}) => {
     update(
       {
-        favourity: true,
+        favourity: !favourity,
       },
       COLLECTION_NAMES.books,
       id,
-      _onSuccess(`Book ${title} added to favourity`),
+      _onSuccess(
+        `Book ${title} ${favourity ? 'removed from' : 'added to'} favourity`,
+      ),
     );
   };
 
@@ -156,6 +160,7 @@ const BooksScreen = () => {
         setValue('year', year.toString());
         setCurrentId(id);
         setEdit(true);
+        setCurrentAS('editAddAS');
         onOpen();
       }
     }
@@ -173,6 +178,36 @@ const BooksScreen = () => {
     _loadBooks();
   };
 
+  const _openAddEditAS = () => {
+    setCurrentAS('editAddAS');
+    onOpen();
+  };
+
+  const _onDotPress = item => {
+    setBookToDelete(item);
+    setCurrentAS('deleteAddFavAS');
+    onOpen();
+  };
+
+  const _onClose = () => {
+    setEdit(false);
+    setCurrentId(null);
+    setBookToDelete(null);
+    reset();
+    onClose();
+    setCurrentAS(null);
+  };
+
+  const _onDeletePress = () => {
+    if (bookToDelete !== null) {
+      const {
+        _data: {title},
+        id,
+      } = bookToDelete;
+      remove(COLLECTION_NAMES.books, id, _onSuccess(`Book ${title} deleted`));
+    }
+  };
+
   return (
     <Screen style={styles.container}>
       <VList
@@ -185,91 +220,113 @@ const BooksScreen = () => {
             <BookItem
               name={_data.title}
               author={_data.author}
+              favourity={_data.favourity}
               onEditPress={() => _editBook(item)}
               onStarPress={() => _onStarPress(item)}
+              onDotPress={() => _onDotPress(item)}
             />
           );
         }}
         ListHeaderComponent={<ListTitle title="My Books" />}
       />
-      <AppFab label="Book" onPress={onOpen} />
-      <ActionSheet isOpen={isOpen} onClose={onClose}>
-        <FormControl>
-          <Controller
-            control={control}
-            render={({field: {onChange, onBlur, value}}) => (
-              <AppInput
-                errorMessage="Invalid title"
-                // helpertext="Title must be at least 4 characters"
-                placeholder="Book title"
-                control={control}
-                rules={{required: true}}
-                onChangeText={onChange}
-                value={value}
-                onBlur={onBlur}
-              />
-            )}
-            name="title"
-          />
+      <AppFab label="Book" onPress={_openAddEditAS} />
+      {currentAS !== null && currentAS === 'editAddAS' ? (
+        <ActionSheet isOpen={isOpen} onClose={_onClose} reference={addEditAS}>
+          <FormControl>
+            <Controller
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <AppInput
+                  errorMessage="Invalid title"
+                  // helpertext="Title must be at least 4 characters"
+                  placeholder="Book title"
+                  control={control}
+                  rules={{required: true}}
+                  onChangeText={onChange}
+                  value={value}
+                  onBlur={onBlur}
+                />
+              )}
+              name="title"
+            />
 
-          <Controller
-            control={control}
-            render={({field: {onChange, onBlur, value}}) => (
-              <AppInput
-                errorMessage="Invalid author name"
-                // helpertext="Author name must be at least 4 characters"
-                placeholder="Author"
-                control={control}
-                rules={{required: true}}
-                onChangeText={onChange}
-                value={value}
-                onBlur={onBlur}
-              />
-            )}
-            name="author"
-          />
+            <Controller
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <AppInput
+                  errorMessage="Invalid author name"
+                  // helpertext="Author name must be at least 4 characters"
+                  placeholder="Author"
+                  control={control}
+                  rules={{required: true}}
+                  onChangeText={onChange}
+                  value={value}
+                  onBlur={onBlur}
+                />
+              )}
+              name="author"
+            />
 
-          <Controller
-            control={control}
-            render={({field: {onChange, onBlur, value}}) => (
-              <AppInput
-                placeholder="Year"
-                props={{keyboardType: 'numeric'}}
-                control={control}
-                rules={{required: true}}
-                onChangeText={onChange}
-                value={value}
-                onBlur={onBlur}
-              />
-            )}
-            name="year"
-          />
+            <Controller
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <AppInput
+                  placeholder="Year"
+                  props={{keyboardType: 'numeric'}}
+                  control={control}
+                  rules={{required: true}}
+                  onChangeText={onChange}
+                  value={value}
+                  onBlur={onBlur}
+                />
+              )}
+              name="year"
+            />
 
-          <Controller
-            control={control}
-            render={({field: {onChange, onBlur, value}}) => (
-              <AppInput
-                errorMessage="Invalid ISBN"
-                // helpertext="ISBN must be at least 10 characters"
-                placeholder="ISBN"
-                control={control}
-                rules={{required: true}}
-                onChangeText={onChange}
-                value={value}
-                onBlur={onBlur}
-              />
-            )}
-            name="isbn"
-          />
-          <SubmitButton
-            handleSubmit={handleSubmit}
-            onSubmit={onSubmit}
-            title={edit && currentId ? 'Update Book' : 'Add Book'}
-          />
-        </FormControl>
-        {/* {isValidating && <Text>Validating fields</Text>}
+            <Controller
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <AppInput
+                  errorMessage="Invalid ISBN"
+                  // helpertext="ISBN must be at least 10 characters"
+                  placeholder="ISBN"
+                  control={control}
+                  rules={{required: true}}
+                  onChangeText={onChange}
+                  value={value}
+                  onBlur={onBlur}
+                />
+              )}
+              name="isbn"
+            />
+            <SubmitButton
+              handleSubmit={handleSubmit}
+              onSubmit={onSubmit}
+              title={edit && currentId ? 'Update Book' : 'Add Book'}
+            />
+          </FormControl>
+          {/* {isValidating && <Text>Validating fields</Text>}
         {isSubmitting && <Text>Adding book</Text>} */}
-      </ActionSheet>
+        </ActionSheet>
+      ) : bookToDelete !== null ? (
+        <ActionSheet isOpen={isOpen} onClose={_onClose}>
+          <Text mt={4}>
+            {bookToDelete._data !== null
+              ? `Book ${bookToDelete._data.title} will be deleted. Do you want to procced ?`
+              : ' '}
+          </Text>
+          <Button
+            mt={4}
+            mb={4}
+            onPress={_onDeletePress}
+            _dark={{background: 'red.500'}}
+            _light={{background: 'red.100'}}>
+            YES
+          </Button>
+        </ActionSheet>
+      ) : (
+        <></>
+      )}
     </Screen>
   );
 };

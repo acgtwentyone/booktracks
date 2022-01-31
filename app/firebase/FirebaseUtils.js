@@ -30,7 +30,7 @@ export const update = async (data, path, doc, onSuccess) => {
       .doc(doc)
       .update(data)
       .then(() => {
-        onSuccess();
+        onSuccess;
       });
   } catch (error) {
     console.error(ERROR_MESSAGES.default, error);
@@ -44,7 +44,7 @@ export const remove = async (path, doc, onSuccess) => {
       .doc(doc)
       .delete()
       .then(() => {
-        onSuccess();
+        onSuccess;
       });
   } catch (error) {
     console.error(ERROR_MESSAGES.default, error);

@@ -1,4 +1,12 @@
-import {Box, Center, Flex, HStack, Icon, Text} from 'native-base';
+import {
+  Box,
+  Center,
+  Flex,
+  HStack,
+  Icon,
+  Text,
+  useColorModeValue,
+} from 'native-base';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,6 +17,7 @@ const ListItem = ({
   props,
   title,
   subtitle,
+  favourity,
   showFavIcon = true,
   showEdit = true,
   recent = false,
@@ -16,6 +25,9 @@ const ListItem = ({
   onStarPress,
   onDotPress,
 }) => {
+  const _favColor = useColorModeValue('yellow.500', 'yellow.500');
+  const _notFavColor = useColorModeValue('black', 'white');
+
   const Content = () => (
     <>
       <Box>
@@ -41,6 +53,7 @@ const ListItem = ({
               size="xs"
               m={2}
               onPress={onStarPress}
+              color={favourity ? _favColor : _notFavColor}
             />
           )}
           {showEdit && (

@@ -7,6 +7,7 @@ const BookItem = ({
   props,
   name,
   author,
+  favourity,
   showFavIcon = true,
   showEdit = true,
   recent = false,
@@ -18,6 +19,7 @@ const BookItem = ({
     <ListItem
       title={name}
       subtitle={author}
+      favourity={favourity}
       style={[styles.container, {...style}]}
       showFavIcon={showFavIcon}
       showEdit={showEdit}
