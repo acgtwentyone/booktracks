@@ -10,6 +10,9 @@ const BookItem = ({
   showFavIcon = true,
   showEdit = true,
   recent = false,
+  onEditPress,
+  onStarPress,
+  onDotPress,
 }) => {
   return (
     <ListItem
@@ -20,6 +23,9 @@ const BookItem = ({
       showEdit={showEdit}
       {...props}
       recent={recent}
+      onDotPress={onDotPress}
+      onEditPress={onEditPress}
+      onStarPress={onStarPress}
     />
   );
 };

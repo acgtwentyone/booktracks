@@ -1,4 +1,11 @@
-import {useDisclose, FormControl, View, useColorModeValue} from 'native-base';
+import {
+  useDisclose,
+  FormControl,
+  View,
+  useColorModeValue,
+  useToast,
+  Text,
+} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -18,20 +25,29 @@ import {
 } from '../components';
 import {NewBookSchema} from '../validation/Validations';
 import {BookStatus} from '../realm/Schemas';
-import {add, COLLECTION_NAMES, serTimestamp} from '../firebase/FirebaseUtils';
+import {
+  add,
+  COLLECTION_NAMES,
+  serTimestamp,
+  update,
+} from '../firebase/FirebaseUtils';
 
 const BooksScreen = () => {
   const {isOpen, onOpen, onClose} = useDisclose();
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [books, setBooks] = useState([]);
+  const [currentId, setCurrentId] = useState(null);
+  const [edit, setEdit] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const activityIndicatorBg = useColorModeValue('#FFF', '#000');
+  const toast = useToast();
 
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: {errors, isSubmitting, isValidating},
+    reset,
+    setValue,
   } = useForm({
     defaultValues: {
       title: '',
@@ -39,16 +55,22 @@ const BooksScreen = () => {
       year: '',
       isbn: '',
     },
-    // resolver: yupResolver(NewBookSchema),
+    resolver: yupResolver(NewBookSchema),
   });
+
+  useEffect(() => {
+    const subscriber = _loadBooks();
+    return () => subscriber();
+  }, []);
 
   const _loadBooks = () => {
     const subscriber = firestore()
       .collection(COLLECTION_NAMES.books)
+      .where('favourity', '==', false)
       .onSnapshot(querySnapshot => {
         const _books = [];
         querySnapshot.forEach(documentSnapshot => {
-          _books.push(documentSnapshot.data());
+          _books.push(documentSnapshot);
         });
         setBooks(_books);
         setLoading(false);
@@ -57,28 +79,86 @@ const BooksScreen = () => {
     return subscriber;
   };
 
-  useEffect(() => {
-    const subscriber = _loadBooks();
-    // Unsubscribe from events when no longer in use
-    return () => subscriber();
-  }, []);
+  const _showToastMsg = msg => {
+    toast.show({
+      title: msg,
+      placement: 'top',
+    });
+  };
+
+  const _onSuccess = msg => {
+    onClose();
+    _showToastMsg(msg);
+    reset();
+    setCurrentId(null);
+    setEdit(false);
+  };
 
   const onSubmit = data => {
     const {title, author, year, isbn} = data;
-    add(
+    if (edit) {
+      update(
+        {
+          title: title,
+          author: author,
+          year: Number(year),
+          isbn: isbn,
+        },
+        COLLECTION_NAMES.books,
+        currentId,
+        _onSuccess(`Book ${title} updated`),
+      );
+    } else {
+      add(
+        {
+          id: uuid(),
+          title: title,
+          author: author,
+          year: Number(year),
+          isbn: isbn,
+          created_at: serTimestamp,
+          updated_at: serTimestamp,
+          status: BookStatus.active,
+          favourity: false,
+        },
+        COLLECTION_NAMES.books,
+        _onSuccess(`Book ${title} added`),
+      );
+    }
+  };
+
+  const _onStarPress = ({_data: {title}, id}) => {
+    update(
       {
-        id: uuid(),
-        title: title,
-        author: author,
-        year: Number(year),
-        isbn: isbn,
-        created_at: serTimestamp,
-        updated_at: serTimestamp,
-        status: BookStatus.active,
-        favourity: false,
+        favourity: true,
       },
       COLLECTION_NAMES.books,
+      id,
+      _onSuccess(`Book ${title} added to favourity`),
     );
+  };
+
+  const _editBook = item => {
+    if (undefined !== item) {
+      const {
+        _data: {author, isbn, title, year},
+        id,
+      } = item;
+      if (
+        undefined !== title &&
+        undefined !== isbn &&
+        undefined !== author &&
+        undefined !== year
+      ) {
+        setValue('author', author);
+        setValue('isbn', isbn);
+        setValue('title', title);
+        setValue('year', year.toString());
+        setCurrentId(id);
+        setEdit(true);
+        onOpen();
+      }
+    }
   };
 
   if (loading) {
@@ -99,9 +179,17 @@ const BooksScreen = () => {
         onRefresh={_onRefresh}
         refreshing={refreshing}
         data={books}
-        renderItem={({item}) => (
-          <BookItem name={item.title} author={item.author} />
-        )}
+        renderItem={({item}) => {
+          const {_data} = item;
+          return (
+            <BookItem
+              name={_data.title}
+              author={_data.author}
+              onEditPress={() => _editBook(item)}
+              onStarPress={() => _onStarPress(item)}
+            />
+          );
+        }}
         ListHeaderComponent={<ListTitle title="My Books" />}
       />
       <AppFab label="Book" onPress={onOpen} />
@@ -109,15 +197,11 @@ const BooksScreen = () => {
         <FormControl>
           <Controller
             control={control}
-            rules={{
-              required: true,
-            }}
             render={({field: {onChange, onBlur, value}}) => (
               <AppInput
                 errorMessage="Invalid title"
-                helpertext="Title must be at least 4 characters"
+                // helpertext="Title must be at least 4 characters"
                 placeholder="Book title"
-                props={{mt: 8}}
                 control={control}
                 rules={{required: true}}
                 onChangeText={onChange}
@@ -127,19 +211,14 @@ const BooksScreen = () => {
             )}
             name="title"
           />
-          {/* {errors.title && <Text>This is required.</Text>} */}
 
           <Controller
             control={control}
-            rules={{
-              required: true,
-            }}
             render={({field: {onChange, onBlur, value}}) => (
               <AppInput
                 errorMessage="Invalid author name"
-                helpertext="Author name must be at least 4 characters"
+                // helpertext="Author name must be at least 4 characters"
                 placeholder="Author"
-                props={{mt: 8}}
                 control={control}
                 rules={{required: true}}
                 onChangeText={onChange}
@@ -149,17 +228,13 @@ const BooksScreen = () => {
             )}
             name="author"
           />
-          {/* {errors.author && <Text>This is required.</Text>} */}
 
           <Controller
             control={control}
-            rules={{
-              required: true,
-            }}
             render={({field: {onChange, onBlur, value}}) => (
               <AppInput
                 placeholder="Year"
-                props={{mt: 8}}
+                props={{keyboardType: 'numeric'}}
                 control={control}
                 rules={{required: true}}
                 onChangeText={onChange}
@@ -169,19 +244,14 @@ const BooksScreen = () => {
             )}
             name="year"
           />
-          {/* {errors.year && <Text>This is required.</Text>} */}
 
           <Controller
             control={control}
-            rules={{
-              required: true,
-            }}
             render={({field: {onChange, onBlur, value}}) => (
               <AppInput
                 errorMessage="Invalid ISBN"
-                helpertext="ISBN must be at least 10 characters"
+                // helpertext="ISBN must be at least 10 characters"
                 placeholder="ISBN"
-                props={{mt: 8}}
                 control={control}
                 rules={{required: true}}
                 onChangeText={onChange}
@@ -191,13 +261,14 @@ const BooksScreen = () => {
             )}
             name="isbn"
           />
-          {/* {errors.isbn && <Text>This is required.</Text>} */}
           <SubmitButton
             handleSubmit={handleSubmit}
             onSubmit={onSubmit}
-            title="Register book"
+            title={edit && currentId ? 'Update Book' : 'Add Book'}
           />
         </FormControl>
+        {/* {isValidating && <Text>Validating fields</Text>}
+        {isSubmitting && <Text>Adding book</Text>} */}
       </ActionSheet>
     </Screen>
   );

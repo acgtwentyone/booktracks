@@ -12,6 +12,9 @@ const ListItem = ({
   showFavIcon = true,
   showEdit = true,
   recent = false,
+  onEditPress,
+  onStarPress,
+  onDotPress,
 }) => {
   const Content = () => (
     <>
@@ -37,16 +40,24 @@ const ListItem = ({
               name="star-outline"
               size="xs"
               m={2}
+              onPress={onStarPress}
             />
           )}
           {showEdit && (
-            <Icon as={MaterialCommunityIcons} name="pencil" size="xs" m={2} />
+            <Icon
+              as={MaterialCommunityIcons}
+              name="pencil"
+              size="xs"
+              m={2}
+              onPress={onEditPress}
+            />
           )}
           <Icon
             as={MaterialCommunityIcons}
             name="dots-vertical"
             size="xs"
             m={2}
+            onPress={onDotPress}
           />
         </HStack>
       )}

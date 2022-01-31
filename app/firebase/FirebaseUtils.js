@@ -10,41 +10,41 @@ export const ERROR_MESSAGES = {
 
 export const serTimestamp = firestore.FieldValue.serverTimestamp();
 
-export const add = async (data, path) => {
+export const add = async (data, path, onSuccess) => {
   try {
     await firestore()
       .collection(path)
       .add(data)
       .then(() => {
-        console.log('Data successfully created!');
+        onSuccess;
       });
   } catch (error) {
     console.error(ERROR_MESSAGES.default, error);
   }
 };
 
-export const update = async (data, path, doc) => {
+export const update = async (data, path, doc, onSuccess) => {
   try {
     await firestore()
       .collection(path)
       .doc(doc)
       .update(data)
       .then(() => {
-        console.log('Data successfully updated!');
+        onSuccess();
       });
   } catch (error) {
     console.error(ERROR_MESSAGES.default, error);
   }
 };
 
-export const remove = async (path, doc) => {
+export const remove = async (path, doc, onSuccess) => {
   try {
     await firestore()
       .collection(path)
       .doc(doc)
       .delete()
       .then(() => {
-        console.log('Data successfully deleted!');
+        onSuccess();
       });
   } catch (error) {
     console.error(ERROR_MESSAGES.default, error);
