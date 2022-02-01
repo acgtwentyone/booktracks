@@ -1,81 +1,9 @@
-import {
-  Box,
-  Center,
-  Flex,
-  HStack,
-  Icon,
-  Text,
-  useColorModeValue,
-} from 'native-base';
+import {Box, Center} from 'native-base';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {FONT_SIZE, SCREEN_WIDTH} from '../Utils';
+import {SCREEN_WIDTH} from '../Utils';
 
-const ListItem = ({
-  style,
-  props,
-  title,
-  subtitle,
-  favourity,
-  showFavIcon = true,
-  showEdit = true,
-  recent = false,
-  onEditPress,
-  onStarPress,
-  onDotPress,
-}) => {
-  const _favColor = useColorModeValue('yellow.500', 'yellow.500');
-  const _notFavColor = useColorModeValue('black', 'white');
-
-  const Content = () => (
-    <>
-      <Box>
-        <Text fontSize={FONT_SIZE.font_18}>{title}</Text>
-        <Text
-          mt={2}
-          fontSize={FONT_SIZE.font_15}
-          _dark={{
-            color: 'white',
-          }}
-          _light={{
-            color: 'gray.600',
-          }}>
-          {subtitle}
-        </Text>
-      </Box>
-      {!recent && (
-        <HStack justifyContent="flex-end" justifyItems="center">
-          {showFavIcon && (
-            <Icon
-              as={MaterialCommunityIcons}
-              name="star-outline"
-              size="xs"
-              m={2}
-              onPress={onStarPress}
-              color={favourity ? _favColor : _notFavColor}
-            />
-          )}
-          {showEdit && (
-            <Icon
-              as={MaterialCommunityIcons}
-              name="pencil"
-              size="xs"
-              m={2}
-              onPress={onEditPress}
-            />
-          )}
-          <Icon
-            as={MaterialCommunityIcons}
-            name="dots-vertical"
-            size="xs"
-            m={2}
-            onPress={onDotPress}
-          />
-        </HStack>
-      )}
-    </>
-  );
+const ListItem = ({style, props, content, recent = false}) => {
   return (
     <>
       {recent ? (
@@ -99,7 +27,7 @@ const ListItem = ({
               backgroundColor: 'gray.50',
             }}
             p={4}>
-            <Content />
+            {content}
           </Center>
         </Box>
       ) : (
@@ -127,7 +55,7 @@ const ListItem = ({
           flexDirection="row"
           alignItems="center"
           justifyContent="space-between">
-          <Content />
+          {content}
         </Box>
       )}
     </>

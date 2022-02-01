@@ -1,28 +1,9 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-
-import {BookItem, ListTitle, Screen, VList} from '../components';
-
-const favourities = require('../dummy/favourities.json');
+import {ListBooks} from '../components';
 
 const FavScreen = () => {
-  return (
-    <Screen style={styles.container}>
-      <VList
-        data={favourities}
-        renderItem={({item: {title, author, favourity}}) => (
-          <BookItem
-            name={title}
-            author={author}
-            favourity={favourity}
-            showFavIcon={false}
-            showEdit={false}
-          />
-        )}
-        ListHeaderComponent={<ListTitle title="Favourities Books" />}
-      />
-    </Screen>
-  );
+  return <ListBooks isFavourities={true} subtitle="My Favourities" />;
 };
 
 const styles = StyleSheet.create({
