@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-const NewBookSchema = yup
+const BookSchema = yup
   .object({
     title: yup.string().required(),
     author: yup.string().required(),
@@ -12,6 +12,13 @@ const NewBookSchema = yup
   })
   .required();
 
+const PageSchema = yup
+  .object({
+    page: yup.string().required(),
+    obs: yup.string().required(),
+  })
+  .required();
+
 const SigninSchema = yup
   .object({
     email: yup.string().email('Invalid email'),
@@ -19,4 +26,4 @@ const SigninSchema = yup
   })
   .required();
 
-export {NewBookSchema, SigninSchema};
+export {BookSchema, PageSchema, SigninSchema};

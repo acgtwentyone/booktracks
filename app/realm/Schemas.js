@@ -1,4 +1,4 @@
-export const BookStatus = {
+export const ItemStatus = {
   active: 1,
   inactive: 0,
   deleted: -1,

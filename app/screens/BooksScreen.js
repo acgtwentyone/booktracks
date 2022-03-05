@@ -1,9 +1,9 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {ListBooks} from '../components';
+import {ListBookItems} from '../components';
 
 const BooksScreen = () => {
-  return <ListBooks subtitle="My Books" />;
+  return <ListBookItems subtitle="My Books" />;
 };
 
 const styles = StyleSheet.create({

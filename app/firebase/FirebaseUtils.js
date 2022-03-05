@@ -2,6 +2,7 @@ import firestore from '@react-native-firebase/firestore';
 
 export const COLLECTION_NAMES = {
   books: 'books',
+  pages: 'pages',
 };
 
 export const ERROR_MESSAGES = {

@@ -1,9 +1,9 @@
 import {Box, HStack, Icon, Text, useColorModeValue} from 'native-base';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ListItem} from '.';
-import {FONT_SIZE} from '../Utils';
+import {FONT_SIZE, HIT_SLOP} from '../Utils';
 
 const BookItem = ({
   style,
@@ -21,10 +21,45 @@ const BookItem = ({
     _data: {title, author, favourity},
   } = item;
 
+  const Touchable = ({onPress, children}) => (
+    <TouchableOpacity
+      onPress={onPress}
+      hitSlop={{top: 20, right: 10, bottom: 20, left: 12}}>
+      {children}
+    </TouchableOpacity>
+  );
+
+  const __renderStarBtn = () => (
+    <Touchable onPress={onStarPress}>
+      <Icon
+        as={MaterialCommunityIcons}
+        name="star-outline"
+        size="xs"
+        m={2}
+        onPress={onStarPress}
+        color={favourity ? _favColor : _notFavColor}
+      />
+    </Touchable>
+  );
+
+  const __renderIcon = (name, onPress) => (
+    <Touchable onPress={onPress}>
+      <Icon
+        as={MaterialCommunityIcons}
+        name={name}
+        size="xs"
+        m={2}
+        onPress={onPress}
+      />
+    </Touchable>
+  );
+
   const Content = () => (
     <>
       <Box>
-        <Text fontSize={FONT_SIZE.font_18}>{title}</Text>
+        <Text fontSize={FONT_SIZE.font_18} fontWeight="bold">
+          {title}
+        </Text>
         <Text
           mt={2}
           fontSize={FONT_SIZE.font_15}
@@ -39,40 +74,12 @@ const BookItem = ({
       </Box>
       {!recent && !isFavScreen ? (
         <HStack justifyContent="flex-end" justifyItems="center">
-          <Icon
-            as={MaterialCommunityIcons}
-            name="star-outline"
-            size="xs"
-            m={2}
-            onPress={onStarPress}
-            color={favourity ? _favColor : _notFavColor}
-          />
-
-          <Icon
-            as={MaterialCommunityIcons}
-            name="pencil"
-            size="xs"
-            m={2}
-            onPress={onEditPress}
-          />
-
-          <Icon
-            as={MaterialCommunityIcons}
-            name="dots-vertical"
-            size="xs"
-            m={2}
-            onPress={onDotPress}
-          />
+          {__renderStarBtn()}
+          {__renderIcon('pencil', onEditPress)}
+          {__renderIcon('dots-vertical', onDotPress)}
         </HStack>
       ) : (
-        <Icon
-          as={MaterialCommunityIcons}
-          name="star-outline"
-          size="xs"
-          m={2}
-          onPress={onStarPress}
-          color={favourity ? _favColor : _notFavColor}
-        />
+        __renderStarBtn()
       )}
     </>
   );
