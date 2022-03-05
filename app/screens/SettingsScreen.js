@@ -1,13 +1,12 @@
 import {Box, HStack, Switch, Text, useColorMode} from 'native-base';
-import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
+import React from 'react';
 
 import {Screen} from '../components';
 
 const SettingsScreen = () => {
   const {colorMode, toggleColorMode} = useColorMode();
   return (
-    <Screen style={styles.container}>
+    <Screen>
       <Box>
         <Text padding={4}>Theme</Text>
         <HStack justifyContent="space-between" alignItems="center" paddingX={4}>
@@ -22,9 +21,5 @@ const SettingsScreen = () => {
     </Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default SettingsScreen;

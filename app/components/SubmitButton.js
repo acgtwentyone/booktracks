@@ -8,7 +8,6 @@ const SubmitButton = ({style, props, title, size, handleSubmit, onSubmit}) => (
     style={[styles.container, {...style}]}
     {...props}
     onPress={handleSubmit(onSubmit)}
-    // variant="outline"
     m={4}>
     {title}
   </Button>

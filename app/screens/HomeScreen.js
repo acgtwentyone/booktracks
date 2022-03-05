@@ -1,7 +1,5 @@
 import {Box, FlatList, ScrollView} from 'native-base';
 import React from 'react';
-import {StyleSheet} from 'react-native';
-
 import {BookItem, ListTitle, PageItem, Screen} from '../components';
 const books = require('../dummy/books.json');
 const favourities = require('../dummy/favourities.json');
@@ -43,7 +41,7 @@ const HomeScreen = () => {
   );
 
   return (
-    <Screen style={styles.container}>
+    <Screen>
       <ScrollView>
         <RecentBook data={books} title="books" />
         <RecentPage props={{mt: 4}} />
@@ -56,9 +54,5 @@ const HomeScreen = () => {
     </Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default HomeScreen;

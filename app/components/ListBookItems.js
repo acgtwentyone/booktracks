@@ -1,14 +1,13 @@
 import {
   useDisclose,
   FormControl,
-  View,
   useColorModeValue,
   useToast,
   Text,
   Button,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm, Controller} from 'react-hook-form';
 import firestore from '@react-native-firebase/firestore';

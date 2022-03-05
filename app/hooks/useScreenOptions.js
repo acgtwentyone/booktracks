@@ -13,12 +13,7 @@ const useScreenOptions = (search = true) => {
     },
     headerTitleAlign: 'center',
     headerLeft: () => (
-      <Avatar
-        bg="indigo.500"
-        // source={{
-        //   uri: 'https://pbs.twimg.com/profile_images/1352844693151731713/HKO7cnlW_400x400.jpg',
-        // }}
-        size="sm">
+      <Avatar bg="indigo.500" size="sm">
         AV
       </Avatar>
     ),

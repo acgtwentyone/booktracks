@@ -3,7 +3,7 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ListItem} from '.';
-import {FONT_SIZE, HIT_SLOP} from '../Utils';
+import {FONT_SIZE} from '../Utils';
 
 const BookItem = ({
   style,

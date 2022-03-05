@@ -16,15 +16,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import auth from '@react-native-firebase/auth';
 
 import {Screen} from '.';
-// import useIsLoggedIn from '../hooks/useIsLoggedin';
 import {NAVIGATORS_NAME, ROUTES_NAME} from '../Utils';
 import {Controller, useForm} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
-import {SigninSchema} from '../validation/Validations';
 
 const AuthForm = ({navigation, signin = true}) => {
-  // const {login} = useIsLoggedIn();
-
   const {
     control,
     formState: {errors},
@@ -34,7 +29,6 @@ const AuthForm = ({navigation, signin = true}) => {
       email: '',
       password: '',
     },
-    // resolver: yupResolver(SigninSchema),
   });
 
   const navigateTab = () => {
@@ -160,8 +154,6 @@ const AuthForm = ({navigation, signin = true}) => {
             <HStack justifyContent="center" mt={8}>
               <Button
                 size="sm"
-                // variant="outline"
-                // isDisabled
                 endIcon={
                   <Icon
                     as={MaterialCommunityIcons}
