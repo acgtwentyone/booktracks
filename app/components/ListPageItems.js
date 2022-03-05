@@ -289,10 +289,10 @@ const ListPageItems = () => {
     };
 
     if (loadingBooks) {
-      return <AppActivityIndicator />;
+      return <AppActivityIndicator style={styles.loadingBooksContainer} />;
     }
 
-    return (
+    return books.length > 0 ? (
       <Box flexDirection="column" p={0}>
         <ListTitle title="Select a book" />
         <FlatList
@@ -303,11 +303,18 @@ const ListPageItems = () => {
           renderItem={({item}) => <BookItem item={item} />}
         />
       </Box>
+    ) : (
+      <Box
+        flexDirection="column"
+        p={0}
+        justifyContent="center"
+        alignItems="center">
+        <ListTitle title="Ainda não tens livros registrados. Registre um novo livro antes de proceder" />
+      </Box>
     );
   };
 
   const _onBookSelected = item => {
-    console.log(`book id is ${item}`);
     setSelectedBook(item);
     _onClose();
     _openAddEditAS();
@@ -366,6 +373,9 @@ const ListPageItems = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loadingBooksContainer: {
+    padding: 16,
   },
 });
 

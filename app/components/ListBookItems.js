@@ -299,7 +299,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
         ListHeaderComponent={<ListTitle title={subtitle} />}
         loading={loading}
       />
-      <AppFab onPress={_openAddEditAS} />
+      {!isFavourities && <AppFab onPress={_openAddEditAS} />}
       {!isFavourities ? (
         currentAS !== null && currentAS === 'editAddAS' ? (
           <ActionSheet isOpen={isOpen} onClose={_onClose} reference={addEditAS}>
