@@ -11,6 +11,11 @@ export const ERROR_MESSAGES = {
   default: 'Oppss... algo deu errado',
 };
 
+export const ItemStatus = {
+  active: 1,
+  inactive: 0,
+};
+
 export const serTimestamp = firestore.FieldValue.serverTimestamp();
 
 export const add = async (data, path, onSuccess) => {

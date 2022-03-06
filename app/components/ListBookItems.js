@@ -24,13 +24,13 @@ import {
   VList,
 } from '.';
 import {BookSchema} from '../validation/Validations';
-import {ItemStatus} from '../realm/Schemas';
 import {
   add,
   COLLECTION_NAMES,
   remove,
   serTimestamp,
   update,
+  ItemStatus,
 } from '../firebase/FirebaseUtils';
 import {useRef} from 'react';
 
