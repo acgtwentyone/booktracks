@@ -1,8 +1,10 @@
 import firestore from '@react-native-firebase/firestore';
 
+import {FIREBASE_BOOKS_PATH, FIREBASE_PAGES_PATH} from '../secrets';
+
 export const COLLECTION_NAMES = {
-  books: 'books',
-  pages: 'pages',
+  books: FIREBASE_BOOKS_PATH,
+  pages: FIREBASE_PAGES_PATH,
 };
 
 export const ERROR_MESSAGES = {

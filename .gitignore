@@ -2,6 +2,11 @@
 #
 .DS_Store
 
+# node 
+node_modules
+npm-debug.log
+yarn-error.log
+
 # Xcode
 #
 build/
@@ -29,12 +34,6 @@ build/
 local.properties
 *.iml
 
-# node.js
-#
-node_modules/
-npm-debug.log
-yarn-error.log
-
 # BUCK
 buck-out/
 \.buckd/
@@ -57,5 +56,6 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+android/*.hprof
 android/gradle.properties
-annotations.txt
+app/secrets.js
