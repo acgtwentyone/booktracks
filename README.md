@@ -24,7 +24,7 @@ Make sure you have [node](https://nodejs.org/en/) and instaled globaly if you in
 
 ## Contributing
 
-Fork and start make changes locally, and then make a pull request especifying the proposed changes.. For more information, please check see the [the contributing file](contributing.md)!
+Fork and start make changes locally, and then make a pull request especifying the proposed changes.. For more information, please check see the [the contributing file](https://github.com/acgtwentyone/booktracks/blob/main/CONTRIBUTING.md)!
 
 Small note: If editing the README, please conform to the [standard-readme](https://github.com/acgtwentyone/booktracks#readme) specification.
 
