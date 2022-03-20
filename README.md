@@ -1,4 +1,4 @@
-# booktracks
+# Book Tracks
 A react native book tracks app.
 
 A simple books app. The idea is to make this a tool where users can register their own books, as well as reading online registred books. 
