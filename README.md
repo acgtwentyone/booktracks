@@ -19,7 +19,7 @@ Let's make it together.
 ## Usage
 Fork and start make changes locally, and then make a pull request especifying the proposed changes.
 
-The app is also intended to be open source. Please read the [![code-of-conduting](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/acgtwentyone/booktracks#ODE_CONDUTING.md) 
+The app is also intended to be open source. Please read the [code-of-conduting](https://github.com/acgtwentyone/booktracks#ODE_CONDUTING.md) 
 
 Make sure you have [node](https://nodejs.org/en/) and instaled globaly if you intend to fork and contribute to this project.
 
