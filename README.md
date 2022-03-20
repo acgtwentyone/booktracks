@@ -6,11 +6,7 @@ A person can also add his pages, add a book to favourities books, delete a book 
 
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/acgtwentyone/booktracks#readme)
 
-Android / ios package to create customizable breadcrumbs to use in react native projects
-
-No need to re-invent the wheel. Its already been done. Just use it and take advantage of open source projects. 
-
-Usefull for exemple, let's say we are using this library to create a breadcrumbs to navigate between folders
+Let's make it together.
 
 ## Table of Contents
 
