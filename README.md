@@ -10,13 +10,9 @@ Let's make it together.
 
 ## Table of Contents
 
-- [Usage](#usage)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
 - [License](#license)
-
-## Usage
-Fork and start make changes locally, and then make a pull request especifying the proposed changes.
 
 The app is also intended to be open source. Please read the [code-of-conduting](https://github.com/acgtwentyone/booktracks/blob/main/CODE_OF_CONDUCT.md) 
 
@@ -28,7 +24,7 @@ Make sure you have [node](https://nodejs.org/en/) and instaled globaly if you in
 
 ## Contributing
 
-See [the contributing file](contributing.md)!
+Fork and start make changes locally, and then make a pull request especifying the proposed changes.. For more information, please check see the [the contributing file](contributing.md)!
 
 PRs accepted.
 
