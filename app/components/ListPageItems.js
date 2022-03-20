@@ -55,6 +55,9 @@ const ListPageItems = () => {
   const [pageToDelete, setPageToDelete] = useState(null);
   const [selectedBook, setSelectedBook] = useState(null);
   const path = COLLECTION_NAMES.pages;
+  const [loadingBooks, setLoadingBooks] = useState(true);
+  const [books, setBooks] = useState([]);
+  const [refreshingBooks, setRefreshingBooks] = useState(false);
 
   const {
     control,
@@ -115,7 +118,6 @@ const ListPageItems = () => {
       );
     } else {
       if (selectedBook !== null) {
-        console.log(selectedBook);
         add(
           {
             id: uuid(),
@@ -123,7 +125,7 @@ const ListPageItems = () => {
             obs: obs,
             created_at: serTimestamp,
             updated_at: serTimestamp,
-            book_id: selectedBook,
+            book_id: selectedBook.id,
             status: ItemStatus.active,
           },
           path,
@@ -179,6 +181,7 @@ const ListPageItems = () => {
     setPageToDelete(null);
     reset();
     setCurrentAS(null);
+    setSelectedBook(null);
   };
 
   const _onDeletePress = () => {
@@ -233,11 +236,7 @@ const ListPageItems = () => {
     );
   };
 
-  const RenderSelectBookOptions = ({onBookPress}) => {
-    const [loadingBooks, setLoadingBooks] = useState(true);
-    const [books, setBooks] = useState([]);
-    const [refreshingBooks, setRefreshingBooks] = useState(false);
-
+  const RenderSelectBookOptions = onBookPress => {
     const _loadBooks = () => {
       let subscriber = firestore().collection(COLLECTION_NAMES.books);
       subscriber = subscriber.onSnapshot(querySnapshot => {
@@ -259,7 +258,7 @@ const ListPageItems = () => {
 
     const BookItem = ({item}) => {
       return undefined !== item && item !== null ? (
-        <TouchableOpacity onPress={() => onBookPress(item.id)}>
+        <TouchableOpacity onPress={() => onBookPress(item)}>
           <Box
             p={5}
             m={2}
@@ -316,8 +315,6 @@ const ListPageItems = () => {
 
   const _onBookSelected = item => {
     setSelectedBook(item);
-    _onClose();
-    _openAddEditAS();
   };
 
   return (
@@ -337,11 +334,6 @@ const ListPageItems = () => {
         loading={loading}
       />
       <AppFab onPress={_openSelectBook} />
-      {currentAS !== null && currentAS === AS_STATUS.add_edit && (
-        <ActionSheet isOpen={isOpen} onClose={_onClose} reference={addEditAS}>
-          <RenderForm />
-        </ActionSheet>
-      )}
       {pageToDelete !== null && currentAS === AS_STATUS.delete && (
         <ActionSheet isOpen={isOpen} onClose={_onClose}>
           <Text mt={4}>
@@ -361,9 +353,12 @@ const ListPageItems = () => {
       )}
       {currentAS !== null && currentAS === AS_STATUS.select_book && (
         <ActionSheet isOpen={isOpen} onClose={_onClose} reference={addEditAS}>
-          <RenderSelectBookOptions
-            onBookPress={item => _onBookSelected(item)}
-          />
+          <Box flexDirection="column">
+            <RenderSelectBookOptions
+              onBookPress={item => _onBookSelected(item)}
+            />
+            <RenderForm />
+          </Box>
         </ActionSheet>
       )}
     </Screen>
@@ -375,7 +370,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   loadingBooksContainer: {
-    padding: 16,
+    // padding: 16,
   },
 });
 
