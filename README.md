@@ -30,4 +30,4 @@ Small note: If editing the README, please conform to the [standard-readme](https
 
 ## License
 
-[MIT](https://opensource.org/licenses/MIT) © 2021 Antonio Goncalves
+[MIT](https://github.com/acgtwentyone/booktracks/blob/main/LICENSE) © 2021 Antonio Goncalves
