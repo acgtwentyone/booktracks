@@ -42,6 +42,8 @@ const AS_STATUS = {
   select_book: 'SELECT_BOOK_AS',
 };
 
+const path = COLLECTION_NAMES.pages;
+
 const ListPageItems = () => {
   const {isOpen, onOpen, onClose} = useDisclose();
   const [loading, setLoading] = useState(true);
@@ -54,7 +56,6 @@ const ListPageItems = () => {
   const [currentAS, setCurrentAS] = useState(null);
   const [pageToDelete, setPageToDelete] = useState(null);
   const [selectedBook, setSelectedBook] = useState(null);
-  const path = COLLECTION_NAMES.pages;
   const [loadingBooks, setLoadingBooks] = useState(true);
   const [books, setBooks] = useState([]);
   const [refreshingBooks, setRefreshingBooks] = useState(false);
@@ -368,9 +369,6 @@ const ListPageItems = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  loadingBooksContainer: {
-    // padding: 16,
   },
 });
 
