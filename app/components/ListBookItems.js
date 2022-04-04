@@ -1,11 +1,4 @@
-import {
-  useDisclose,
-  FormControl,
-  useColorModeValue,
-  useToast,
-  Text,
-  Button,
-} from 'native-base';
+import {useDisclose, FormControl, Text, Button} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -33,28 +26,21 @@ import {
 } from '../firebase/FirebaseUtils';
 import {useRef} from 'react';
 import useLoadBooks from '../hooks/useLoadBooks';
+import useShowMessage from '../hooks/useShowMessage';
 
 const ListBookItems = ({isFavourities = false, subtitle}) => {
   const {isOpen, onOpen, onClose} = useDisclose();
   const [currentId, setCurrentId] = useState(null);
   const [edit, setEdit] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const toast = useToast();
   const addEditAS = useRef();
   const [currentAS, setCurrentAS] = useState(null);
   const [bookToDelete, setBookToDelete] = useState(null);
 
   const {books, loading, _loadBooks, _onRefresh} = useLoadBooks(isFavourities);
+  const {_showToastMsg} = useShowMessage();
 
-  const activityIndicatorBg = useColorModeValue('#FFF', '#000');
-
-  const {
-    control,
-    handleSubmit,
-    formState: {errors, isSubmitting, isValidating},
-    reset,
-    setValue,
-  } = useForm({
+  const {control, handleSubmit, reset, setValue} = useForm({
     defaultValues: {
       title: '',
       author: '',
@@ -65,13 +51,6 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   });
 
   useEffect(() => _loadBooks(), []);
-
-  const _showToastMsg = msg => {
-    toast.show({
-      title: msg,
-      placement: 'top',
-    });
-  };
 
   const _onSuccess = msg => {
     _onClose();
