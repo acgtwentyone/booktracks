@@ -34,7 +34,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   const [edit, setEdit] = useState(false);
   const addEditAS = useRef();
   const [currentAS, setCurrentAS] = useState(null);
-  const [bookToDelete, setBookToDelete] = useState(null);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   const {books, loading, refreshing, _loadBooks, _onRefresh} =
     useLoadBooks(isFavourities);
@@ -134,7 +134,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   };
 
   const _onDotPress = item => {
-    setBookToDelete(item);
+    setItemToDelete(item);
     setCurrentAS('deleteAddFavAS');
     onOpen();
   };
@@ -143,17 +143,17 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
     onClose();
     setEdit(false);
     setCurrentId(null);
-    setBookToDelete(null);
+    setItemToDelete(null);
     reset();
     setCurrentAS(null);
   };
 
   const _onDeletePress = () => {
-    if (bookToDelete !== null) {
+    if (itemToDelete !== null) {
       const {
         _data: {title},
         id,
-      } = bookToDelete;
+      } = itemToDelete;
       remove(COLLECTION_NAMES.books, id, _onSuccess(`Book ${title} deleted`));
     }
   };
@@ -260,11 +260,11 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
           <ActionSheet isOpen={isOpen} onClose={_onClose} reference={addEditAS}>
             <RenderForm />
           </ActionSheet>
-        ) : bookToDelete !== null ? (
+        ) : itemToDelete !== null ? (
           <ActionSheet isOpen={isOpen} onClose={_onClose}>
             <Text mt={4}>
-              {bookToDelete._data !== null
-                ? `Book ${bookToDelete._data.title} will be deleted. Do you want to procced ?`
+              {itemToDelete._data !== null
+                ? `Book ${itemToDelete._data.title} will be deleted. Do you want to procced ?`
                 : ' '}
             </Text>
             <Button
