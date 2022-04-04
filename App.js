@@ -33,7 +33,7 @@ const App = () => {
 
   const customTheme = extendTheme({config});
 
-  const [loggedUser, setLoggedUser] = useState({name: 'Antonio'}); // {name: 'Antonio'}
+  const [loggedUser, setLoggedUser] = useState(); // {name: 'Antonio'}
   const [loading, setLoading] = useState(false);
 
   if (loading) {
@@ -61,7 +61,5 @@ const App = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default App;
