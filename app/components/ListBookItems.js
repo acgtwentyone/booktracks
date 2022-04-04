@@ -10,7 +10,6 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm, Controller} from 'react-hook-form';
-import firestore from '@react-native-firebase/firestore';
 import {uuid} from '../Utils';
 
 import {
@@ -33,11 +32,10 @@ import {
   ItemStatus,
 } from '../firebase/FirebaseUtils';
 import {useRef} from 'react';
+import useLoadBooks from '../hooks/useLoadBooks';
 
 const ListBookItems = ({isFavourities = false, subtitle}) => {
   const {isOpen, onOpen, onClose} = useDisclose();
-  const [loading, setLoading] = useState(true);
-  const [books, setBooks] = useState([]);
   const [currentId, setCurrentId] = useState(null);
   const [edit, setEdit] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -45,6 +43,8 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   const addEditAS = useRef();
   const [currentAS, setCurrentAS] = useState(null);
   const [bookToDelete, setBookToDelete] = useState(null);
+
+  const {books, loading, _loadBooks, _onRefresh} = useLoadBooks(isFavourities);
 
   const activityIndicatorBg = useColorModeValue('#FFF', '#000');
 
@@ -64,27 +64,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
     resolver: yupResolver(BookSchema),
   });
 
-  useEffect(() => {
-    const subscriber = _loadBooks();
-    return () => subscriber();
-  }, []);
-
-  const _loadBooks = () => {
-    let subscriber = firestore().collection(COLLECTION_NAMES.books);
-    if (isFavourities) {
-      subscriber = subscriber.where('favourity', '==', true);
-    }
-    subscriber = subscriber.onSnapshot(querySnapshot => {
-      const _books = [];
-      querySnapshot.forEach(documentSnapshot => {
-        _books.push(documentSnapshot);
-      });
-      setBooks(_books);
-      setLoading(false);
-    });
-
-    return subscriber;
-  };
+  useEffect(() => _loadBooks(), []);
 
   const _showToastMsg = msg => {
     toast.show({
@@ -166,10 +146,6 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
         onOpen();
       }
     }
-  };
-
-  const _onRefresh = () => {
-    _loadBooks();
   };
 
   const _openAddEditAS = () => {
