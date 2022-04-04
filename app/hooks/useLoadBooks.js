@@ -6,6 +6,7 @@ const useLoadBooks = isFavourities => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const subscriber = useRef(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     subscriber.current = _loadBooks();
@@ -31,7 +32,7 @@ const useLoadBooks = isFavourities => {
     });
   };
 
-  return {books, loading, _loadBooks, _onRefresh};
+  return {books, loading, refreshing, _loadBooks, _onRefresh};
 };
 
 export default useLoadBooks;

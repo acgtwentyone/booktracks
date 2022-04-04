@@ -32,12 +32,13 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   const {isOpen, onOpen, onClose} = useDisclose();
   const [currentId, setCurrentId] = useState(null);
   const [edit, setEdit] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
   const addEditAS = useRef();
   const [currentAS, setCurrentAS] = useState(null);
   const [bookToDelete, setBookToDelete] = useState(null);
 
-  const {books, loading, _loadBooks, _onRefresh} = useLoadBooks(isFavourities);
+  const {books, loading, refreshing, _loadBooks, _onRefresh} =
+    useLoadBooks(isFavourities);
+
   const {_showToastMsg} = useShowMessage();
 
   const {control, handleSubmit, reset, setValue} = useForm({
