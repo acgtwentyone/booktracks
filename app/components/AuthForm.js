@@ -53,7 +53,6 @@ const AuthForm = ({navigation, signin = true}) => {
           navigateTab();
         })
         .catch(error => {
-          console.log(error.code);
           _showToastMsg(_errors[error.code]);
         });
     } else {
