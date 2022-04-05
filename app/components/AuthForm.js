@@ -21,10 +21,11 @@ import {Controller, useForm} from 'react-hook-form';
 import useShowMessage from '../hooks/useShowMessage';
 
 const _errors = {
-  'auth/user-not-found': 'User not found',
+  'auth/user-not-found': 'User not found!',
   'auth/invalid-email': 'That email address is invalid!',
+  'auth/wrong-password': 'Password does not match owr records!',
   'auth/email-already-in-use': 'That email address is already in use!',
-  'auth/operation-not-allowed': 'Oppss. Not able to login user',
+  'auth/operation-not-allowed': 'Oppss... Not able to login user!',
 };
 
 const AuthForm = ({navigation, signin = true}) => {
@@ -52,6 +53,7 @@ const AuthForm = ({navigation, signin = true}) => {
           navigateTab();
         })
         .catch(error => {
+          console.log(error.code);
           _showToastMsg(_errors[error.code]);
         });
     } else {
