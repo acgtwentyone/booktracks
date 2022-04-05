@@ -33,7 +33,7 @@ const App = () => {
 
   const customTheme = extendTheme({config});
 
-  const [loggedUser, setLoggedUser] = useState(); // {name: 'Antonio'}
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
   if (loading) {
@@ -41,8 +41,8 @@ const App = () => {
   }
 
   // Handle user state changes
-  const onAuthStateChanged = user => {
-    setLoggedUser(user);
+  const onAuthStateChanged = u => {
+    setUser(u);
   };
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const App = () => {
       <StatusBar />
       <NativeBaseProvider theme={customTheme}>
         <NavigationContainer>
-          <RootNavigator user={loggedUser} />
+          <RootNavigator user={user} />
         </NavigationContainer>
       </NativeBaseProvider>
     </SafeAreaView>
