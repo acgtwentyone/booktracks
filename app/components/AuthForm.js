@@ -45,7 +45,6 @@ const AuthForm = ({navigation, signin = true}) => {
   };
 
   const __processSiginOrSignup = async ({email, password}) => {
-    console.log(email);
     if (signin) {
       auth()
         .signInWithEmailAndPassword(email, password)
