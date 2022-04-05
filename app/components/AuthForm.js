@@ -44,13 +44,11 @@ const AuthForm = ({navigation, signin = true}) => {
     navigation.replace(NAVIGATORS_NAME.tab);
   };
 
-  const __processSiginOrSignup = async () => {
+  const __processSiginOrSignup = async ({email, password}) => {
+    console.log(email);
     if (signin) {
       auth()
-        .signInWithEmailAndPassword(
-          'jane.doe@example.com',
-          'SuperSecretPassword!',
-        )
+        .signInWithEmailAndPassword(email, password)
         .then(() => {
           navigateTab();
         })
@@ -59,10 +57,7 @@ const AuthForm = ({navigation, signin = true}) => {
         });
     } else {
       auth()
-        .createUserWithEmailAndPassword(
-          'jane.@example.com',
-          'SuperSecretPassword!',
-        )
+        .createUserWithEmailAndPassword(email, password)
         .then(() => {
           navigateTab();
         })
