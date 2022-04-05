@@ -18,6 +18,14 @@ import auth from '@react-native-firebase/auth';
 import {Screen} from '.';
 import {NAVIGATORS_NAME, ROUTES_NAME} from '../Utils';
 import {Controller, useForm} from 'react-hook-form';
+import useShowMessage from '../hooks/useShowMessage';
+
+const _errors = {
+  'auth/user-not-found': 'User not found',
+  'auth/invalid-email': 'That email address is invalid!',
+  'auth/email-already-in-use': 'That email address is already in use!',
+  'auth/operation-not-allowed': 'Oppss. Not able to login user',
+};
 
 const AuthForm = ({navigation, signin = true}) => {
   const {
@@ -30,12 +38,13 @@ const AuthForm = ({navigation, signin = true}) => {
       password: '',
     },
   });
+  const {_showToastMsg} = useShowMessage();
 
   const navigateTab = () => {
     navigation.replace(NAVIGATORS_NAME.tab);
   };
 
-  const __processSiginOrSignup = async data => {
+  const __processSiginOrSignup = async () => {
     if (signin) {
       auth()
         .signInWithEmailAndPassword(
@@ -43,61 +52,34 @@ const AuthForm = ({navigation, signin = true}) => {
           'SuperSecretPassword!',
         )
         .then(() => {
-          console.log('User account created & signed in!');
           navigateTab();
         })
         .catch(error => {
-          if (error.code === 'auth/email-already-in-use') {
-            console.log('That email address is already in use!');
-          }
-
-          if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
-          }
-
-          console.error(error);
+          _showToastMsg(_errors[error.code]);
         });
     } else {
       auth()
         .createUserWithEmailAndPassword(
-          'jane.doe@example.com',
+          'jane.@example.com',
           'SuperSecretPassword!',
         )
         .then(() => {
-          console.log('User account created & signed in!');
           navigateTab();
         })
         .catch(error => {
-          if (error.code === 'auth/email-already-in-use') {
-            console.log('That email address is already in use!');
-          }
-
-          if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
-          }
-
-          console.error(error);
+          _showToastMsg(_errors[error.code]);
         });
     }
-  };
-
-  const _signinOrSignup = ({email, password}) => {
-    const data = {email, password};
-    __processSiginOrSignup(data);
   };
 
   const _signinAnonymously = () => {
     auth()
       .signInAnonymously()
       .then(() => {
-        console.log('User signed in anonymously');
         navigation.replace(NAVIGATORS_NAME.tab);
       })
       .catch(error => {
-        if (error.code === 'auth/operation-not-allowed') {
-          console.log('Enable anonymous in your firebase console.');
-        }
-        console.error(error);
+        _showToastMsg(_errors[error.code]);
       });
   };
 
@@ -161,7 +143,7 @@ const AuthForm = ({navigation, signin = true}) => {
                     size="xs"
                   />
                 }
-                onPress={handleSubmit(_signinOrSignup)}>
+                onPress={handleSubmit(__processSiginOrSignup)}>
                 {signin ? 'Sign in' : 'Sign up'}
               </Button>
             </HStack>
