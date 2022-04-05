@@ -16,17 +16,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import auth from '@react-native-firebase/auth';
 
 import {Screen} from '.';
-import {NAVIGATORS_NAME, ROUTES_NAME} from '../Utils';
+import {FIREBASE_ERRORS, NAVIGATORS_NAME, ROUTES_NAME} from '../Utils';
 import {Controller, useForm} from 'react-hook-form';
 import useShowMessage from '../hooks/useShowMessage';
-
-const _errors = {
-  'auth/user-not-found': 'User not found!',
-  'auth/invalid-email': 'That email address is invalid!',
-  'auth/wrong-password': 'Password does not match owr records!',
-  'auth/email-already-in-use': 'That email address is already in use!',
-  'auth/operation-not-allowed': 'Oppss... Not able to login user!',
-};
 
 const AuthForm = ({navigation, signin = true}) => {
   const {
@@ -53,7 +45,7 @@ const AuthForm = ({navigation, signin = true}) => {
           navigateTab();
         })
         .catch(error => {
-          _showToastMsg(_errors[error.code]);
+          _showToastMsg(FIREBASE_ERRORS[error.code]);
         });
     } else {
       auth()
@@ -62,7 +54,7 @@ const AuthForm = ({navigation, signin = true}) => {
           navigateTab();
         })
         .catch(error => {
-          _showToastMsg(_errors[error.code]);
+          _showToastMsg(FIREBASE_ERRORS[error.code]);
         });
     }
   };
@@ -74,7 +66,7 @@ const AuthForm = ({navigation, signin = true}) => {
         navigation.replace(NAVIGATORS_NAME.tab);
       })
       .catch(error => {
-        _showToastMsg(_errors[error.code]);
+        _showToastMsg(FIREBASE_ERRORS[error.code]);
       });
   };
 
