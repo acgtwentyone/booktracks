@@ -59,6 +59,15 @@ const FONT_SIZE = {
   font_20: 20,
 };
 
+const FIREBASE_ERRORS = {
+  'auth/user-not-found': 'User not found!',
+  'auth/invalid-email': 'That email address is invalid!',
+  'auth/wrong-password': 'Password does not match owr records!',
+  'auth/email-already-in-use': 'That email address is already in use!',
+  'auth/operation-not-allowed': 'Oppss... Not able to login user!',
+  'auth/no-current-user': 'No user currently signed in',
+};
+
 export const uuid = () => {
   var d = new Date().getTime(); //Timestamp
   var d2 = (performance && performance.now && performance.now() * 1000) || 0; //Time in microseconds since page-load or 0 if unsupported
@@ -79,6 +88,7 @@ export const uuid = () => {
 
 export {
   COLORS,
+  FIREBASE_ERRORS,
   FONT_SIZE,
   HIT_SLOP,
   NAVIGATORS_NAME,
