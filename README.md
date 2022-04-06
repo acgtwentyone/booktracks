@@ -8,7 +8,9 @@ A person can also add his pages, add a book to favourities books, delete a book 
 
 ## Take a look at some app screenshots
 
-![Sign in screen](https://github.com/acgtwentyone/booktracks/blob/main/assets/screenshots/SIGIN.jpg)
+<img src="https://github.com/acgtwentyone/booktracks/blob/main/assets/screenshots/SIGIN.jpg" alt="Sign in screen" width="25%" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/acgtwentyone/booktracks/blob/main/assets/screenshots/LIST_BOOKS.jpg" alt="Sign in screen" width="25%" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/acgtwentyone/booktracks/blob/main/assets/screenshots/PAGES.jpg" alt="Sign in screen" width="25%" />
+
+<img src="https://github.com/acgtwentyone/booktracks/blob/main/assets/screenshots/FAVOURITIES.jpg" alt="Sign in screen" width="25%" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/acgtwentyone/booktracks/blob/main/assets/screenshots/SETTINGS.jpg" alt="Sign in screen" width="25%" />
 
 Let's build it together.
 
