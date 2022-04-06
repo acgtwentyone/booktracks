@@ -10,8 +10,38 @@ Submitting a Pull Request If you wish to submit a pull request for a new feature
 
 Setup Install Node.js if you have not already. (We suggest you to use node v16.x.x). 
 
-Fork the repo by running ```git clone https://github.com/*yourusername*/booktracks.git && cd booktracks yarn install``` OR ```npm install npm test```.
+Fork the repo by running 
 
-One you have done this, create a new branch with a name that loosely describes the issue on which you will be working. 
+```
+git clone https://github.com/*yourusername*/booktracks.git
+``` 
+
+Then navigate to the project by running the following command 
+
+```
+cd booktracks 
+```
+
+And then type
+
+```
+yarn install
+```
+
+OR 
+
+```
+npm install npm test
+```
+
+To test on emulator or phisical device run the following command
+
+```
+npx react-native run-android
+```
+
+and voila!
+
+Once you have done this, create a new branch with a name that loosely describes the issue on which you will be working. 
 
 Once you think you have the addressed the issue in question, submit a pull request to the master branch.
