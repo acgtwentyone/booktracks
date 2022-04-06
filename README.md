@@ -6,6 +6,10 @@ A person can also add his pages, add a book to favourities books, delete a book 
 
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/acgtwentyone/booktracks#readme)
 
+## Take a look at some app screenshots
+
+![Sign in screen](https://github.com/acgtwentyone/booktracks/blob/main/assets/screenshots/SIGIN.jpg)
+
 Let's build it together.
 
 ## Table of Contents
