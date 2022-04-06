@@ -34,14 +34,6 @@ OR
 npm install npm test
 ```
 
-To test on emulator or phisical device run the following command
-
-```
-npx react-native run-android
-```
-
-and voila!
-
 Once you have done this, create a new branch with a name that loosely describes the issue on which you will be working. 
 
 Once you think you have the addressed the issue in question, submit a pull request to the master branch.
