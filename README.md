@@ -14,13 +14,7 @@ A person can also add his pages, add a book to favourities books, delete a book 
 
 Let's build it together.
 
-## Table of Contents
-
-- [Maintainers](#maintainers)
-- [Contributing](#contributing)
-- [License](#license)
-
-The app is also intended to be open source. Please read the [code-of-conduting](https://github.com/acgtwentyone/booktracks/blob/main/CODE_OF_CONDUCT.md) 
+The app is open source. Please read the [code-of-conduting](https://github.com/acgtwentyone/booktracks/blob/main/CODE_OF_CONDUCT.md) 
 
 Make sure you have [node](https://nodejs.org/en/) and instaled globaly if you intend to fork and contribute to this project.
 
