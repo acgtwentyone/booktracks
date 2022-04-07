@@ -16,8 +16,6 @@ Let's build it together.
 
 The app is open source. Please read the [code-of-conduting](https://github.com/acgtwentyone/booktracks/blob/main/CODE_OF_CONDUCT.md) 
 
-Make sure you have [node](https://nodejs.org/en/) and instaled globaly if you intend to fork and contribute to this project.
-
 ## Maintainers
 
 [@acgtwentyone](https://github.com/acgtwentyone)
