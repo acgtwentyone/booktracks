@@ -8,7 +8,7 @@ Reporting Bugs & Feature Requests If you would like to submit a feature request 
 
 Submitting a Pull Request If you wish to submit a pull request for a new feature or issue, you should start by forking this repository first. This should get you setup on your local machine:
 
-Setup Install Node.js if you have not already. (We suggest you to use node v16.x.x). 
+Make sure you have [Node.js](https://nodejs.org/en/) installed in your machine. (We suggest you to use node v16.x.x). 
 
 Fork the repo by running 
 
