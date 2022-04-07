@@ -36,4 +36,4 @@ npm install npm test
 
 Once you have done this, create a new branch with a name that loosely describes the issue on which you will be working. 
 
-Once you think you have the addressed the issue in question, submit a pull request to the master branch.
+Once you think you have addressed the issue in question, submit a pull request to the main branch.
