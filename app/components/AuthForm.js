@@ -9,16 +9,19 @@ import {
   ScrollView,
   Stack,
   Text,
+  useColorModeValue,
 } from 'native-base';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import auth from '@react-native-firebase/auth';
+import {yupResolver} from '@hookform/resolvers/yup';
 
 import {Screen} from '.';
 import {FIREBASE_ERRORS, NAVIGATORS_NAME, ROUTES_NAME} from '../Utils';
 import {Controller, useForm} from 'react-hook-form';
 import useShowMessage from '../hooks/useShowMessage';
+import {SigninSchema} from '../validation/Validations';
 
 const AuthForm = ({navigation, signin = true}) => {
   const {
@@ -30,6 +33,7 @@ const AuthForm = ({navigation, signin = true}) => {
       email: '',
       password: '',
     },
+    resolver: yupResolver(SigninSchema),
   });
   const {_showToastMsg} = useShowMessage();
 
@@ -70,6 +74,12 @@ const AuthForm = ({navigation, signin = true}) => {
       });
   };
 
+  const ErrorMessage = ({name}) => (
+    <Text mt={2} color={useColorModeValue('red.500', 'white')}>
+      {errors[name]?.message}
+    </Text>
+  );
+
   return (
     <Screen style={styles.container}>
       <ScrollView>
@@ -86,9 +96,10 @@ const AuthForm = ({navigation, signin = true}) => {
           w={{
             base: '100%',
             md: '25%',
-          }}>
+          }}
+          p={4}>
           <FormControl isRequired>
-            <Stack mx="4">
+            <Stack>
               <Controller
                 name="email"
                 control={control}
@@ -101,10 +112,10 @@ const AuthForm = ({navigation, signin = true}) => {
                   />
                 )}
               />
-              {errors.email && <Text>Email is Required</Text>}
+              <ErrorMessage name="email" />
             </Stack>
 
-            <Stack mx="4" mt={8}>
+            <Stack mt={4}>
               <Controller
                 name="password"
                 control={control}
@@ -118,7 +129,7 @@ const AuthForm = ({navigation, signin = true}) => {
                   />
                 )}
               />
-              {errors.password && <Text>Password is Required</Text>}
+              <ErrorMessage name="password" />
             </Stack>
             <HStack justifyContent="center" mt={8}>
               <Button
