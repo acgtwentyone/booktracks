@@ -5,7 +5,7 @@ Keep track of all your readed books. The idea is to make this a tool where users
 
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/acgtwentyone/booktracks#readme)
 
-## Take a look at some app screenshots
+## App screenshots
 
 <img src="https://github.com/acgtwentyone/booktracks/blob/main/assets/screenshots/SIGIN.jpg" alt="Sign in screen" width="25%" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/acgtwentyone/booktracks/blob/main/assets/screenshots/LIST_BOOKS.jpg" alt="Sign in screen" width="25%" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/acgtwentyone/booktracks/blob/main/assets/screenshots/PAGES.jpg" alt="Sign in screen" width="25%" />
 
