@@ -96,10 +96,9 @@ const AuthForm = ({navigation, signin = true}) => {
           w={{
             base: '100%',
             md: '25%',
-          }}
-          p={4}>
+          }}>
           <FormControl isRequired>
-            <Stack>
+            <Stack mx={4}>
               <Controller
                 name="email"
                 control={control}
@@ -115,7 +114,7 @@ const AuthForm = ({navigation, signin = true}) => {
               <ErrorMessage name="email" />
             </Stack>
 
-            <Stack mt={4}>
+            <Stack mt={4} mx={4}>
               <Controller
                 name="password"
                 control={control}
@@ -147,14 +146,19 @@ const AuthForm = ({navigation, signin = true}) => {
             </HStack>
           </FormControl>
           {signin && (
-            <HStack justifyContent="space-around" mt={8} px={32}>
+            <HStack justifyContent="center" mt={8}>
               <Icon as={MaterialCommunityIcons} name="google" size="xs" />
-              <Icon as={MaterialCommunityIcons} name="twitter" size="xs" />
+              <Icon
+                as={MaterialCommunityIcons}
+                name="twitter"
+                size="xs"
+                mx={8}
+              />
               <Icon as={MaterialCommunityIcons} name="facebook" size="xs" />
             </HStack>
           )}
           {signin && (
-            <HStack justifyContent="center" mt={8}>
+            <HStack justifyContent="center" mt={4}>
               <Button size="xs" variant="link" onPress={_signinAnonymously}>
                 Skip Sign in
               </Button>
