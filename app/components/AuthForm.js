@@ -98,7 +98,7 @@ const AuthForm = ({navigation, signin = true}) => {
             md: '25%',
           }}>
           <FormControl isRequired>
-            <Stack mx={4}>
+            <Stack mx={8}>
               <Controller
                 name="email"
                 control={control}
@@ -114,7 +114,7 @@ const AuthForm = ({navigation, signin = true}) => {
               <ErrorMessage name="email" />
             </Stack>
 
-            <Stack mt={4} mx={4}>
+            <Stack mt={4} mx={8}>
               <Controller
                 name="password"
                 control={control}
