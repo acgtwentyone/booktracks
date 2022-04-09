@@ -159,7 +159,7 @@ const AuthForm = ({navigation, signin = true}) => {
           )}
           {signin && (
             <HStack justifyContent="center" mt={4}>
-              <Button size="xs" variant="link" onPress={_signinAnonymously}>
+              <Button size="sm" variant="link" onPress={_signinAnonymously}>
                 Skip Sign in
               </Button>
             </HStack>
