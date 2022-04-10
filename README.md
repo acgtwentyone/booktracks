@@ -17,7 +17,7 @@ The app is open source. Please read the [code-of-conduting](https://github.com/a
 
 ## Techs we use
 
-See the wiki page
+All the techs we use is described in the [wiki](https://github.com/acgtwentyone/booktracks/wiki) page.
 
 ## Maintainers
 
