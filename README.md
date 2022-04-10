@@ -15,6 +15,10 @@ Let's build it together.
 
 The app is open source. Please read the [code-of-conduting](https://github.com/acgtwentyone/booktracks/blob/main/CODE_OF_CONDUCT.md) 
 
+## Techs we use
+
+See the wiki page
+
 ## Maintainers
 
 [@acgtwentyone](https://github.com/acgtwentyone)
