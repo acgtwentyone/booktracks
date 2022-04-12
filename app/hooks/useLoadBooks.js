@@ -10,7 +10,7 @@ const useLoadBooks = isFavourities => {
 
   useEffect(() => {
     subscriber.current = _loadBooks();
-    return () => subscriber();
+    return () => subscriber;
   }, []);
 
   const _onRefresh = () => {
