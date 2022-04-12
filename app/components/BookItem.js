@@ -78,8 +78,10 @@ const BookItem = ({
           {__renderIcon('pencil', onEditPress)}
           {__renderIcon('dots-vertical', onDotPress)}
         </HStack>
-      ) : (
+      ) : !recent ? (
         __renderStarBtn()
+      ) : (
+        <></>
       )}
     </>
   );

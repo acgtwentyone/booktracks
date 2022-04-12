@@ -28,7 +28,7 @@ import {useRef} from 'react';
 import useLoadBooks from '../hooks/useLoadBooks';
 import useShowMessage from '../hooks/useShowMessage';
 
-const ListBookItems = ({isFavourities = false, subtitle}) => {
+const ListBookItems = ({isFavourities = false, subtitle, recent = false}) => {
   const {isOpen, onOpen, onClose} = useDisclose();
   const [currentId, setCurrentId] = useState(null);
   const [edit, setEdit] = useState(false);
@@ -249,12 +249,13 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
             onStarPress={() => _onStarPress(item)}
             onDotPress={() => _onDotPress(item)}
             isFavScreen={isFavourities}
+            recent={recent}
           />
         )}
         ListHeaderComponent={<ListTitle title={subtitle} />}
         loading={loading}
       />
-      {!isFavourities && <AppFab onPress={_openAddEditAS} />}
+      {!isFavourities && !recent && <AppFab onPress={_openAddEditAS} />}
       {!isFavourities ? (
         currentAS !== null && currentAS === 'editAddAS' ? (
           <ActionSheet isOpen={isOpen} onClose={_onClose} reference={addEditAS}>
