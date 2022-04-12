@@ -5,6 +5,11 @@ const HomeScreen = () => {
   return (
     <Screen>
       <ListBookItems subtitle="Recent books" recent={true} />
+      <ListBookItems
+        subtitle="Recent favourites books"
+        recent={true}
+        isFavourities={true}
+      />
       {/* <RecentPage props={{mt: 4}} />
         <RecentBook
           data={favourities}
