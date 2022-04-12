@@ -1,6 +1,6 @@
 import {useDisclose, FormControl, Text, Button} from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm, Controller} from 'react-hook-form';
 import {uuid} from '../Utils';
@@ -236,52 +236,71 @@ const ListBookItems = ({isFavourities = false, subtitle, recent = false}) => {
     );
   };
 
+  const RenderItem = ({item}) => (
+    <BookItem
+      item={item}
+      onEditPress={() => _editBook(item)}
+      onStarPress={() => _onStarPress(item)}
+      onDotPress={() => _onDotPress(item)}
+      isFavScreen={isFavourities}
+      recent={recent}
+    />
+  );
+
   return (
     <Screen style={styles.container}>
-      <VList
-        onRefresh={_onRefresh}
-        refreshing={refreshing}
-        data={books}
-        renderItem={({item}) => (
-          <BookItem
-            item={item}
-            onEditPress={() => _editBook(item)}
-            onStarPress={() => _onStarPress(item)}
-            onDotPress={() => _onDotPress(item)}
-            isFavScreen={isFavourities}
-            recent={recent}
+      {recent ? (
+        <>
+          <ListTitle title={subtitle} />
+          <FlatList
+            data={books}
+            renderItem={({item}) => <RenderItem item={item} />}
+            keyExtractor={item => item.id.toString()}
+            horizontal={true}
           />
-        )}
-        ListHeaderComponent={<ListTitle title={subtitle} />}
-        loading={loading}
-      />
-      {!isFavourities && !recent && <AppFab onPress={_openAddEditAS} />}
-      {!isFavourities ? (
-        currentAS !== null && currentAS === 'editAddAS' ? (
-          <ActionSheet isOpen={isOpen} onClose={_onClose} reference={addEditAS}>
-            <RenderForm />
-          </ActionSheet>
-        ) : itemToDelete !== null ? (
-          <ActionSheet isOpen={isOpen} onClose={_onClose}>
-            <Text mt={4}>
-              {itemToDelete._data !== null
-                ? `Book ${itemToDelete._data.title} will be deleted. Do you want to procced ?`
-                : ' '}
-            </Text>
-            <Button
-              mt={4}
-              mb={4}
-              onPress={_onDeletePress}
-              _dark={{background: 'red.500'}}
-              _light={{background: 'red.100'}}>
-              YES
-            </Button>
-          </ActionSheet>
-        ) : (
-          <></>
-        )
+        </>
       ) : (
-        <></>
+        <>
+          <VList
+            onRefresh={_onRefresh}
+            refreshing={refreshing}
+            data={books}
+            renderItem={({item}) => <RenderItem item={item} />}
+            ListHeaderComponent={<ListTitle title={subtitle} />}
+            loading={loading}
+          />
+          {!isFavourities && <AppFab onPress={_openAddEditAS} />}
+          {!isFavourities ? (
+            currentAS !== null && currentAS === 'editAddAS' ? (
+              <ActionSheet
+                isOpen={isOpen}
+                onClose={_onClose}
+                reference={addEditAS}>
+                <RenderForm />
+              </ActionSheet>
+            ) : itemToDelete !== null ? (
+              <ActionSheet isOpen={isOpen} onClose={_onClose}>
+                <Text mt={4}>
+                  {itemToDelete._data !== null
+                    ? `Book ${itemToDelete._data.title} will be deleted. Do you want to procced ?`
+                    : ' '}
+                </Text>
+                <Button
+                  mt={4}
+                  mb={4}
+                  onPress={_onDeletePress}
+                  _dark={{background: 'red.500'}}
+                  _light={{background: 'red.100'}}>
+                  YES
+                </Button>
+              </ActionSheet>
+            ) : (
+              <></>
+            )
+          ) : (
+            <></>
+          )}
+        </>
       )}
     </Screen>
   );
@@ -290,6 +309,8 @@ const ListBookItems = ({isFavourities = false, subtitle, recent = false}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // backgroundColor: 'red',
+    // margin: 2,
   },
 });
 
