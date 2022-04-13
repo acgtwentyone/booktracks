@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import useTabScreenOptions from '../hooks/useTabScreenOptions';
+import {useTabScreenOptions} from '../hooks';
 import {TABS_NAME} from '../Utils';
 import {
   BooksStack,
