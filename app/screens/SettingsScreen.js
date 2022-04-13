@@ -5,7 +5,7 @@ import auth from '@react-native-firebase/auth';
 
 import {Screen} from '../components';
 import {FIREBASE_ERRORS, NAVIGATORS_NAME} from '../Utils';
-import useShowMessage from '../hooks/useShowMessage';
+import {useShowMessage} from '../hooks';
 
 const SettingsScreen = ({navigation}) => {
   const {colorMode, toggleColorMode} = useColorMode();
