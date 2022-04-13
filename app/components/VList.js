@@ -1,8 +1,7 @@
-import {Box, Text, FlatList, Icon} from 'native-base';
+import {FlatList} from 'native-base';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {AppActivityIndicator} from '.';
+import {AppActivityIndicator, EmptyView} from '.';
 
 const VList = ({
   style,
@@ -14,12 +13,6 @@ const VList = ({
   onRefresh,
   loading,
 }) => {
-  const EmptyView = () => (
-    <Box p={5} alignItems="center" flex={1}>
-      <Icon as={MaterialCommunityIcons} name="database-search" size={16} />
-      <Text m={2}>Não há registros ...</Text>
-    </Box>
-  );
 
   if (loading) {
     return <AppActivityIndicator />;
