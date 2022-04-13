@@ -1,4 +1,4 @@
-export {default as useIsLoggedIn} from './useIsLoggedIn';
+export {default as useIsLoggedin} from './useIsLoggedin';
 export {default as useLoadBooks} from './useLoadBooks';
 export {default as useLoadPages} from './useLoadPages';
 export {default as useTabScreenOptions} from './useTabScreenOptions';
