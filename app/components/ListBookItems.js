@@ -28,7 +28,7 @@ import {useRef} from 'react';
 import useLoadBooks from '../hooks/useLoadBooks';
 import useShowMessage from '../hooks/useShowMessage';
 
-const ListBookItems = ({isFavourities = false, subtitle, recent = false}) => {
+const ListBookItems = ({isFavourities = false, subtitle}) => {
   const {isOpen, onOpen, onClose} = useDisclose();
   const [currentId, setCurrentId] = useState(null);
   const [edit, setEdit] = useState(false);
@@ -236,71 +236,51 @@ const ListBookItems = ({isFavourities = false, subtitle, recent = false}) => {
     );
   };
 
-  const RenderItem = ({item}) => (
-    <BookItem
-      item={item}
-      onEditPress={() => _editBook(item)}
-      onStarPress={() => _onStarPress(item)}
-      onDotPress={() => _onDotPress(item)}
-      isFavScreen={isFavourities}
-      recent={recent}
-    />
-  );
-
   return (
     <Screen style={styles.container}>
-      {recent ? (
-        <>
-          <ListTitle title={subtitle} />
-          <FlatList
-            data={books}
-            renderItem={({item}) => <RenderItem item={item} />}
-            keyExtractor={item => item.id.toString()}
-            horizontal={true}
+      <VList
+        onRefresh={_onRefresh}
+        refreshing={refreshing}
+        data={books}
+        renderItem={({item}) => (
+          <BookItem
+            item={item}
+            onEditPress={() => _editBook(item)}
+            onStarPress={() => _onStarPress(item)}
+            onDotPress={() => _onDotPress(item)}
+            isFavScreen={isFavourities}
           />
-        </>
+        )}
+        ListHeaderComponent={<ListTitle title={subtitle} />}
+        loading={loading}
+      />
+      {!isFavourities && <AppFab onPress={_openAddEditAS} />}
+      {!isFavourities ? (
+        currentAS !== null && currentAS === 'editAddAS' ? (
+          <ActionSheet isOpen={isOpen} onClose={_onClose} reference={addEditAS}>
+            <RenderForm />
+          </ActionSheet>
+        ) : itemToDelete !== null ? (
+          <ActionSheet isOpen={isOpen} onClose={_onClose}>
+            <Text mt={4}>
+              {itemToDelete._data !== null
+                ? `Book ${itemToDelete._data.title} will be deleted. Do you want to procced ?`
+                : ' '}
+            </Text>
+            <Button
+              mt={4}
+              mb={4}
+              onPress={_onDeletePress}
+              _dark={{background: 'red.500'}}
+              _light={{background: 'red.100'}}>
+              YES
+            </Button>
+          </ActionSheet>
+        ) : (
+          <></>
+        )
       ) : (
-        <>
-          <VList
-            onRefresh={_onRefresh}
-            refreshing={refreshing}
-            data={books}
-            renderItem={({item}) => <RenderItem item={item} />}
-            ListHeaderComponent={<ListTitle title={subtitle} />}
-            loading={loading}
-          />
-          {!isFavourities && <AppFab onPress={_openAddEditAS} />}
-          {!isFavourities ? (
-            currentAS !== null && currentAS === 'editAddAS' ? (
-              <ActionSheet
-                isOpen={isOpen}
-                onClose={_onClose}
-                reference={addEditAS}>
-                <RenderForm />
-              </ActionSheet>
-            ) : itemToDelete !== null ? (
-              <ActionSheet isOpen={isOpen} onClose={_onClose}>
-                <Text mt={4}>
-                  {itemToDelete._data !== null
-                    ? `Book ${itemToDelete._data.title} will be deleted. Do you want to procced ?`
-                    : ' '}
-                </Text>
-                <Button
-                  mt={4}
-                  mb={4}
-                  onPress={_onDeletePress}
-                  _dark={{background: 'red.500'}}
-                  _light={{background: 'red.100'}}>
-                  YES
-                </Button>
-              </ActionSheet>
-            ) : (
-              <></>
-            )
-          ) : (
-            <></>
-          )}
-        </>
+        <></>
       )}
     </Screen>
   );
