@@ -1,17 +1,15 @@
 import React from 'react';
-import {Box, FlatList, Icon, Text} from 'native-base';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {AppActivityIndicator, BookItem, ListTitle, Screen} from '../components';
+import {Box, FlatList} from 'native-base';
+import {
+  AppActivityIndicator,
+  BookItem,
+  EmptyView,
+  ListTitle,
+  Screen,
+} from '../components';
 import {useLoadBooks} from '../hooks';
 
 const HomeScreen = () => {
-  const EmptyView = () => (
-    <Box p={5} alignItems="center" flex={1}>
-      <Icon as={MaterialCommunityIcons} name="database-search" size={16} />
-      <Text m={2}>Não há registros ...</Text>
-    </Box>
-  );
-
   const RecentBooks = ({isFavScreen, title}) => {
     const {books, loading} = useLoadBooks(isFavScreen);
     return (
