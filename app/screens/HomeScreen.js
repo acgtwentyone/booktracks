@@ -1,13 +1,13 @@
 import React from 'react';
-import {FlatList} from 'native-base';
+import {Box, FlatList} from 'native-base';
 import {BookItem, ListTitle, Screen} from '../components';
-import useLoadBooks from '../hooks/useLoadBooks';
+import {useLoadBooks} from '../hooks';
 
 const HomeScreen = () => {
   const RecentBooks = ({isFavScreen, title}) => {
     const {books} = useLoadBooks(isFavScreen);
     return (
-      <>
+      <Box pb={4}>
         <ListTitle title={title} />
         <FlatList
           data={books}
@@ -17,7 +17,7 @@ const HomeScreen = () => {
           keyExtractor={item => item.id.toString()}
           horizontal={true}
         />
-      </>
+      </Box>
     );
   };
 
