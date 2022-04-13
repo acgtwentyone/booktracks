@@ -10,7 +10,6 @@ import {
   StatusBar,
 } from 'native-base';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import useIsLoggedIn from './app/hooks/useIsLoggedin';
 import {RootNavigator} from './app/navigation/StackNavigator';
 
 const App = () => {

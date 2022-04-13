@@ -58,7 +58,7 @@ const PageItem = ({
       )}
     </>
   );
-  return <ListItem content={<Content />} />;
+  return <ListItem content={<Content />} recent={recent} />;
 };
 
 const styles = StyleSheet.create({

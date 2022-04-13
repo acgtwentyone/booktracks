@@ -78,13 +78,15 @@ const BookItem = ({
           {__renderIcon('pencil', onEditPress)}
           {__renderIcon('dots-vertical', onDotPress)}
         </HStack>
-      ) : (
+      ) : !recent ? (
         __renderStarBtn()
+      ) : (
+        <></>
       )}
     </>
   );
 
-  return <ListItem content={<Content />} />;
+  return <ListItem content={<Content />} recent={recent} />;
 };
 
 const styles = StyleSheet.create({

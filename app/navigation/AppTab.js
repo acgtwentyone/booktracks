@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import useTabScreenOptions from '../hooks/useTabScreenOptions';
+import {useTabScreenOptions} from '../hooks';
 import {TABS_NAME} from '../Utils';
 import {
   BooksStack,
@@ -17,7 +17,7 @@ const AppTab = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName={TABS_NAME.books}
+      initialRouteName={TABS_NAME.home}
       screenOptions={screenOptions}>
       <Tab.Screen
         name={TABS_NAME.home}

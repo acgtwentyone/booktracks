@@ -5,13 +5,11 @@ import {
   Text,
   Box,
   Button,
-  FlatList,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm, Controller} from 'react-hook-form';
-import firestore from '@react-native-firebase/firestore';
 import {uuid} from '../Utils';
 
 import {
@@ -23,7 +21,6 @@ import {
   Screen,
   SubmitButton,
   VList,
-  AppActivityIndicator,
 } from '.';
 import {PageSchema} from '../validation/Validations';
 import {
@@ -35,6 +32,8 @@ import {
   ItemStatus,
 } from '../firebase/FirebaseUtils';
 import {useRef} from 'react';
+import {useLoadPages} from '../hooks';
+import SelectBookOptions from './SelectBookOptions';
 
 const AS_STATUS = {
   add_edit: 'EDIT_ADD_AS',
@@ -46,19 +45,15 @@ const path = COLLECTION_NAMES.pages;
 
 const ListPageItems = () => {
   const {isOpen, onOpen, onClose} = useDisclose();
-  const [loading, setLoading] = useState(true);
-  const [pages, setPages] = useState([]);
   const [currentId, setCurrentId] = useState(null);
   const [edit, setEdit] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
   const toast = useToast();
   const addEditAS = useRef();
   const [currentAS, setCurrentAS] = useState(null);
   const [pageToDelete, setPageToDelete] = useState(null);
   const [selectedBook, setSelectedBook] = useState(null);
-  const [loadingBooks, setLoadingBooks] = useState(true);
-  const [books, setBooks] = useState([]);
-  const [refreshingBooks, setRefreshingBooks] = useState(false);
+
+  const {pages, loading, refreshing, _loadPages, _onRefresh} = useLoadPages();
 
   const {
     control,
@@ -75,23 +70,8 @@ const ListPageItems = () => {
   });
 
   useEffect(() => {
-    const subscriber = _loadPages();
-    return () => subscriber();
+    _loadPages();
   }, []);
-
-  const _loadPages = () => {
-    let subscriber = firestore().collection(path);
-    subscriber = subscriber.onSnapshot(querySnapshot => {
-      const _pages = [];
-      querySnapshot.forEach(documentSnapshot => {
-        _pages.push(documentSnapshot);
-      });
-      setPages(_pages);
-      setLoading(false);
-    });
-
-    return subscriber;
-  };
 
   const _showToastMsg = msg => {
     toast.show({
@@ -153,10 +133,6 @@ const ListPageItems = () => {
         onOpen();
       }
     }
-  };
-
-  const _onRefresh = () => {
-    _loadPages();
   };
 
   const _openAddEditAS = () => {
@@ -237,86 +213,7 @@ const ListPageItems = () => {
     );
   };
 
-  const RenderSelectBookOptions = onBookPress => {
-    const _loadBooks = () => {
-      let subscriber = firestore().collection(COLLECTION_NAMES.books);
-      subscriber = subscriber.onSnapshot(querySnapshot => {
-        const _books = [];
-        querySnapshot.forEach(documentSnapshot => {
-          _books.push(documentSnapshot);
-        });
-        setBooks(_books);
-        setLoadingBooks(false);
-      });
-
-      return subscriber;
-    };
-
-    useEffect(() => {
-      let subscriber = _loadBooks();
-      return subscriber;
-    }, []);
-
-    const BookItem = ({item}) => {
-      return undefined !== item && item !== null ? (
-        <TouchableOpacity onPress={() => onBookPress(item)}>
-          <Box
-            p={5}
-            m={2}
-            _dark={{background: 'coolGray.600'}}
-            _light={{background: 'coolGray.200'}}
-            flexDirection="column"
-            alignItems="center">
-            <Text fontWeight="bold">
-              {item._data.author.length > 16
-                ? `${item._data.author.substring(0, 15)}...`
-                : item._data.author}
-            </Text>
-            <Text>
-              {item._data.title.length > 16
-                ? `${item._data.title.substring(0, 15)}...`
-                : item._data.title}
-            </Text>
-          </Box>
-        </TouchableOpacity>
-      ) : (
-        <></>
-      );
-    };
-
-    const _onRefreshBooks = () => {
-      _loadBooks();
-    };
-
-    if (loadingBooks) {
-      return <AppActivityIndicator style={styles.loadingBooksContainer} />;
-    }
-
-    return books.length > 0 ? (
-      <Box flexDirection="column" p={0}>
-        <ListTitle title="Select a book" />
-        <FlatList
-          horizontal
-          onRefresh={_onRefreshBooks}
-          refreshing={refreshingBooks}
-          data={books}
-          renderItem={({item}) => <BookItem item={item} />}
-        />
-      </Box>
-    ) : (
-      <Box
-        flexDirection="column"
-        p={0}
-        justifyContent="center"
-        alignItems="center">
-        <ListTitle title="Ainda não tens livros registrados. Registre um novo livro antes de proceder" />
-      </Box>
-    );
-  };
-
-  const _onBookSelected = item => {
-    setSelectedBook(item);
-  };
+  console.log(selectedBook);
 
   return (
     <Screen style={styles.container}>
@@ -355,8 +252,9 @@ const ListPageItems = () => {
       {currentAS !== null && currentAS === AS_STATUS.select_book && (
         <ActionSheet isOpen={isOpen} onClose={_onClose} reference={addEditAS}>
           <Box flexDirection="column">
-            <RenderSelectBookOptions
-              onBookPress={item => _onBookSelected(item)}
+            <SelectBookOptions
+              selectedBook={selectedBook}
+              setSelectedBook={setSelectedBook}
             />
             <RenderForm />
           </Box>

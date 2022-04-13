@@ -20,7 +20,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {Screen} from '.';
 import {FIREBASE_ERRORS, NAVIGATORS_NAME, ROUTES_NAME} from '../Utils';
 import {Controller, useForm} from 'react-hook-form';
-import useShowMessage from '../hooks/useShowMessage';
+import {useShowMessage} from '../hooks';
 import {SigninSchema} from '../validation/Validations';
 
 const AuthForm = ({navigation, signin = true}) => {
