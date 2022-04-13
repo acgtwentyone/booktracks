@@ -2,7 +2,7 @@ import {useEffect, useState, useRef} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
 
-const useLoadPages = isFavourities => {
+const useLoadPages = () => {
   const [pages, setPages] = useState([]);
   const [loading, setLoading] = useState(true);
   const subscriber = useRef(null);
@@ -20,7 +20,7 @@ const useLoadPages = isFavourities => {
   const _loadPages = () => {
     subscriber.current = firestore()
       .collection(COLLECTION_NAMES.pages)
-      .subscriber.current.onSnapshot(querySnapshot => {
+      .onSnapshot(querySnapshot => {
         const _pages = [];
         querySnapshot.forEach(documentSnapshot => {
           _pages.push(documentSnapshot);

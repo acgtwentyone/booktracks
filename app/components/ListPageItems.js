@@ -35,6 +35,7 @@ import {
   ItemStatus,
 } from '../firebase/FirebaseUtils';
 import {useRef} from 'react';
+import {useLoadPages} from '../hooks';
 
 const AS_STATUS = {
   add_edit: 'EDIT_ADD_AS',
@@ -46,11 +47,8 @@ const path = COLLECTION_NAMES.pages;
 
 const ListPageItems = () => {
   const {isOpen, onOpen, onClose} = useDisclose();
-  const [loading, setLoading] = useState(true);
-  const [pages, setPages] = useState([]);
   const [currentId, setCurrentId] = useState(null);
   const [edit, setEdit] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
   const toast = useToast();
   const addEditAS = useRef();
   const [currentAS, setCurrentAS] = useState(null);
@@ -59,6 +57,8 @@ const ListPageItems = () => {
   const [loadingBooks, setLoadingBooks] = useState(true);
   const [books, setBooks] = useState([]);
   const [refreshingBooks, setRefreshingBooks] = useState(false);
+
+  const {pages, loading, refreshing, _loadPages, _onRefresh} = useLoadPages();
 
   const {
     control,
@@ -75,23 +75,8 @@ const ListPageItems = () => {
   });
 
   useEffect(() => {
-    const subscriber = _loadPages();
-    return () => subscriber();
+    _loadPages();
   }, []);
-
-  const _loadPages = () => {
-    let subscriber = firestore().collection(path);
-    subscriber = subscriber.onSnapshot(querySnapshot => {
-      const _pages = [];
-      querySnapshot.forEach(documentSnapshot => {
-        _pages.push(documentSnapshot);
-      });
-      setPages(_pages);
-      setLoading(false);
-    });
-
-    return subscriber;
-  };
 
   const _showToastMsg = msg => {
     toast.show({
@@ -153,10 +138,6 @@ const ListPageItems = () => {
         onOpen();
       }
     }
-  };
-
-  const _onRefresh = () => {
-    _loadPages();
   };
 
   const _openAddEditAS = () => {
