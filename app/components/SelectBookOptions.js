@@ -5,7 +5,7 @@ import {useLoadBooks} from '../hooks';
 import AppActivityIndicator from './AppActivityIndicator';
 import ListTitle from './ListTitle';
 
-const SelectBookOptions = ({setSelectedBook}) => {
+const SelectBookOptions = ({selectedBook, setSelectedBook}) => {
   const {books, loading, refreshing} = useLoadBooks(false);
 
   const BookItem = ({item}) => {
@@ -14,8 +14,20 @@ const SelectBookOptions = ({setSelectedBook}) => {
         <Box
           p={5}
           m={2}
-          _dark={{background: 'coolGray.600'}}
-          _light={{background: 'coolGray.200'}}
+          _dark={
+            undefined !== selectedBook &&
+            selectedBook !== null &&
+            selectedBook.id === item.id
+              ? {background: 'coolGray.600'}
+              : {background: 'coolGray.900'}
+          }
+          _light={
+            undefined !== selectedBook &&
+            selectedBook !== null &&
+            selectedBook.id === item.id
+              ? {background: 'coolGray.200'}
+              : {background: 'coolGray.500'}
+          }
           flexDirection="column"
           alignItems="center">
           <Text fontWeight="bold">

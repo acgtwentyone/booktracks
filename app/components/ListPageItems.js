@@ -252,7 +252,10 @@ const ListPageItems = () => {
       {currentAS !== null && currentAS === AS_STATUS.select_book && (
         <ActionSheet isOpen={isOpen} onClose={_onClose} reference={addEditAS}>
           <Box flexDirection="column">
-            <SelectBookOptions setSelectedBook={setSelectedBook} />
+            <SelectBookOptions
+              selectedBook={selectedBook}
+              setSelectedBook={setSelectedBook}
+            />
             <RenderForm />
           </Box>
         </ActionSheet>
