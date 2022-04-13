@@ -10,7 +10,7 @@ import {
   SettingsScreen,
 } from '../screens';
 import {NAVIGATORS_NAME, ROUTES_NAME, SCREEN_TITLES} from '../Utils';
-import useScreenOptions from '../hooks/useScreenOptions';
+import {useScreenOptions} from '../hooks';
 import {AppTab} from '.';
 
 const AuthStk = createNativeStackNavigator();
