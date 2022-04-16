@@ -10,12 +10,12 @@ Let's build it together.
 The app is open source. Please read the [code-of-conduting](https://github.com/acgtwentyone/booktracks/blob/main/CODE_OF_CONDUCT.md) 
 
 ## App screenshots
-![SIGIN](https://user-images.githubusercontent.com/94224806/163692860-a45c97ea-78d9-4997-840a-5beb06811ecb.jpg)
-![HOME](https://user-images.githubusercontent.com/94224806/163692867-4d32f24b-c1db-4ea8-b42a-802f8ab0331d.jpg)
-![BOOKS](https://user-images.githubusercontent.com/94224806/163692876-b5b09047-6513-493e-8c0a-ed14b1d78ea3.jpg)
-![PAGES](https://user-images.githubusercontent.com/94224806/163692893-017e475e-c838-404f-acdd-eec1da9d4037.jpg)
-![REGISTER_PAGE](https://user-images.githubusercontent.com/94224806/163692901-a1f382a7-669c-4b18-a5dd-432c6125c897.jpg)
-![SETINGS](https://user-images.githubusercontent.com/94224806/163692912-5f783ced-40f0-4c9e-ab5f-efaa3b14cb9f.jpg)
+<img src="https://user-images.githubusercontent.com/94224806/163692860-a45c97ea-78d9-4997-840a-5beb06811ecb.jpg" width="200" />&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/94224806/163692867-4d32f24b-c1db-4ea8-b42a-802f8ab0331d.jpg" width="200" />&nbsp;&nbsp;&nbsp;
+<img src="https://user-images.githubusercontent.com/94224806/163692876-b5b09047-6513-493e-8c0a-ed14b1d78ea3.jpg" width="200" />&nbsp;&nbsp;&nbsp;
+<img src="https://user-images.githubusercontent.com/94224806/163692893-017e475e-c838-404f-acdd-eec1da9d4037.jpg" width="200" />&nbsp;&nbsp;&nbsp;
+
+<img src="https://user-images.githubusercontent.com/94224806/163692901-a1f382a7-669c-4b18-a5dd-432c6125c897.jpg" width="200" />&nbsp;&nbsp;&nbsp;
+<img src="https://user-images.githubusercontent.com/94224806/163692912-5f783ced-40f0-4c9e-ab5f-efaa3b14cb9f.jpg" width="200" />
 
 
 ## Techs we use
