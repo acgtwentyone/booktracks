@@ -24,6 +24,7 @@ const HomeScreen = () => {
           )}
           keyExtractor={item => item.id.toString()}
           horizontal={true}
+          showsHorizontalScrollIndicator={false}
           ListHeaderComponent={
             books.length === 0 &&
             !loading && (
@@ -53,6 +54,7 @@ const HomeScreen = () => {
           renderItem={({item}) => <PageItem item={item} recent={true} />}
           keyExtractor={item => item.id.toString()}
           horizontal={true}
+          showsHorizontalScrollIndicator={false}
           ListHeaderComponent={
             pages.length === 0 &&
             !loading && (
