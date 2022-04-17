@@ -13,8 +13,8 @@ const ListItem = ({style, props, content, recent = false}) => {
             color: 'coolGray.800',
           }}>
           <Center
-            w={SCREEN_WIDTH / 3}
-            h={SCREEN_WIDTH / 3}
+            w={SCREEN_WIDTH / 2 - 50}
+            h={SCREEN_WIDTH / 2 - 50}
             _dark={{
               borderColor: 'coolGray.600',
               backgroundColor: 'gray.700',
