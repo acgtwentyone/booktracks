@@ -8,7 +8,7 @@ const ListItem = ({style, props, content, recent = false}) => {
     <>
       {recent ? (
         <Box
-          mx={4}
+          mx={2}
           _text={{
             color: 'coolGray.800',
           }}>

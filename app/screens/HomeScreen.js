@@ -18,6 +18,7 @@ const HomeScreen = () => {
         {<ListTitle title={title} />}
         {(!books || books.length === 0) && loading && <AppActivityIndicator />}
         <FlatList
+          px={2}
           data={books}
           renderItem={({item}) => (
             <BookItem item={item} isFavScreen={isFavScreen} recent={true} />
@@ -50,6 +51,7 @@ const HomeScreen = () => {
         {<ListTitle title="Recent pages" />}
         {(!pages || pages.length === 0) && loading && <AppActivityIndicator />}
         <FlatList
+          px={2}
           data={pages}
           renderItem={({item}) => <PageItem item={item} recent={true} />}
           keyExtractor={item => item.id.toString()}
