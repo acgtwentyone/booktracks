@@ -33,7 +33,7 @@ const ListItem = ({style, props, content, recent = false}) => {
       ) : (
         <Box
           p={4}
-          mb={8}
+          mb={6}
           rounded="lg"
           overflow="hidden"
           borderColor="coolGray.200"
