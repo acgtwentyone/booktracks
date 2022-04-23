@@ -213,8 +213,6 @@ const ListPageItems = () => {
     );
   };
 
-  console.log(selectedBook);
-
   return (
     <Screen style={styles.container}>
       <VList
