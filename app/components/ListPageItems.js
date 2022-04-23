@@ -129,15 +129,10 @@ const ListPageItems = () => {
         setValue('obs', obs);
         setCurrentId(id);
         setEdit(true);
-        setCurrentAS(AS_STATUS.add_edit);
-        onOpen();
+        setSelectedBook(item);
+        _openSelectBook();
       }
     }
-  };
-
-  const _openAddEditAS = () => {
-    setCurrentAS(AS_STATUS.add_edit);
-    onOpen();
   };
 
   const _openSelectBook = () => {
