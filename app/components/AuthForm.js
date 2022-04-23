@@ -11,7 +11,7 @@ import {
   Text,
   useColorModeValue,
 } from 'native-base';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import auth from '@react-native-firebase/auth';
@@ -25,6 +25,7 @@ import {useShowMessage} from '../hooks';
 import {SigninSchema} from '../validation/Validations';
 
 const AuthForm = ({navigation, signin = true}) => {
+  const [starting, setStarting] = useState(true);
   const {
     control,
     formState: {errors},
@@ -52,19 +53,22 @@ const AuthForm = ({navigation, signin = true}) => {
     );
   };
 
+  useEffect(() => {
+    setStarting(false);
+  }, []);
+
   const NoInternetAlert = () => {
-    const bgColor = useColorModeValue('black', 'white');
-    const textColor = useColorModeValue('white', 'black');
+    const bgColor = useColorModeValue('coolGray.500', 'coolGray.900');
     return (
       <>
         {!isInternet() && (
           <Box
-            p={6}
+            p={4}
             backgroundColor={bgColor}
-            borderTopLeftRadius={32}
-            borderTopRightRadius={32}>
-            <Text color={textColor} fontSize={15} fontWeight="bold">
-              No internet connection. Please connect to internet first.
+            borderTopLeftRadius={16}
+            borderTopRightRadius={16}>
+            <Text fontSize={15} fontWeight="bold">
+              No internet connection
             </Text>
           </Box>
         )}
@@ -118,6 +122,10 @@ const AuthForm = ({navigation, signin = true}) => {
       {errors[name]?.message}
     </Text>
   );
+
+  if (starting) {
+    return null;
+  }
 
   return (
     <Screen style={styles.container}>
