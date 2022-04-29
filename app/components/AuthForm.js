@@ -23,18 +23,26 @@ import {FIREBASE_ERRORS, NAVIGATORS_NAME, ROUTES_NAME} from '../Utils';
 import {Controller, useForm} from 'react-hook-form';
 import {useShowMessage} from '../hooks';
 import {SigninSchema, SignupSchema} from '../validation/Validations';
+import {set} from '../firebase/FirebaseUtils';
 
 const AuthForm = ({navigation, signin = true}) => {
   const [starting, setStarting] = useState(true);
+  const defaultValues = signin
+    ? {
+        email: '',
+        password: '',
+      }
+    : {
+        username: '',
+        email: '',
+        password: '',
+      };
   const {
     control,
     formState: {errors},
     handleSubmit,
   } = useForm({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+    defaultValues: defaultValues,
     resolver: yupResolver(signin ? SigninSchema : SignupSchema),
   });
   const {_showToastMsg} = useShowMessage();
@@ -76,7 +84,7 @@ const AuthForm = ({navigation, signin = true}) => {
     );
   };
 
-  const __processSiginOrSignup = async ({email, password}) => {
+  const __processSiginOrSignup = async ({email, password, username = null}) => {
     if (isInternet()) {
       if (signin) {
         auth()
@@ -90,8 +98,8 @@ const AuthForm = ({navigation, signin = true}) => {
       } else {
         auth()
           .createUserWithEmailAndPassword(email, password)
-          .then(() => {
-            navigateTab();
+          .then(({user}) => {
+            set({username: username}, 'users', user.uid, navigateTab());
           })
           .catch(error => {
             _showToastMsg(FIREBASE_ERRORS[error.code]);
