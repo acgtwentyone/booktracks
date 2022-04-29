@@ -22,7 +22,7 @@ import {Screen} from '.';
 import {FIREBASE_ERRORS, NAVIGATORS_NAME, ROUTES_NAME} from '../Utils';
 import {Controller, useForm} from 'react-hook-form';
 import {useShowMessage} from '../hooks';
-import {SigninSchema} from '../validation/Validations';
+import {SigninSchema, SignupSchema} from '../validation/Validations';
 
 const AuthForm = ({navigation, signin = true}) => {
   const [starting, setStarting] = useState(true);
@@ -35,7 +35,7 @@ const AuthForm = ({navigation, signin = true}) => {
       email: '',
       password: '',
     },
-    resolver: yupResolver(SigninSchema),
+    resolver: yupResolver(signin ? SigninSchema : SignupSchema),
   });
   const {_showToastMsg} = useShowMessage();
   const netInfo = useNetInfo();
@@ -145,6 +145,23 @@ const AuthForm = ({navigation, signin = true}) => {
             md: '25%',
           }}>
           <FormControl isRequired>
+            {!signin && (
+              <Stack mx={8}>
+                <Controller
+                  name="username"
+                  control={control}
+                  render={({field: {onChange, onBlur, value}}) => (
+                    <Input
+                      placeholder="username"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                    />
+                  )}
+                />
+                <ErrorMessage name="username" />
+              </Stack>
+            )}
             <Stack mx={8}>
               <Controller
                 name="email"
@@ -161,7 +178,7 @@ const AuthForm = ({navigation, signin = true}) => {
               <ErrorMessage name="email" />
             </Stack>
 
-            <Stack mt={4} mx={8}>
+            <Stack mx={8}>
               <Controller
                 name="password"
                 control={control}
@@ -204,13 +221,13 @@ const AuthForm = ({navigation, signin = true}) => {
               <Icon as={MaterialCommunityIcons} name="facebook" size="xs" />
             </HStack>
           )}
-          {signin && (
+          {/* {signin && (
             <HStack justifyContent="center" mt={4}>
               <Button size="sm" variant="link" onPress={_signinAnonymously}>
                 Skip Sign in
               </Button>
             </HStack>
-          )}
+          )} */}
           <HStack
             justifyContent="center"
             alignItems="center"
