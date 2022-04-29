@@ -10,6 +10,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm, Controller} from 'react-hook-form';
+import firestore from '@react-native-firebase/firestore';
 import {uuid} from '../Utils';
 
 import {
@@ -24,24 +25,20 @@ import {
 } from '.';
 import {PageSchema} from '../validation/Validations';
 import {
-  add,
   COLLECTION_NAMES,
-  remove,
   serTimestamp,
-  update,
   ItemStatus,
 } from '../firebase/FirebaseUtils';
 import {useRef} from 'react';
 import {useLoadPages} from '../hooks';
 import SelectBookOptions from './SelectBookOptions';
+import {getObjData} from '../data/AsyncStorageUtils';
 
 const AS_STATUS = {
   add_edit: 'EDIT_ADD_AS',
   delete: 'DELETE_PAGE_AS',
   select_book: 'SELECT_BOOK_AS',
 };
-
-const path = COLLECTION_NAMES.pages;
 
 const ListPageItems = () => {
   const {isOpen, onOpen, onClose} = useDisclose();
@@ -71,6 +68,7 @@ const ListPageItems = () => {
 
   useEffect(() => {
     _loadPages();
+    return firestore;
   }, []);
 
   const _showToastMsg = msg => {
@@ -80,6 +78,10 @@ const ListPageItems = () => {
     });
   };
 
+  const _alertError = () => {
+    _showToastMsg('Oppss... Something went wrong.');
+  };
+
   const _onSuccess = msg => {
     _onClose();
     _showToastMsg(msg);
@@ -87,35 +89,46 @@ const ListPageItems = () => {
 
   const onSubmit = data => {
     const {page, obs} = data;
-    if (edit) {
-      update(
-        {
-          page: page,
-          obs: obs,
-        },
-        path,
-        currentId,
-        _onSuccess(`Page ${page} updated`),
-      );
-    } else {
-      if (selectedBook !== null) {
-        add(
-          {
-            id: uuid(),
-            page: page,
-            obs: obs,
-            created_at: serTimestamp,
-            updated_at: serTimestamp,
-            book_id: selectedBook.id,
-            status: ItemStatus.active,
-          },
-          path,
-          _onSuccess(`Page ${page} added`),
-        );
-      } else {
-        _showToastMsg('Please select a book first');
-      }
-    }
+    getObjData('user', e => {})
+      .then(u => {
+        if (edit) {
+          firestore()
+            .collection('users')
+            .doc(u.uid)
+            .collection(COLLECTION_NAMES.books)
+            .doc(selectedBook.id)
+            .collection(COLLECTION_NAMES.pages)
+            .update({
+              page: page,
+              obs: obs,
+            })
+            .then(() => _onSuccess(`Page ${page} updated`))
+            .catch(error => _alertError());
+        } else {
+          if (selectedBook !== null) {
+            firestore()
+              .collection('users')
+              .doc(u.uid)
+              .collection(COLLECTION_NAMES.books)
+              .doc(selectedBook.id)
+              .collection(COLLECTION_NAMES.pages)
+              .add({
+                id: uuid(),
+                page: page,
+                obs: obs,
+                created_at: serTimestamp,
+                updated_at: serTimestamp,
+                book_id: selectedBook.id,
+                status: ItemStatus.active,
+              })
+              .then(() => _onSuccess(`Page ${page} added`))
+              .catch(error => _alertError());
+          } else {
+            _showToastMsg('Please select a book first');
+          }
+        }
+      })
+      .catch(error => _alertError());
   };
 
   const _editPage = item => {
@@ -162,7 +175,20 @@ const ListPageItems = () => {
         _data: {page},
         id,
       } = pageToDelete;
-      remove(path, id, _onSuccess(`Page ${page} deleted`));
+      getObjData('user', e => _alertError())
+        .then(u => {
+          firestore()
+            .collection('users')
+            .doc(u.uid)
+            .collection(COLLECTION_NAMES.books)
+            .doc(selectedBook.id)
+            .collection(COLLECTION_NAMES.pages)
+            .doc(id)
+            .delete()
+            .then(() => _onSuccess(`Page ${page} deleted`))
+            .catch(error => _alertError());
+        })
+        .catch(e => _alertError());
     }
   };
 
