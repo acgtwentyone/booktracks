@@ -1,6 +1,7 @@
 import {useEffect, useState, useRef} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
+import {getObjData} from '../data/AsyncStorageUtils';
 
 const useLoadBooks = isFavourities => {
   const [books, setBooks] = useState([]);
@@ -18,17 +19,22 @@ const useLoadBooks = isFavourities => {
   };
 
   const _loadBooks = () => {
-    subscriber.current = firestore().collection(COLLECTION_NAMES.books);
-    if (isFavourities) {
-      subscriber.current = subscriber.current.where('favourity', '==', true);
-    }
-    subscriber.current = subscriber.current.onSnapshot(querySnapshot => {
-      const _books = [];
-      querySnapshot.forEach(documentSnapshot => {
-        _books.push(documentSnapshot);
+    getObjData('user', e => {}).then(u => {
+      subscriber.current = firestore()
+        .collection('users')
+        .doc(u.uid)
+        .collection(COLLECTION_NAMES.books);
+      if (isFavourities) {
+        subscriber.current = subscriber.current.where('favourity', '==', true);
+      }
+      subscriber.current = subscriber.current.onSnapshot(querySnapshot => {
+        const _books = [];
+        querySnapshot.forEach(documentSnapshot => {
+          _books.push(documentSnapshot);
+        });
+        setBooks(_books);
+        setLoading(false);
       });
-      setBooks(_books);
-      setLoading(false);
     });
   };
 

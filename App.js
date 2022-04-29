@@ -11,6 +11,7 @@ import {
 } from 'native-base';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {RootNavigator} from './app/navigation/StackNavigator';
+import {storeObjData} from './app/data/AsyncStorageUtils';
 
 const App = () => {
   const backgroundStyle = {
@@ -41,6 +42,7 @@ const App = () => {
 
   // Handle user state changes
   const onAuthStateChanged = u => {
+    storeObjData('user', u, e => console.log(`algo deu errado ${e.message}`));
     setUser(u);
   };
 

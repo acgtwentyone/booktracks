@@ -17,7 +17,7 @@ const AppTab = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName={TABS_NAME.home}
+      initialRouteName={TABS_NAME.books}
       screenOptions={screenOptions}>
       <Tab.Screen
         name={TABS_NAME.home}
