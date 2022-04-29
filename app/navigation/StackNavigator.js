@@ -120,10 +120,10 @@ const SettingsStack = () => {
 
 const RootNavigator = ({user}) => {
   const {auth, tab} = NAVIGATORS_NAME;
-  let appScreens = [{name: auth, component: AuthStack}];
-  appScreens = user
-    ? [{name: tab, component: AppTab}, ...appScreens]
-    : [...appScreens, {name: tab, component: AppTab}];
+  let appScreens =
+    undefined !== user && user !== null
+      ? [{name: tab, component: AppTab}]
+      : [{name: auth, component: AuthStack}];
 
   return (
     <RootStk.Navigator>
