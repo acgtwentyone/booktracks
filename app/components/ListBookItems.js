@@ -63,8 +63,8 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
 
   const onSubmit = data => {
     const {title, author, year, isbn} = data;
-    if (edit) {
-      getObjData('user', e => {}).then(u => {
+    getObjData('user', e => {}).then(u => {
+      if (edit) {
         firestore()
           .collection('users')
           .doc(u.uid)
@@ -80,9 +80,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
             _onSuccess(`Book ${title} updated`);
           })
           .catch(error => _showToastMsg('Oppss... Something went wrong.'));
-      });
-    } else {
-      getObjData('user', e => {}).then(u => {
+      } else {
         firestore()
           .collection('users')
           .doc(u.uid)
@@ -102,8 +100,8 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
             _onSuccess(`Book ${title} added`);
           })
           .catch(error => _showToastMsg('Oppss... Something went wrong.'));
-      });
-    }
+      }
+    });
   };
 
   const _onStarPress = ({_data: {title, favourity}, id}) => {
