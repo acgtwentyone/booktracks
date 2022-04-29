@@ -8,7 +8,7 @@ export const COLLECTION_NAMES = {
 };
 
 export const ERROR_MESSAGES = {
-  default: 'Oppss... algo deu errado',
+  default: 'Oppss... something went wrong.',
 };
 
 export const ItemStatus = {
@@ -23,6 +23,20 @@ export const add = async (data, path, onSuccess) => {
     await firestore()
       .collection(path)
       .add(data)
+      .then(() => {
+        onSuccess;
+      });
+  } catch (error) {
+    console.error(ERROR_MESSAGES.default, error);
+  }
+};
+
+export const set = async (data, path, doc, onSuccess) => {
+  try {
+    await firestore()
+      .collection(path)
+      .doc(doc)
+      .set(data)
       .then(() => {
         onSuccess;
       });
