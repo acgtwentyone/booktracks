@@ -7,7 +7,7 @@ Keep track of all your readed books. Never forget. With this app users can regis
 
 Let's build it together.
 
-The app is open source. Please read the [code-of-conduting](https://github.com/acgtwentyone/booktracks/blob/main/CODE_OF_CONDUCT.md) 
+This app is open source. Please read the [code-of-conduting](https://github.com/acgtwentyone/booktracks/blob/main/CODE_OF_CONDUCT.md) 
 
 ## App screenshots
 <img src="https://user-images.githubusercontent.com/94224806/163692860-a45c97ea-78d9-4997-840a-5beb06811ecb.jpg" width="200" />&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/94224806/163692867-4d32f24b-c1db-4ea8-b42a-802f8ab0331d.jpg" width="200" />&nbsp;&nbsp;&nbsp;
