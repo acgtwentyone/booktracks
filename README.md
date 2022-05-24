@@ -29,7 +29,7 @@ All the techs we use is described in the [wiki](https://github.com/acgtwentyone/
 
 Fork and start make changes locally, and then make a pull request especifying the proposed changes.. For more information, please check see the [the contributing file](https://github.com/acgtwentyone/booktracks/blob/main/CONTRIBUTING.md)!
 
-Small note: If editing the README, please conform to the [standard-readme](https://github.com/acgtwentyone/booktracks#readme) specification.
+Small note: If editing the [README](README.md), please conform to the [standard-readme](https://github.com/acgtwentyone/booktracks#readme) specification.
 
 ## License
 
