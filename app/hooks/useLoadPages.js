@@ -36,10 +36,8 @@ const useLoadPages = () => {
                   .then(pageSnaps => {
                     pageSnaps.forEach(p => {
                       _pages.push(p);
-                      // setPages(prev => [...prev, p]);
                     });
                     console.log(_pages);
-                    // setPages(_pages);
                   })
                   .catch(e => console.log(e));
               }
