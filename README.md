@@ -23,7 +23,7 @@ All the techs we use is described in the [wiki](https://github.com/acgtwentyone/
 
 ## Maintainers
 
-[@acgtwentyone](https://github.com/acgtwentyone)
+This repository is exclusively maintained by [@acgtwentyone](https://github.com/acgtwentyone)
 
 ## Contributing
 
