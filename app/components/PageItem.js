@@ -1,6 +1,6 @@
 import {Box, HStack, Icon, Text} from 'native-base';
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ListItem} from '.';
 import {FONT_SIZE} from '../Utils';
@@ -60,9 +60,5 @@ const PageItem = ({
   );
   return <ListItem content={<Content />} recent={recent} />;
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default React.memo(PageItem);

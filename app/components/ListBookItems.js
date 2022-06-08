@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm, Controller} from 'react-hook-form';
+import firestore from '@react-native-firebase/firestore';
 import {uuid} from '../Utils';
 
 import {
@@ -17,16 +18,15 @@ import {
 } from '.';
 import {BookSchema} from '../validation/Validations';
 import {
-  add,
   COLLECTION_NAMES,
   remove,
   serTimestamp,
-  update,
   ItemStatus,
 } from '../firebase/FirebaseUtils';
 import {useRef} from 'react';
 import {useLoadBooks} from '../hooks';
 import {useShowMessage} from '../hooks';
+import {getObjData} from '../data/AsyncStorageUtils';
 
 const ListBookItems = ({isFavourities = false, subtitle}) => {
   const {isOpen, onOpen, onClose} = useDisclose();
@@ -41,6 +41,10 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
 
   const {_showToastMsg} = useShowMessage();
 
+  const _alertError = () => {
+    _showToastMsg('Oppss... Something went wrong.');
+  };
+
   const {control, handleSubmit, reset, setValue} = useForm({
     defaultValues: {
       title: '',
@@ -51,7 +55,10 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
     resolver: yupResolver(BookSchema),
   });
 
-  useEffect(() => _loadBooks(), []);
+  useEffect(() => {
+    _loadBooks();
+    return firestore;
+  }, []);
 
   const _onSuccess = msg => {
     _onClose();
@@ -60,48 +67,66 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
 
   const onSubmit = data => {
     const {title, author, year, isbn} = data;
-    if (edit) {
-      update(
-        {
-          title: title,
-          author: author,
-          year: Number(year),
-          isbn: isbn,
-        },
-        COLLECTION_NAMES.books,
-        currentId,
-        _onSuccess(`Book ${title} updated`),
-      );
-    } else {
-      add(
-        {
-          id: uuid(),
-          title: title,
-          author: author,
-          year: Number(year),
-          isbn: isbn,
-          created_at: serTimestamp,
-          updated_at: serTimestamp,
-          status: ItemStatus.active,
-          favourity: false,
-        },
-        COLLECTION_NAMES.books,
-        _onSuccess(`Book ${title} added`),
-      );
-    }
+    getObjData('user', e => {}).then(u => {
+      if (edit) {
+        firestore()
+          .collection(COLLECTION_NAMES.users)
+          .doc(u.uid)
+          .collection(COLLECTION_NAMES.books)
+          .doc(currentId)
+          .update({
+            title: title,
+            author: author,
+            year: Number(year),
+            isbn: isbn,
+          })
+          .then(() => {
+            _onSuccess(`Book ${title} updated`);
+          })
+          .catch(error => _alertError());
+      } else {
+        firestore()
+          .collection(COLLECTION_NAMES.users)
+          .doc(u.uid)
+          .collection(COLLECTION_NAMES.books)
+          .add({
+            id: uuid(),
+            title: title,
+            author: author,
+            year: Number(year),
+            isbn: isbn,
+            created_at: serTimestamp,
+            updated_at: serTimestamp,
+            status: ItemStatus.active,
+            favourity: false,
+          })
+          .then(() => {
+            _onSuccess(`Book ${title} added`);
+          })
+          .catch(error => _alertError());
+      }
+    });
   };
 
   const _onStarPress = ({_data: {title, favourity}, id}) => {
-    update(
-      {
-        favourity: !favourity,
-      },
-      COLLECTION_NAMES.books,
-      id,
-      _onSuccess(
-        `Book ${title} ${favourity ? 'removed from' : 'added to'} favourity`,
-      ),
-    );
+    getObjData('user', e => {}).then(u => {
+      firestore()
+        .collection('users')
+        .doc(u.uid)
+        .collection(COLLECTION_NAMES.books)
+        .doc(id)
+        .update({
+          favourity: !favourity,
+        })
+        .then(() => {
+          _onSuccess(
+            `Book ${title} ${
+              favourity ? 'removed from' : 'added to'
+            } favourity`,
+          );
+        })
+        .catch(error => _alertError());
+    });
   };
 
   const _editBook = item => {
@@ -154,7 +179,18 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
         _data: {title},
         id,
       } = itemToDelete;
-      remove(COLLECTION_NAMES.books, id, _onSuccess(`Book ${title} deleted`));
+      getObjData('user', e => _alertError())
+        .then(u => {
+          firestore()
+            .collection(COLLECTION_NAMES.users)
+            .doc(u.uid)
+            .collection(COLLECTION_NAMES.books)
+            .doc(id)
+            .delete()
+            .then(() => _onSuccess(`Book ${title} deleted`))
+            .catch(error => _alertError());
+        })
+        .catch(e => _alertError());
     }
   };
 

@@ -1,14 +1,19 @@
 import firestore from '@react-native-firebase/firestore';
 
-import {FIREBASE_BOOKS_PATH, FIREBASE_PAGES_PATH} from '@env';
+import {
+  FIREBASE_BOOKS_PATH,
+  FIREBASE_PAGES_PATH,
+  FIREBASE_USERS_PATH,
+} from '@env';
 
 export const COLLECTION_NAMES = {
   books: FIREBASE_BOOKS_PATH,
   pages: FIREBASE_PAGES_PATH,
+  users: FIREBASE_USERS_PATH,
 };
 
 export const ERROR_MESSAGES = {
-  default: 'Oppss... algo deu errado',
+  default: 'Oppss... something went wrong.',
 };
 
 export const ItemStatus = {
@@ -23,6 +28,20 @@ export const add = async (data, path, onSuccess) => {
     await firestore()
       .collection(path)
       .add(data)
+      .then(() => {
+        onSuccess;
+      });
+  } catch (error) {
+    console.error(ERROR_MESSAGES.default, error);
+  }
+};
+
+export const set = async (data, path, doc, onSuccess) => {
+  try {
+    await firestore()
+      .collection(path)
+      .doc(doc)
+      .set(data)
       .then(() => {
         onSuccess;
       });
