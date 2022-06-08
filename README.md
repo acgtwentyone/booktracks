@@ -33,7 +33,7 @@ Small note: If editing the [README](README.md), please conform to the [standard-
 
 ## Community
 
-Connect us on our [discord](https://discord.gg/473Znw8E) channel.
+Join the booktracks's [discord](https://discord.gg/473Znw8E) and say hi :smile:
 
 ## Support this project.
 
