@@ -37,4 +37,4 @@ Small note: If editing the [README](README.md), please conform to the [standard-
 
 ## License
 
-[MIT](https://github.com/acgtwentyone/booktracks/blob/main/LICENSE) © 2021 Antonio Goncalves
+[MIT](https://github.com/acgtwentyone/booktracks/blob/main/LICENSE) © 2022 Antonio Goncalves
