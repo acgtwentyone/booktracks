@@ -1,7 +1,7 @@
 # Book Tracks
 A react native book tracks app. 
 
-Keep track of all your readed books. Never forget. With this app users can register their own books, readed pages, add a book to favourities, delete a book, export data, and son on... Also as well as generate reports, such as recent readed books, pages etc...
+Keep track of all your readed books. Never forget. With this app users can add, delete and edit books and pages, add a book to favourities, check recent activities, export and share user data and son on...
 
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/acgtwentyone/booktracks#readme)
 
