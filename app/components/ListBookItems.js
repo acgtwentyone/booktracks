@@ -104,7 +104,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   };
 
   const _onStarPress = ({_data: {title, favourity}, id}) => {
-    getObjData('user', e => {}).then(u => {
+    getObjData('user', e => _alertError()).then(u => {
       firestore()
         .collection('users')
         .doc(u.uid)
