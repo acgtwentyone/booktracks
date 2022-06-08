@@ -31,6 +31,10 @@ Fork and start make changes locally, and then make a pull request especifying th
 
 Small note: If editing the [README](README.md), please conform to the [standard-readme](https://github.com/acgtwentyone/booktracks#readme) specification.
 
+## Community
+
+Join the booktracks's [discord](https://discord.gg/473Znw8E) and say hi :smile:
+
 ## Support this project.
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/U7U7D2EQ6)
