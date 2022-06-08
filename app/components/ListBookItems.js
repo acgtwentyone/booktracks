@@ -32,7 +32,6 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   const {isOpen, onOpen, onClose} = useDisclose();
   const [currentId, setCurrentId] = useState(null);
   const [edit, setEdit] = useState(false);
-  const addEditAS = useRef();
   const [currentAS, setCurrentAS] = useState(null);
   const [itemToDelete, setItemToDelete] = useState(null);
 
@@ -293,7 +292,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
       {!isFavourities && <AppFab onPress={_openAddEditAS} />}
       {!isFavourities ? (
         currentAS !== null && currentAS === 'editAddAS' ? (
-          <ActionSheet isOpen={isOpen} onClose={_onClose} reference={addEditAS}>
+          <ActionSheet isOpen={isOpen} onClose={_onClose}>
             <RenderForm />
           </ActionSheet>
         ) : itemToDelete !== null ? (
