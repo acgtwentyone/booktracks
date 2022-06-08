@@ -3,7 +3,7 @@ A react native book tracks app.
 
 Keep track of all your books. Never forget. With this app users can add, delete and edit books and pages, add a book to favourities, check recent activities, export and share user data and son on...
 
-[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/acgtwentyone/booktracks#readme)&nbsp;&nbsp;![GitHub repo size](https://img.shields.io/github/repo-size/acgtwentyone/booktracks)&nbsp;&nbsp;![GitHub issues](https://img.shields.io/github/issues-raw/acgtwentyone/booktracks)&nbsp;&nbsp;![GitHub pull requests](https://img.shields.io/github/issues-pr/acgtwentyone/booktracks)&nbsp;&nbsp;![GitHub Repo stars](https://img.shields.io/github/stars/acgtwentyone/booktracks?style=social)
+[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat)](https://github.com/acgtwentyone/booktracks#readme)&nbsp;&nbsp;![GitHub repo size](https://img.shields.io/github/repo-size/acgtwentyone/booktracks)&nbsp;&nbsp;![GitHub issues](https://img.shields.io/github/issues-raw/acgtwentyone/booktracks)&nbsp;&nbsp;![GitHub pull requests](https://img.shields.io/github/issues-pr/acgtwentyone/booktracks)&nbsp;&nbsp;![GitHub Repo stars](https://img.shields.io/github/stars/acgtwentyone/booktracks?style=social)
 
 Let's build it together.
 
