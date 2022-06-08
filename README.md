@@ -9,7 +9,7 @@ Let's build it together.
 
 This app is open source. Please see the [code-of-conduting](https://github.com/acgtwentyone/booktracks/blob/main/CODE_OF_CONDUCT.md) 
 
-## App screenshots
+## Some app screenshots
 <img src="https://user-images.githubusercontent.com/94224806/163692860-a45c97ea-78d9-4997-840a-5beb06811ecb.jpg" width="200" />&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/94224806/163692867-4d32f24b-c1db-4ea8-b42a-802f8ab0331d.jpg" width="200" />&nbsp;&nbsp;&nbsp;
 <img src="https://user-images.githubusercontent.com/94224806/163692876-b5b09047-6513-493e-8c0a-ed14b1d78ea3.jpg" width="200" /><br /><br />
 <img src="https://user-images.githubusercontent.com/94224806/163692893-017e475e-c838-404f-acdd-eec1da9d4037.jpg" width="200" />&nbsp;&nbsp;&nbsp;
