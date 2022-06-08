@@ -1,6 +1,6 @@
 import {useDisclose, FormControl, Text, Button} from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm, Controller} from 'react-hook-form';
 import firestore from '@react-native-firebase/firestore';
@@ -19,11 +19,9 @@ import {
 import {BookSchema} from '../validation/Validations';
 import {
   COLLECTION_NAMES,
-  remove,
   serTimestamp,
   ItemStatus,
 } from '../firebase/FirebaseUtils';
-import {useRef} from 'react';
 import {useLoadBooks} from '../hooks';
 import {useShowMessage} from '../hooks';
 import {getObjData} from '../data/AsyncStorageUtils';
@@ -66,44 +64,42 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
 
   const onSubmit = data => {
     const {title, author, year, isbn} = data;
-    getObjData('user', e => {}).then(u => {
-      if (edit) {
-        firestore()
-          .collection(COLLECTION_NAMES.users)
-          .doc(u.uid)
-          .collection(COLLECTION_NAMES.books)
-          .doc(currentId)
-          .update({
-            title: title,
-            author: author,
-            year: Number(year),
-            isbn: isbn,
-          })
-          .then(() => {
-            _onSuccess(`Book ${title} updated`);
-          })
-          .catch(error => _alertError());
-      } else {
-        firestore()
-          .collection(COLLECTION_NAMES.users)
-          .doc(u.uid)
-          .collection(COLLECTION_NAMES.books)
-          .add({
-            id: uuid(),
-            title: title,
-            author: author,
-            year: Number(year),
-            isbn: isbn,
-            created_at: serTimestamp,
-            updated_at: serTimestamp,
-            status: ItemStatus.active,
-            favourity: false,
-          })
-          .then(() => {
-            _onSuccess(`Book ${title} added`);
-          })
-          .catch(error => _alertError());
-      }
+    getObjData('user', e => _alertError()).then(u => {
+      edit
+        ? firestore()
+            .collection(COLLECTION_NAMES.users)
+            .doc(u.uid)
+            .collection(COLLECTION_NAMES.books)
+            .doc(currentId)
+            .update({
+              title: title,
+              author: author,
+              year: Number(year),
+              isbn: isbn,
+            })
+            .then(() => {
+              _onSuccess(`Book ${title} updated`);
+            })
+            .catch(error => _alertError())
+        : firestore()
+            .collection(COLLECTION_NAMES.users)
+            .doc(u.uid)
+            .collection(COLLECTION_NAMES.books)
+            .add({
+              id: uuid(),
+              title: title,
+              author: author,
+              year: Number(year),
+              isbn: isbn,
+              created_at: serTimestamp,
+              updated_at: serTimestamp,
+              status: ItemStatus.active,
+              favourity: false,
+            })
+            .then(() => {
+              _onSuccess(`Book ${title} added`);
+            })
+            .catch(error => _alertError());
     });
   };
 
@@ -324,8 +320,6 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: 'red',
-    // margin: 2,
   },
 });
 
