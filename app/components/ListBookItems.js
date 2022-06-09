@@ -1,29 +1,22 @@
-import {useDisclose, FormControl, Text, Button} from 'native-base';
+import {useDisclose, Text, Button} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useForm, Controller} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import firestore from '@react-native-firebase/firestore';
-import {uuid} from '../Utils';
 
 import {
   ActionSheet,
   AppFab,
-  AppInput,
+  BookForm,
   BookItem,
   ListTitle,
   Screen,
-  SubmitButton,
   VList,
 } from '.';
 import {BookSchema} from '../validation/Validations';
-import {
-  COLLECTION_NAMES,
-  serTimestamp,
-  ItemStatus,
-} from '../firebase/FirebaseUtils';
-import {useLoadBooks} from '../hooks';
-import {useShowMessage} from '../hooks';
+import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
+import {useAlertError, useLoadBooks, useShowMessage} from '../hooks';
 import {getObjData} from '../data/AsyncStorageUtils';
 
 const ListBookItems = ({isFavourities = false, subtitle}) => {
@@ -36,11 +29,8 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   const {books, loading, refreshing, _loadBooks, _onRefresh} =
     useLoadBooks(isFavourities);
 
+  const {_alertError} = useAlertError();
   const {_showToastMsg} = useShowMessage();
-
-  const _alertError = () => {
-    _showToastMsg('Oppss... Something went wrong.');
-  };
 
   const {control, handleSubmit, reset, setValue} = useForm({
     defaultValues: {
@@ -60,47 +50,6 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   const _onSuccess = msg => {
     _onClose();
     _showToastMsg(msg);
-  };
-
-  const onSubmit = data => {
-    const {title, author, year, isbn} = data;
-    getObjData('user', e => _alertError()).then(u => {
-      edit
-        ? firestore()
-            .collection(COLLECTION_NAMES.users)
-            .doc(u.uid)
-            .collection(COLLECTION_NAMES.books)
-            .doc(currentId)
-            .update({
-              title: title,
-              author: author,
-              year: Number(year),
-              isbn: isbn,
-            })
-            .then(() => {
-              _onSuccess(`Book ${title} updated`);
-            })
-            .catch(error => _alertError())
-        : firestore()
-            .collection(COLLECTION_NAMES.users)
-            .doc(u.uid)
-            .collection(COLLECTION_NAMES.books)
-            .add({
-              id: uuid(),
-              title: title,
-              author: author,
-              year: Number(year),
-              isbn: isbn,
-              created_at: serTimestamp,
-              updated_at: serTimestamp,
-              status: ItemStatus.active,
-              favourity: false,
-            })
-            .then(() => {
-              _onSuccess(`Book ${title} added`);
-            })
-            .catch(error => _alertError());
-    });
   };
 
   const _onStarPress = ({_data: {title, favourity}, id}) => {
@@ -189,84 +138,6 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
     }
   };
 
-  const RenderForm = () => {
-    return (
-      <FormControl>
-        <Controller
-          control={control}
-          render={({field: {onChange, onBlur, value}}) => (
-            <AppInput
-              errorMessage="Invalid title"
-              // helpertext="Title must be at least 4 characters"
-              placeholder="Book title"
-              control={control}
-              rules={{required: true}}
-              onChangeText={onChange}
-              value={value}
-              onBlur={onBlur}
-            />
-          )}
-          name="title"
-        />
-
-        <Controller
-          control={control}
-          render={({field: {onChange, onBlur, value}}) => (
-            <AppInput
-              errorMessage="Invalid author name"
-              // helpertext="Author name must be at least 4 characters"
-              placeholder="Author"
-              control={control}
-              rules={{required: true}}
-              onChangeText={onChange}
-              value={value}
-              onBlur={onBlur}
-            />
-          )}
-          name="author"
-        />
-
-        <Controller
-          control={control}
-          render={({field: {onChange, onBlur, value}}) => (
-            <AppInput
-              placeholder="Year"
-              props={{keyboardType: 'numeric'}}
-              control={control}
-              rules={{required: true}}
-              onChangeText={onChange}
-              value={value}
-              onBlur={onBlur}
-            />
-          )}
-          name="year"
-        />
-
-        <Controller
-          control={control}
-          render={({field: {onChange, onBlur, value}}) => (
-            <AppInput
-              errorMessage="Invalid ISBN"
-              // helpertext="ISBN must be at least 10 characters"
-              placeholder="ISBN"
-              control={control}
-              rules={{required: true}}
-              onChangeText={onChange}
-              value={value}
-              onBlur={onBlur}
-            />
-          )}
-          name="isbn"
-        />
-        <SubmitButton
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          title={edit && currentId ? 'Update Book' : 'Add Book'}
-        />
-      </FormControl>
-    );
-  };
-
   return (
     <Screen style={styles.container}>
       <VList
@@ -289,7 +160,13 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
       {!isFavourities ? (
         currentAS !== null && currentAS === 'editAddAS' ? (
           <ActionSheet isOpen={isOpen} onClose={_onClose}>
-            <RenderForm />
+            <BookForm
+              control={control}
+              currentId={currentId}
+              edit={edit}
+              handleSubmit={handleSubmit}
+              onSuccess={_onSuccess}
+            />
           </ActionSheet>
         ) : itemToDelete !== null ? (
           <ActionSheet isOpen={isOpen} onClose={_onClose}>

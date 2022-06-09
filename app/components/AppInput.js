@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
   container: {},
 });
 
-export default AppInput;
+export default React.memo(AppInput);
