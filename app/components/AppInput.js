@@ -24,7 +24,9 @@ const AppInput = ({
         onChangeText={onChangeText}
         onBlur={onBlur}
       />
-      <FormControl.HelperText>{helpertext}</FormControl.HelperText>
+      {helpertext && (
+        <FormControl.HelperText>{helpertext}</FormControl.HelperText>
+      )}
       <FormControl.ErrorMessage
         leftIcon={<WarningOutlineIcon size={errorMessageSize || 'xs'} />}>
         {errorMessage}
