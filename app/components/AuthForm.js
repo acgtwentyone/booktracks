@@ -73,8 +73,8 @@ const AuthForm = ({navigation, signin = true}) => {
           <Box
             p={4}
             backgroundColor={bgColor}
-            borderTopLeftRadius={16}
-            borderTopRightRadius={16}>
+            borderTopLeftRadius={8}
+            borderTopRightRadius={8}>
             <Text fontSize={15} fontWeight="bold">
               No internet connection
             </Text>
