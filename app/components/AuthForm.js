@@ -27,6 +27,7 @@ import {set} from '../firebase/FirebaseUtils';
 
 const AuthForm = ({navigation, signin = true}) => {
   const [starting, setStarting] = useState(true);
+  const errorColor = useColorModeValue('red.500', 'white');
   const defaultValues = signin
     ? {
         email: '',
@@ -126,9 +127,13 @@ const AuthForm = ({navigation, signin = true}) => {
   };
 
   const ErrorMessage = ({name}) => (
-    <Text mt={2} color={useColorModeValue('red.500', 'white')}>
-      {errors[name]?.message}
-    </Text>
+    <>
+      {errors && errors[name] && (
+        <Text mt={2} color={errorColor}>
+          {errors[name]?.message}
+        </Text>
+      )}
+    </>
   );
 
   if (starting) {
@@ -154,7 +159,7 @@ const AuthForm = ({navigation, signin = true}) => {
           }}>
           <FormControl isRequired>
             {!signin && (
-              <Stack mx={8}>
+              <Stack mx={8} my={2}>
                 <Controller
                   name="username"
                   control={control}
@@ -170,7 +175,7 @@ const AuthForm = ({navigation, signin = true}) => {
                 <ErrorMessage name="username" />
               </Stack>
             )}
-            <Stack mx={8}>
+            <Stack mx={8} my={2}>
               <Controller
                 name="email"
                 control={control}
@@ -186,7 +191,7 @@ const AuthForm = ({navigation, signin = true}) => {
               <ErrorMessage name="email" />
             </Stack>
 
-            <Stack mx={8}>
+            <Stack mx={8} my={2}>
               <Controller
                 name="password"
                 control={control}
