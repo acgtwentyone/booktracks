@@ -1,6 +1,6 @@
 import React from 'react';
 import {Controller} from 'react-hook-form';
-import {FormControl, Stack, Text} from 'native-base';
+import {FormControl, Stack} from 'native-base';
 import firestore from '@react-native-firebase/firestore';
 
 import {AppInput, SubmitButton} from './';
