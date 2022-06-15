@@ -66,6 +66,8 @@ const FIREBASE_ERRORS = {
   'auth/email-already-in-use': 'That email address is already in use!',
   'auth/operation-not-allowed': 'Oppss... Not able to login user!',
   'auth/no-current-user': 'No user currently signed in',
+  'auth/network-request-failed':
+    'A network error. Interrupted connection or unreachable host',
 };
 
 export const uuid = () => {
