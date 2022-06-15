@@ -1,14 +1,13 @@
 import React from 'react';
 import {Text, useColorModeValue} from 'native-base';
 
-const ErrorMessage = ({props, name, errors}) => {
+const ErrorMessage = ({props, error}) => {
   const color = useColorModeValue('red.500', 'white');
-
   return (
     <>
-      {errors[name] && (
+      {error && (
         <Text mt={2} color={color} {...props}>
-          {errors[name].message}
+          {error}
         </Text>
       )}
     </>
