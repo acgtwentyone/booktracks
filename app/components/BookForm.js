@@ -1,6 +1,6 @@
 import React from 'react';
 import {Controller} from 'react-hook-form';
-import {FormControl, Stack} from 'native-base';
+import {FormControl, Stack, Text, useColorModeValue} from 'native-base';
 import firestore from '@react-native-firebase/firestore';
 
 import {AppInput, SubmitButton} from './';
@@ -12,7 +12,6 @@ import {
   serTimestamp,
   ItemStatus,
 } from '../firebase/FirebaseUtils';
-import {ErrorMessage} from './';
 
 const BookForm = ({
   control,
@@ -23,6 +22,7 @@ const BookForm = ({
   errors,
 }) => {
   const {_alertError} = useAlertError();
+  const errorColor = useColorModeValue('red.500', 'white');
 
   const onSubmit = data => {
     const {title, author, year, isbn} = data;
@@ -65,6 +65,16 @@ const BookForm = ({
     });
   };
 
+  const ErrorMessage = ({name}) => (
+    <>
+      {errors && errors[name] && (
+        <Text mx={4} my={2} color={errorColor}>
+          {errors[name]?.message}
+        </Text>
+      )}
+    </>
+  );
+
   return (
     <FormControl>
       <Stack my={2}>
@@ -82,6 +92,7 @@ const BookForm = ({
           )}
           name="title"
         />
+        <ErrorMessage name="title" />
       </Stack>
 
       <Stack my={2}>
@@ -99,6 +110,7 @@ const BookForm = ({
           )}
           name="author"
         />
+        <ErrorMessage name="author" />
       </Stack>
 
       <Stack my={2}>
@@ -117,6 +129,7 @@ const BookForm = ({
           )}
           name="year"
         />
+        <ErrorMessage name="year" />
       </Stack>
 
       <Stack my={2}>
@@ -134,6 +147,7 @@ const BookForm = ({
           )}
           name="isbn"
         />
+        <ErrorMessage name="isbn" />
       </Stack>
       <SubmitButton
         handleSubmit={handleSubmit}
