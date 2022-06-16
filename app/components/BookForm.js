@@ -1,6 +1,6 @@
 import React from 'react';
 import {Controller} from 'react-hook-form';
-import {FormControl} from 'native-base';
+import {FormControl, Stack, Text, useColorModeValue} from 'native-base';
 import firestore from '@react-native-firebase/firestore';
 
 import {AppInput, SubmitButton} from './';
@@ -13,8 +13,16 @@ import {
   ItemStatus,
 } from '../firebase/FirebaseUtils';
 
-const BookForm = ({control, currentId, edit, handleSubmit, onSuccess}) => {
+const BookForm = ({
+  control,
+  currentId,
+  edit,
+  handleSubmit,
+  onSuccess,
+  errors,
+}) => {
   const {_alertError} = useAlertError();
+  const errorColor = useColorModeValue('red.500', 'white');
 
   const onSubmit = data => {
     const {title, author, year, isbn} = data;
@@ -57,74 +65,90 @@ const BookForm = ({control, currentId, edit, handleSubmit, onSuccess}) => {
     });
   };
 
+  const ErrorMessage = ({name}) => (
+    <>
+      {errors && errors[name] && (
+        <Text mx={4} my={2} color={errorColor}>
+          {errors[name]?.message}
+        </Text>
+      )}
+    </>
+  );
+
   return (
     <FormControl>
-      <Controller
-        control={control}
-        render={({field: {onChange, onBlur, value}}) => (
-          <AppInput
-            errorMessage="Invalid title"
-            // helpertext="Title must be at least 4 characters"
-            placeholder="Book title"
-            control={control}
-            rules={{required: true}}
-            onChangeText={onChange}
-            value={value}
-            onBlur={onBlur}
-          />
-        )}
-        name="title"
-      />
+      <Stack my={2}>
+        <Controller
+          control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <AppInput
+              placeholder="Book title"
+              control={control}
+              rules={{required: true}}
+              onChangeText={onChange}
+              value={value}
+              onBlur={onBlur}
+            />
+          )}
+          name="title"
+        />
+        <ErrorMessage name="title" />
+      </Stack>
 
-      <Controller
-        control={control}
-        render={({field: {onChange, onBlur, value}}) => (
-          <AppInput
-            errorMessage="Invalid author name"
-            // helpertext="Author name must be at least 4 characters"
-            placeholder="Author"
-            control={control}
-            rules={{required: true}}
-            onChangeText={onChange}
-            value={value}
-            onBlur={onBlur}
-          />
-        )}
-        name="author"
-      />
+      <Stack my={2}>
+        <Controller
+          control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <AppInput
+              placeholder="Author"
+              control={control}
+              rules={{required: true}}
+              onChangeText={onChange}
+              value={value}
+              onBlur={onBlur}
+            />
+          )}
+          name="author"
+        />
+        <ErrorMessage name="author" />
+      </Stack>
 
-      <Controller
-        control={control}
-        render={({field: {onChange, onBlur, value}}) => (
-          <AppInput
-            placeholder="Year"
-            props={{keyboardType: 'numeric'}}
-            control={control}
-            rules={{required: true}}
-            onChangeText={onChange}
-            value={value}
-            onBlur={onBlur}
-          />
-        )}
-        name="year"
-      />
+      <Stack my={2}>
+        <Controller
+          control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <AppInput
+              placeholder="Year"
+              props={{keyboardType: 'numeric'}}
+              control={control}
+              rules={{required: true}}
+              onChangeText={onChange}
+              value={value}
+              onBlur={onBlur}
+            />
+          )}
+          name="year"
+        />
+        <ErrorMessage name="year" />
+      </Stack>
 
-      <Controller
-        control={control}
-        render={({field: {onChange, onBlur, value}}) => (
-          <AppInput
-            errorMessage="Invalid ISBN"
-            // helpertext="ISBN must be at least 10 characters"
-            placeholder="ISBN"
-            control={control}
-            rules={{required: true}}
-            onChangeText={onChange}
-            value={value}
-            onBlur={onBlur}
-          />
-        )}
-        name="isbn"
-      />
+      <Stack my={2}>
+        <Controller
+          control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <AppInput
+              placeholder="ISBN"
+              control={control}
+              rules={{required: true}}
+              onChangeText={onChange}
+              value={value}
+              onBlur={onBlur}
+            />
+          )}
+          name="isbn"
+        />
+        <ErrorMessage name="isbn" />
+      </Stack>
       <SubmitButton
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}

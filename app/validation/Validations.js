@@ -1,16 +1,13 @@
 import * as yup from 'yup';
 
-const BookSchema = yup
-  .object({
-    title: yup.string().required(),
-    author: yup.string().required(),
-    year: yup
-      .number()
-      .positive('Nao aceita numeros negativos')
-      .integer('Deve ter um valor inteiro'),
-    isbn: yup.string().required(),
-  })
-  .required();
+const BookSchema = yup.object({
+  title: yup.string().required('Title is required.'),
+  author: yup.string().required('Author is required.'),
+  year: yup.string().notRequired(),
+  // .test('len', 'Invalid YEAR', val => val && val.toString().length === 4)
+  // .max(new Date().getFullYear()),
+  isbn: yup.string().notRequired(), // min(4, 'Minimo 4 caracteres para ISBN.'),
+});
 
 const PageSchema = yup
   .object({

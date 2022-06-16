@@ -14,35 +14,31 @@ const Tab = createBottomTabNavigator();
 
 const AppTab = () => {
   const {screenOptions} = useTabScreenOptions();
+  const {books, favourities, home, pages, settings} = TABS_NAME;
+  const defaultOptions = {tabBarLabel: ''};
 
   return (
-    <Tab.Navigator
-      initialRouteName={TABS_NAME.home}
-      screenOptions={screenOptions}>
+    <Tab.Navigator initialRouteName={home} screenOptions={screenOptions}>
+      <Tab.Screen name={home} component={HomeStack} options={defaultOptions} />
       <Tab.Screen
-        name={TABS_NAME.home}
-        component={HomeStack}
-        options={{tabBarLabel: ''}}
-      />
-      <Tab.Screen
-        name={TABS_NAME.books}
+        name={books}
         component={BooksStack}
-        options={{tabBarLabel: ''}}
+        options={defaultOptions}
       />
       <Tab.Screen
-        name={TABS_NAME.pages}
+        name={pages}
         component={PagesStack}
-        options={{tabBarLabel: ''}}
+        options={defaultOptions}
       />
       <Tab.Screen
-        name={TABS_NAME.favourities}
+        name={favourities}
         component={FavStack}
-        options={{tabBarLabel: ''}}
+        options={defaultOptions}
       />
       <Tab.Screen
-        name={TABS_NAME.settings}
+        name={settings}
         component={SettingsStack}
-        options={{tabBarLabel: ''}}
+        options={defaultOptions}
       />
     </Tab.Navigator>
   );

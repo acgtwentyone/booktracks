@@ -1,12 +1,17 @@
 import React from 'react';
-import {Text} from 'native-base';
+import {Text, useColorModeValue} from 'native-base';
 
-const ErrorMessage = ({props, name, errors}) => (
-  <>
-    <Text color="red.100" {...props}>
-      {errors[name]?.message}
-    </Text>
-  </>
-);
+const ErrorMessage = ({props, error}) => {
+  const color = useColorModeValue('red.500', 'white');
+  return (
+    <>
+      {error && (
+        <Text mt={2} color={color} {...props}>
+          {error}
+        </Text>
+      )}
+    </>
+  );
+};
 
 export default React.memo(ErrorMessage);

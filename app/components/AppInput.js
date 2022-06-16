@@ -1,4 +1,4 @@
-import {FormControl, Input, Stack, WarningOutlineIcon} from 'native-base';
+import {Input, Stack} from 'native-base';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 
@@ -7,9 +7,6 @@ const AppInput = ({
   props,
   placeholder = 'placeholder',
   type,
-  helpertext = '',
-  errorMessage = '',
-  errorMessageSize,
   onChangeText,
   value,
   onBlur,
@@ -24,11 +21,6 @@ const AppInput = ({
         onChangeText={onChangeText}
         onBlur={onBlur}
       />
-      <FormControl.HelperText>{helpertext}</FormControl.HelperText>
-      <FormControl.ErrorMessage
-        leftIcon={<WarningOutlineIcon size={errorMessageSize || 'xs'} />}>
-        {errorMessage}
-      </FormControl.ErrorMessage>
     </Stack>
   );
 };

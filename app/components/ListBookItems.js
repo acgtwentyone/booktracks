@@ -32,7 +32,13 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   const {_alertError} = useAlertError();
   const {_showToastMsg} = useShowMessage();
 
-  const {control, handleSubmit, reset, setValue} = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: {errors},
+  } = useForm({
     defaultValues: {
       title: '',
       author: '',
@@ -166,6 +172,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
               edit={edit}
               handleSubmit={handleSubmit}
               onSuccess={_onSuccess}
+              errors={errors}
             />
           </ActionSheet>
         ) : itemToDelete !== null ? (
