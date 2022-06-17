@@ -1,7 +1,8 @@
 # Book Tracks
-A react native book tracks app. 
 
-Keep track of all your books. Never forget. With this app users can add, delete and edit books and pages, add a book to favourities, check recent activities, export and share user data and son on...
+If you are a book lover, after reading several books :page_with_curl:, surely you have already lost yourself in the middle of so many pages and you don't know where you stopped and then continue reading. My dear, if this is your case, I have great news for you. Book Tracks, a simple and thoughtful application that from now on will make your reading easier. 
+
+Test the application and don't forget to give your contribution. We count on you. And good reading .
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/acgtwentyone/booktracks)&nbsp;&nbsp;![GitHub issues](https://img.shields.io/github/issues-raw/acgtwentyone/booktracks)&nbsp;&nbsp;![GitHub last commit](https://img.shields.io/github/last-commit/acgtwentyone/booktracks)
 
