@@ -9,7 +9,7 @@ import {
 } from 'native-base';
 import firestore from '@react-native-firebase/firestore';
 
-import {AppInput, SubmitButton} from '.';
+import {AppTextArea, SubmitButton} from '.';
 import {getObjData} from '../data/AsyncStorageUtils';
 import {uuid} from '../Utils';
 import {
@@ -40,6 +40,8 @@ const NoteForm = ({
 
   const onSubmit = data => {
     const {note} = data;
+    const n =
+      note.length > 25 ? `Note: ${note.substring(0, 24)}...` : `Note: ${note}`;
     getObjData('user', e => alertError())
       .then(u => {
         if (edit) {
@@ -52,7 +54,7 @@ const NoteForm = ({
             .update({
               note: note,
             })
-            .then(() => onSuccess(`note ${note} updated`))
+            .then(() => onSuccess(`${n} updated`))
             .catch(error => alertError());
         } else {
           if (selectedBook !== null) {
@@ -70,7 +72,7 @@ const NoteForm = ({
                 book_id: selectedBook.id,
                 status: ItemStatus.active,
               })
-              .then(() => onSuccess(`note ${note} added`))
+              .then(() => onSuccess(`${n} added`))
               .catch(error => alertError());
           } else {
             _showToastMsg('Please select a book first');
@@ -83,7 +85,7 @@ const NoteForm = ({
   const ErrorMessage = ({name}) => (
     <>
       {errors && errors[name] && (
-        <Text mx={4} my={2} color={errorColor}>
+        <Text fontSize="md" mx={4} my={2} color={errorColor}>
           {errors[name]?.message}
         </Text>
       )}
@@ -96,8 +98,8 @@ const NoteForm = ({
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
-            <AppInput
-              placeholder="note"
+            <AppTextArea
+              placeholder="Your note"
               props={{keyboardType: 'numeric'}}
               control={control}
               rules={{required: true}}
