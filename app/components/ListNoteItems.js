@@ -17,40 +17,40 @@ import {
   ActionSheet,
   AppFab,
   AppInput,
-  PageItem,
+  NoteItem,
   ListTitle,
   Screen,
   SubmitButton,
   VList,
 } from '.';
-import {PageSchema} from '../validation/Validations';
+import {NoteSchema} from '../validation/Validations';
 import {
   COLLECTION_NAMES,
   serTimestamp,
   ItemStatus,
 } from '../firebase/FirebaseUtils';
 import {useRef} from 'react';
-import {useLoadPages} from '../hooks';
+import {useLoadNotes} from '../hooks';
 import SelectBookOptions from './SelectBookOptions';
 import {getObjData} from '../data/AsyncStorageUtils';
 
 const AS_STATUS = {
   add_edit: 'EDIT_ADD_AS',
-  delete: 'DELETE_PAGE_AS',
+  delete: 'DELETE_note_AS',
   select_book: 'SELECT_BOOK_AS',
 };
 
-const ListPageItems = () => {
+const ListNoteItems = () => {
   const {isOpen, onOpen, onClose} = useDisclose();
   const [currentId, setCurrentId] = useState(null);
   const [edit, setEdit] = useState(false);
   const toast = useToast();
   const addEditAS = useRef();
   const [currentAS, setCurrentAS] = useState(null);
-  const [pageToDelete, setPageToDelete] = useState(null);
+  const [noteToDelete, setnoteToDelete] = useState(null);
   const [selectedBook, setSelectedBook] = useState(null);
 
-  const {pages, loading, refreshing, _loadPages, _onRefresh} = useLoadPages();
+  const {notes, loading, refreshing, _loadNotes, _onRefresh} = useLoadNotes();
 
   const {
     control,
@@ -60,14 +60,13 @@ const ListPageItems = () => {
     setValue,
   } = useForm({
     defaultValues: {
-      page: '',
-      obs: '',
+      note: '',
     },
-    resolver: yupResolver(PageSchema),
+    resolver: yupResolver(NoteSchema),
   });
 
   useEffect(() => {
-    _loadPages();
+    _loadNotes();
     return firestore;
   }, []);
 
@@ -88,7 +87,7 @@ const ListPageItems = () => {
   };
 
   const onSubmit = data => {
-    const {page, obs} = data;
+    const {note} = data;
     getObjData('user', e => {})
       .then(u => {
         if (edit) {
@@ -97,12 +96,11 @@ const ListPageItems = () => {
             .doc(u.uid)
             .collection(COLLECTION_NAMES.books)
             .doc(selectedBook.id)
-            .collection(COLLECTION_NAMES.pages)
+            .collection(COLLECTION_NAMES.notes)
             .update({
-              page: page,
-              obs: obs,
+              note: note,
             })
-            .then(() => _onSuccess(`Page ${page} updated`))
+            .then(() => _onSuccess(`note ${note} updated`))
             .catch(error => _alertError());
         } else {
           if (selectedBook !== null) {
@@ -111,17 +109,16 @@ const ListPageItems = () => {
               .doc(u.uid)
               .collection(COLLECTION_NAMES.books)
               .doc(selectedBook.id)
-              .collection(COLLECTION_NAMES.pages)
+              .collection(COLLECTION_NAMES.notes)
               .add({
                 id: uuid(),
-                page: page,
-                obs: obs,
+                note: note,
                 created_at: serTimestamp,
                 updated_at: serTimestamp,
                 book_id: selectedBook.id,
                 status: ItemStatus.active,
               })
-              .then(() => _onSuccess(`Page ${page} added`))
+              .then(() => _onSuccess(`note ${note} added`))
               .catch(error => _alertError());
           } else {
             _showToastMsg('Please select a book first');
@@ -131,15 +128,14 @@ const ListPageItems = () => {
       .catch(error => _alertError());
   };
 
-  const _editPage = item => {
+  const _editnote = item => {
     if (undefined !== item) {
       const {
-        _data: {page, obs},
+        _data: {note},
         id,
       } = item;
-      if (undefined !== page && undefined !== obs) {
-        setValue('page', page);
-        setValue('obs', obs);
+      if (undefined !== note) {
+        setValue('note', note);
         setCurrentId(id);
         setEdit(true);
         setSelectedBook(item);
@@ -154,7 +150,7 @@ const ListPageItems = () => {
   };
 
   const _onDotPress = item => {
-    setPageToDelete(item);
+    setnoteToDelete(item);
     setCurrentAS(AS_STATUS.delete);
     onOpen();
   };
@@ -163,18 +159,18 @@ const ListPageItems = () => {
     onClose();
     setEdit(false);
     setCurrentId(null);
-    setPageToDelete(null);
+    setnoteToDelete(null);
     reset();
     setCurrentAS(null);
     setSelectedBook(null);
   };
 
   const _onDeletePress = () => {
-    if (pageToDelete !== null) {
+    if (noteToDelete !== null) {
       const {
-        _data: {page},
+        _data: {note},
         id,
-      } = pageToDelete;
+      } = noteToDelete;
       getObjData('user', e => _alertError())
         .then(u => {
           firestore()
@@ -182,10 +178,10 @@ const ListPageItems = () => {
             .doc(u.uid)
             .collection(COLLECTION_NAMES.books)
             .doc(selectedBook.id)
-            .collection(COLLECTION_NAMES.pages)
+            .collection(COLLECTION_NAMES.notes)
             .doc(id)
             .delete()
-            .then(() => _onSuccess(`Page ${page} deleted`))
+            .then(() => _onSuccess(`note ${note} deleted`))
             .catch(error => _alertError());
         })
         .catch(e => _alertError());
@@ -199,7 +195,7 @@ const ListPageItems = () => {
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
             <AppInput
-              placeholder="Page number"
+              placeholder="note number"
               props={{keyboardType: 'numeric'}}
               control={control}
               rules={{required: true}}
@@ -208,27 +204,12 @@ const ListPageItems = () => {
               onBlur={onBlur}
             />
           )}
-          name="page"
-        />
-
-        <Controller
-          control={control}
-          render={({field: {onChange, onBlur, value}}) => (
-            <AppInput
-              placeholder="Description"
-              control={control}
-              rules={{required: true}}
-              onChangeText={onChange}
-              value={value}
-              onBlur={onBlur}
-            />
-          )}
-          name="obs"
+          name="note"
         />
         <SubmitButton
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}
-          title={edit && currentId ? 'Update Page' : 'Add Page'}
+          title={edit && currentId ? 'Update note' : 'Add note'}
         />
       </FormControl>
     );
@@ -239,23 +220,23 @@ const ListPageItems = () => {
       <VList
         onRefresh={_onRefresh}
         refreshing={refreshing}
-        data={pages}
+        data={notes}
         renderItem={({item}) => (
-          <PageItem
+          <NoteItem
             item={item}
-            onEditPress={() => _editPage(item)}
+            onEditPress={() => _editnote(item)}
             onDotPress={() => _onDotPress(item)}
           />
         )}
-        ListHeaderComponent={<ListTitle title="My Pages" />}
+        ListHeaderComponent={<ListTitle title="My notes" />}
         loading={loading}
       />
       <AppFab onPress={_openSelectBook} />
-      {pageToDelete !== null && currentAS === AS_STATUS.delete && (
+      {noteToDelete !== null && currentAS === AS_STATUS.delete && (
         <ActionSheet isOpen={isOpen} onClose={_onClose}>
           <Text mt={4}>
-            {pageToDelete._data !== null
-              ? `Page ${pageToDelete._data.page} will be deleted. Do you want to procced ?`
+            {noteToDelete._data !== null
+              ? `note ${noteToDelete._data.note} will be deleted. Do you want to procced ?`
               : ' '}
           </Text>
           <Button
@@ -289,4 +270,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(ListPageItems);
+export default React.memo(ListNoteItems);

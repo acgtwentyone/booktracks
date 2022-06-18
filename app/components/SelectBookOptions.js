@@ -62,7 +62,7 @@ const SelectBookOptions = ({selectedBook, setSelectedBook}) => {
         showsHorizontalScrollIndicator={false}
       />
       <Text px={2} mt={6} mb={2}>
-        Please fill the page details
+        Please fill the note details
       </Text>
     </Box>
   ) : (

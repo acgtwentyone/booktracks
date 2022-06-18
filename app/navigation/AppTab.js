@@ -6,7 +6,7 @@ import {
   BooksStack,
   FavStack,
   HomeStack,
-  PagesStack,
+  NotesStack,
   SettingsStack,
 } from './StackNavigator';
 
@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 
 const AppTab = () => {
   const {screenOptions} = useTabScreenOptions();
-  const {books, favourities, home, pages, settings} = TABS_NAME;
+  const {books, favourities, home, notes, settings} = TABS_NAME;
   const defaultOptions = {tabBarLabel: ''};
 
   return (
@@ -26,8 +26,8 @@ const AppTab = () => {
         options={defaultOptions}
       />
       <Tab.Screen
-        name={pages}
-        component={PagesStack}
+        name={notes}
+        component={NotesStack}
         options={defaultOptions}
       />
       <Tab.Screen

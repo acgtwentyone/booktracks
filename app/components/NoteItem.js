@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {ListItem} from '.';
 import {FONT_SIZE} from '../Utils';
 
-const PageItem = ({
+const NoteItem = ({
   style,
   props,
   item,
@@ -14,7 +14,7 @@ const PageItem = ({
   onDotPress,
 }) => {
   const {
-    _data: {page, obs},
+    _data: {note},
   } = item;
 
   const __renderIcon = (name, onPress) => (
@@ -35,19 +35,8 @@ const PageItem = ({
     <>
       <Box>
         <Text fontSize={FONT_SIZE.font_18} fontWeight="bold">
-          {'Page '}
-          <Text fontWeight="bold">{page}</Text>
-        </Text>
-        <Text
-          mt={2}
-          fontSize={FONT_SIZE.font_15}
-          _dark={{
-            color: 'white',
-          }}
-          _light={{
-            color: 'gray.600',
-          }}>
-          {obs}
+          {'note '}
+          <Text fontWeight="bold">{note}</Text>
         </Text>
       </Box>
       {!recent && (
@@ -61,4 +50,4 @@ const PageItem = ({
   return <ListItem content={<Content />} recent={recent} />;
 };
 
-export default React.memo(PageItem);
+export default React.memo(NoteItem);

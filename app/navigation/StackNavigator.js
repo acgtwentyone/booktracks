@@ -4,7 +4,7 @@ import {
   SigninScreen,
   SignupScreen,
   BooksScreen,
-  PagesScreen,
+  NotesScreen,
   FavScreen,
   HomeScreen,
   SettingsScreen,
@@ -17,7 +17,7 @@ const AuthStk = createNativeStackNavigator();
 const BooksStk = createNativeStackNavigator();
 const FavStk = createNativeStackNavigator();
 const HomeStk = createNativeStackNavigator();
-const PagesStk = createNativeStackNavigator();
+const NotesStk = createNativeStackNavigator();
 const SettingsStk = createNativeStackNavigator();
 const RootStk = createNativeStackNavigator();
 
@@ -84,21 +84,20 @@ const HomeStack = () => {
   );
 };
 
-const PagesStack = () => {
+const NotesStack = () => {
   const {screenOptions} = useScreenOptions();
+  const {notes} = ROUTES_NAME;
 
   return (
-    <PagesStk.Navigator
-      initialRouteName={ROUTES_NAME.pages}
-      screenOptions={screenOptions}>
-      <PagesStk.Screen
-        name={ROUTES_NAME.pages}
-        component={PagesScreen}
+    <NotesStk.Navigator initialRouteName={notes} screenOptions={screenOptions}>
+      <NotesStk.Screen
+        name={notes}
+        component={NotesScreen}
         options={{
-          title: SCREEN_TITLES.pages,
+          title: SCREEN_TITLES.notes,
         }}
       />
-    </PagesStk.Navigator>
+    </NotesStk.Navigator>
   );
 };
 
@@ -144,7 +143,7 @@ export {
   BooksStack,
   FavStack,
   HomeStack,
-  PagesStack,
+  NotesStack,
   SettingsStack,
   RootNavigator,
 };

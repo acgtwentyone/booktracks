@@ -3,22 +3,22 @@ import firestore from '@react-native-firebase/firestore';
 import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
 import {getObjData} from '../data/AsyncStorageUtils';
 
-const useLoadPages = () => {
-  const [pages, setPages] = useState([]);
+const useLoadNotes = () => {
+  const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const subscriber = useRef(null);
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    subscriber.current = _loadPages();
+    subscriber.current = _loadNotes();
     return () => subscriber;
   }, []);
 
   const _onRefresh = () => {
-    _loadPages();
+    _loadNotes();
   };
 
-  const _loadPages = () => {
+  const _loadNotes = () => {
     getObjData('user', e => {})
       .then(u => {
         firestore()
@@ -27,17 +27,17 @@ const useLoadPages = () => {
           .collection(COLLECTION_NAMES.books)
           .get()
           .then(bookSnaps => {
-            let _pages = [];
+            let _notes = [];
             bookSnaps.forEach(doc => {
               if (doc.exists) {
                 doc.ref
-                  .collection(COLLECTION_NAMES.pages)
+                  .collection(COLLECTION_NAMES.notes)
                   .get()
-                  .then(pageSnaps => {
-                    pageSnaps.forEach(p => {
-                      _pages.push(p);
+                  .then(noteSnaps => {
+                    noteSnaps.forEach(p => {
+                      _notes.push(p);
                     });
-                    console.log(_pages);
+                    console.log(_notes);
                   })
                   .catch(e => console.log(e));
               }
@@ -49,7 +49,7 @@ const useLoadPages = () => {
     setLoading(false);
   };
 
-  return {pages, loading, refreshing, _loadPages, _onRefresh};
+  return {notes, loading, refreshing, _loadNotes, _onRefresh};
 };
 
-export default useLoadPages;
+export default useLoadNotes;

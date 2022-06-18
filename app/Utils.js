@@ -17,7 +17,7 @@ const ROUTES_NAME = {
   books: 'BOOKS',
   favourities: 'FAVOURITIES',
   home: 'HOME',
-  pages: 'PAGES',
+  notes: 'NOTES',
   search: 'SEARCH',
   settings: 'SETTINGS',
   signin: 'SIGNIN',
@@ -29,7 +29,7 @@ const SCREEN_TITLES = {
   books: 'Books',
   favourities: 'Favourities',
   home: 'Home',
-  pages: 'Pages',
+  notes: 'Notes',
   search: 'Search',
   settings: 'Settings',
 };
@@ -37,7 +37,7 @@ const SCREEN_TITLES = {
 const TABS_NAME = {
   home: 'HOME_TAB',
   books: 'BOOKS_TAB',
-  pages: 'PAGES_TAB',
+  notes: 'NOTES_TAB',
   favourities: 'FAV_TABS',
   settings: 'SETTINGS_TAB',
 };

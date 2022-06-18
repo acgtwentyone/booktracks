@@ -5,10 +5,10 @@ import {
   BookItem,
   EmptyView,
   ListTitle,
-  PageItem,
+  NoteItem,
   Screen,
 } from '../components';
-import {useLoadBooks, useLoadPages} from '../hooks';
+import {useLoadBooks, useLoadNotes} from '../hooks';
 
 const HomeScreen = () => {
   const emptyStyle = (data, loading) => {
@@ -54,26 +54,26 @@ const HomeScreen = () => {
     );
   };
 
-  const RecentPages = () => {
-    const {pages, loading} = useLoadPages();
+  const RecentNotes = () => {
+    const {notes, loading} = useLoadNotes();
     return (
       <Box pb={4}>
-        {<ListTitle title="Recent pages" />}
-        {(!pages || pages.length === 0) && loading && <AppActivityIndicator />}
+        {<ListTitle title="Recent notes" />}
+        {(!notes || notes.length === 0) && loading && <AppActivityIndicator />}
         <FlatList
           px={2}
-          data={pages}
-          renderItem={({item}) => <PageItem item={item} recent={true} />}
+          data={notes}
+          renderItem={({item}) => <NoteItem item={item} recent={true} />}
           keyExtractor={item => item.id.toString()}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={emptyStyle(pages, loading)}
+          contentContainerStyle={emptyStyle(notes, loading)}
           ListHeaderComponent={
-            pages.length === 0 &&
+            notes.length === 0 &&
             !loading && (
               <EmptyView
                 iconName="cloud-off-outline"
-                title="There is no pages."
+                title="There is no notes."
               />
             )
           }
@@ -88,7 +88,7 @@ const HomeScreen = () => {
         ListHeaderComponent={
           <>
             <RecentBooks title="Recent books" isFavScreen={false} />
-            <RecentPages />
+            <RecentNotes />
             <RecentBooks title="Recent favourities books" isFavScreen={true} />
           </>
         }

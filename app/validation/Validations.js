@@ -7,14 +7,13 @@ const BookSchema = yup.object({
   // .test('len', 'Invalid YEAR', val => val && val.toString().length === 4)
   // .max(new Date().getFullYear()),
   isbn: yup.string().notRequired(), // min(4, 'Minimo 4 caracteres para ISBN.'),
+  last_readed_page: yup.number().positive().notRequired(),
+  note: yup.string().notRequired(),
 });
 
-const PageSchema = yup
-  .object({
-    page: yup.string().required(),
-    obs: yup.string().required(),
-  })
-  .required();
+const NoteSchema = yup.object({
+  note: yup.string().notRequired(),
+});
 
 const SigninSchema = yup
   .object({
@@ -40,4 +39,4 @@ const SignupSchema = yup
   })
   .required();
 
-export {BookSchema, PageSchema, SigninSchema, SignupSchema};
+export {BookSchema, NoteSchema, SigninSchema, SignupSchema};

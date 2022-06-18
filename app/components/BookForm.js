@@ -25,7 +25,7 @@ const BookForm = ({
   const errorColor = useColorModeValue('red.500', 'white');
 
   const onSubmit = data => {
-    const {title, author, year, isbn} = data;
+    const {author, isbn, last_readed_page, note, title, year} = data;
     getObjData('user', e => _alertError()).then(u => {
       edit
         ? firestore()
@@ -38,6 +38,8 @@ const BookForm = ({
               author: author,
               year: Number(year),
               isbn: isbn,
+              last_readed_page: Number(last_readed_page),
+              note: note,
             })
             .then(() => {
               onSuccess(`Book ${title} updated`);
@@ -53,6 +55,8 @@ const BookForm = ({
               author: author,
               year: Number(year),
               isbn: isbn,
+              last_readed_page: Number(last_readed_page),
+              note: note,
               created_at: serTimestamp,
               updated_at: serTimestamp,
               status: ItemStatus.active,
@@ -148,6 +152,40 @@ const BookForm = ({
           name="isbn"
         />
         <ErrorMessage name="isbn" />
+      </Stack>
+      <Stack my={2}>
+        <Controller
+          control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <AppInput
+              placeholder="Last readed page"
+              control={control}
+              rules={{required: true}}
+              onChangeText={onChange}
+              value={value}
+              onBlur={onBlur}
+            />
+          )}
+          name="last_readed_page"
+        />
+        <ErrorMessage name="last_readed_page" />
+      </Stack>
+      <Stack my={2}>
+        <Controller
+          control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <AppInput
+              placeholder="Note"
+              control={control}
+              rules={{required: true}}
+              onChangeText={onChange}
+              value={value}
+              onBlur={onBlur}
+            />
+          )}
+          name="note"
+        />
+        <ErrorMessage name="note" />
       </Stack>
       <SubmitButton
         handleSubmit={handleSubmit}
