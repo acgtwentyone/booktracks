@@ -1,9 +1,12 @@
 import {useEffect, useState, useRef} from 'react';
 import firestore from '@react-native-firebase/firestore';
+
 import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
 import {getObjData} from '../data/AsyncStorageUtils';
+import {useAlertError} from '../hooks';
 
 const useLoadNotes = () => {
+  const {_alertError} = useAlertError();
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const subscriber = useRef(null);
@@ -37,15 +40,15 @@ const useLoadNotes = () => {
                     noteSnaps.forEach(p => {
                       _notes.push(p);
                     });
-                    console.log(_notes);
+                    // console.log(_notes);
                   })
-                  .catch(e => console.log(e));
+                  .catch(e => _alertError());
               }
             });
           })
-          .catch(e => console.log(e));
+          .catch(e => _alertError());
       })
-      .catch(error => console.log('oppss...'));
+      .catch(error => _alertError());
     setLoading(false);
   };
 
