@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {SafeAreaView} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import auth from '@react-native-firebase/auth';
 import {
@@ -12,8 +12,10 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {RootNavigator} from './app/navigation/StackNavigator';
 import {storeObjData} from './app/data/AsyncStorageUtils';
+import {useAlertError} from './app/hooks';
 
 const App = () => {
+  const subscriber = useRef(null);
   const backgroundStyle = {
     backgroundColor: useColorModeValue(Colors.darker, Colors.lighter),
     flex: 1,
@@ -26,7 +28,8 @@ const App = () => {
 
   useEffect(() => {
     SplashScreen.hide();
-    return () => {};
+    subscriber.current = auth().onAuthStateChanged(onAuthStateChanged);
+    return () => subscriber;
   }, []);
 
   SplashScreen.hide();
@@ -35,6 +38,7 @@ const App = () => {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const {_alertError} = useAlertError();
 
   if (loading) {
     return <></>;
@@ -42,14 +46,9 @@ const App = () => {
 
   // Handle user state changes
   const onAuthStateChanged = u => {
-    storeObjData('user', u, e => console.log(`algo deu errado ${e.message}`));
+    storeObjData('user', u, e => _alertError());
     setUser(u);
   };
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -63,4 +62,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default React.memo(App);
