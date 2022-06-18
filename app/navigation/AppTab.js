@@ -26,13 +26,13 @@ const AppTab = () => {
         options={defaultOptions}
       />
       <Tab.Screen
-        name={notes}
-        component={NotesStack}
+        name={favourities}
+        component={FavStack}
         options={defaultOptions}
       />
       <Tab.Screen
-        name={favourities}
-        component={FavStack}
+        name={notes}
+        component={NotesStack}
         options={defaultOptions}
       />
       <Tab.Screen
