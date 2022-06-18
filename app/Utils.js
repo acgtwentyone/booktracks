@@ -52,13 +52,6 @@ const SCREEN_HEIGHT = Dimensions.get('screen').height;
 
 const HIT_SLOP = {top: 20, right: 20, bottom: 20, left: 20};
 
-const FONT_SIZE = {
-  font_16: 16,
-  font_15: 15,
-  font_18: 18,
-  font_20: 20,
-};
-
 const FIREBASE_ERRORS = {
   'auth/user-not-found': 'User not found!',
   'auth/invalid-email': 'That email address is invalid!',
@@ -91,7 +84,6 @@ export const uuid = () => {
 export {
   COLORS,
   FIREBASE_ERRORS,
-  FONT_SIZE,
   HIT_SLOP,
   NAVIGATORS_NAME,
   TABS_NAME,

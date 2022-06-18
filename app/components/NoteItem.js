@@ -3,7 +3,6 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ListItem} from '.';
-import {FONT_SIZE} from '../Utils';
 
 const NoteItem = ({
   style,
@@ -34,9 +33,8 @@ const NoteItem = ({
   const Content = () => (
     <>
       <Box>
-        <Text fontSize={FONT_SIZE.font_18} fontWeight="bold">
-          {'note '}
-          <Text fontWeight="bold">{note}</Text>
+        <Text fontSize="lg" fontWeight="bold">
+          {note}
         </Text>
       </Box>
       {!recent && (

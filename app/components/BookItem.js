@@ -3,7 +3,6 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ListItem} from '.';
-import {FONT_SIZE} from '../Utils';
 
 const BookItem = ({
   style,
@@ -57,12 +56,12 @@ const BookItem = ({
   const Content = () => (
     <>
       <Box>
-        <Text fontSize={FONT_SIZE.font_18} fontWeight="bold">
+        <Text fontSize="lg" fontWeight="bold">
           {title}
         </Text>
         <Text
           mt={2}
-          fontSize={FONT_SIZE.font_15}
+          fontSize="md"
           _dark={{
             color: 'white',
           }}

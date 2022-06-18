@@ -30,12 +30,12 @@ const SelectBookOptions = ({selectedBook, setSelectedBook}) => {
           }
           flexDirection="column"
           alignItems="center">
-          <Text fontWeight="bold">
-            {item._data.author.length > 16
-              ? `${item._data.author.substring(0, 15)}...`
+          <Text fontWeight="bold" fontSize="lg">
+            {item._data.author.length > 12
+              ? `${item._data.author.substring(0, 11)}...`
               : item._data.author}
           </Text>
-          <Text>
+          <Text fontSize="md">
             {item._data.title.length > 16
               ? `${item._data.title.substring(0, 15)}...`
               : item._data.title}
@@ -61,8 +61,8 @@ const SelectBookOptions = ({selectedBook, setSelectedBook}) => {
         renderItem={({item}) => <BookItem item={item} />}
         showsHorizontalScrollIndicator={false}
       />
-      <Text px={2} mt={6} mb={2}>
-        Please fill the note details
+      <Text px={2} mt={6} mb={2} fontSize="md">
+        Please fill the note details (Optional)
       </Text>
     </Box>
   ) : (

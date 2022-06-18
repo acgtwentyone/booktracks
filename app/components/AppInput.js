@@ -1,6 +1,5 @@
 import {Input, Stack} from 'native-base';
 import React from 'react';
-import {StyleSheet} from 'react-native';
 
 const AppInput = ({
   style,
@@ -12,7 +11,7 @@ const AppInput = ({
   onBlur,
 }) => {
   return (
-    <Stack mx="4" style={[styles.container, {...style}]} {...props}>
+    <Stack mx="4" {...props}>
       <Input
         type={type || 'text'}
         placeholder={placeholder}
@@ -20,13 +19,10 @@ const AppInput = ({
         value={value}
         onChangeText={onChangeText}
         onBlur={onBlur}
+        size="lg"
       />
     </Stack>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default React.memo(AppInput);

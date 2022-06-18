@@ -81,7 +81,7 @@ const AuthForm = ({navigation, signin = true}) => {
             backgroundColor={bgColor}
             borderTopLeftRadius={8}
             borderTopRightRadius={8}>
-            <Text fontSize={15} fontWeight="bold">
+            <Text fontSize="lg" fontWeight="bold">
               No internet connection
             </Text>
           </Box>
@@ -139,7 +139,7 @@ const AuthForm = ({navigation, signin = true}) => {
   const ErrorMessage = ({name}) => (
     <>
       {errors && errors[name] && (
-        <Text mt={2} color={errorColor}>
+        <Text mt={2} color={errorColor} fontSize="md">
           {errors[name]?.message}
         </Text>
       )}
@@ -179,6 +179,7 @@ const AuthForm = ({navigation, signin = true}) => {
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
+                      size="lg"
                     />
                   )}
                 />
@@ -195,6 +196,7 @@ const AuthForm = ({navigation, signin = true}) => {
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
+                    size="lg"
                   />
                 )}
               />
@@ -212,6 +214,7 @@ const AuthForm = ({navigation, signin = true}) => {
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
+                    size="lg"
                   />
                 )}
               />
@@ -219,7 +222,8 @@ const AuthForm = ({navigation, signin = true}) => {
             </Stack>
             <HStack justifyContent="center" mt={8}>
               <Button
-                size="sm"
+                shadow={2}
+                size="lg"
                 endIcon={
                   <Icon
                     as={MaterialCommunityIcons}
@@ -256,11 +260,12 @@ const AuthForm = ({navigation, signin = true}) => {
             alignItems="center"
             mt={8}
             px={signin ? 32 : 8}>
-            <Text>
+            <Text fontSize="lg">
               {signin ? 'No account yet ?' : 'Already has an account ?'}
             </Text>
             <Button
-              size="sm"
+              shadow={2}
+              size="lg"
               variant="link"
               onPress={() =>
                 navigation.navigate(

@@ -142,7 +142,7 @@ const ListNoteItems = () => {
       <AppFab onPress={_openSelectBook} />
       {noteToDelete !== null && currentAS === AS_STATUS.delete && (
         <ActionSheet isOpen={isOpen} onClose={_onClose}>
-          <Text mt={4}>
+          <Text mt={4} fontSize="md">
             {noteToDelete._data !== null
               ? `note ${noteToDelete._data.note} will be deleted. Do you want to procced ?`
               : ' '}

@@ -181,12 +181,13 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
           </ActionSheet>
         ) : itemToDelete !== null ? (
           <ActionSheet isOpen={isOpen} onClose={_onClose}>
-            <Text mt={4}>
+            <Text mt={4} fontSize="md">
               {itemToDelete._data !== null
                 ? `Book ${itemToDelete._data.title} will be deleted. Do you want to procced ?`
                 : ' '}
             </Text>
             <Button
+              size="lg"
               mt={4}
               mb={4}
               onPress={_onDeletePress}
