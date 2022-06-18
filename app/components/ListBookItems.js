@@ -44,7 +44,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
       author: '',
       year: '',
       isbn: '',
-      last_readed_page: 0,
+      last_readed_page: '',
       note: '',
     },
     resolver: yupResolver(BookSchema),

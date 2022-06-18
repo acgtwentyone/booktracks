@@ -159,8 +159,8 @@ const BookForm = ({
           render={({field: {onChange, onBlur, value}}) => (
             <AppInput
               placeholder="Last readed page"
+              props={{keyboardType: 'numeric'}}
               control={control}
-              rules={{required: true}}
               onChangeText={onChange}
               value={value}
               onBlur={onBlur}
@@ -177,7 +177,6 @@ const BookForm = ({
             <AppInput
               placeholder="Note"
               control={control}
-              rules={{required: true}}
               onChangeText={onChange}
               value={value}
               onBlur={onBlur}
