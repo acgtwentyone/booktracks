@@ -11,7 +11,7 @@ import {
   Text,
   useColorModeValue,
 } from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import auth from '@react-native-firebase/auth';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -27,6 +27,8 @@ import {set} from '../firebase/FirebaseUtils';
 const AuthForm = ({navigation, signin = true}) => {
   const [loading, setLoading] = useState(false);
   const errorColor = useColorModeValue('red.500', 'white');
+  const subscriber = useRef(null);
+  const setSubscriber = useRef(null);
   const defaultValues = signin
     ? {
         email: '',
@@ -47,6 +49,14 @@ const AuthForm = ({navigation, signin = true}) => {
   });
   const {_showToastMsg} = useShowMessage();
   const netInfo = useNetInfo();
+
+  useEffect(() => {
+    return () => subscriber;
+  });
+
+  useEffect(() => {
+    return () => setSubscriber;
+  });
 
   const navigateTab = () => {
     navigation.replace(NAVIGATORS_NAME.tab);
@@ -83,7 +93,7 @@ const AuthForm = ({navigation, signin = true}) => {
   const __processSiginOrSignup = async ({email, password, username = null}) => {
     if (isInternet()) {
       if (signin) {
-        auth()
+        subscriber.current = auth()
           .signInWithEmailAndPassword(email, password)
           .then(() => {
             navigateTab();
@@ -92,10 +102,15 @@ const AuthForm = ({navigation, signin = true}) => {
             _showToastMsg(FIREBASE_ERRORS[error.code]);
           });
       } else {
-        auth()
+        subscriber.current = auth()
           .createUserWithEmailAndPassword(email, password)
           .then(({user}) => {
-            set({username: username}, 'users', user.uid, navigateTab());
+            setSubscriber.current = set(
+              {username: username},
+              'users',
+              user.uid,
+              navigateTab(),
+            );
           })
           .catch(error => {
             _showToastMsg(FIREBASE_ERRORS[error.code]);
@@ -108,7 +123,7 @@ const AuthForm = ({navigation, signin = true}) => {
 
   const _signinAnonymously = () => {
     if (isInternet()) {
-      auth()
+      subscriber.current = auth()
         .signInAnonymously()
         .then(() => {
           navigation.replace(NAVIGATORS_NAME.tab);

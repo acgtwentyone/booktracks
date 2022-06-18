@@ -39,7 +39,7 @@ const useLoadBooks = isFavourities => {
     });
   };
 
-  return {books, loading, refreshing, _loadBooks, _onRefresh};
+  return {books, loading, refreshing, _loadBooks, _onRefresh, subscriber};
 };
 
 export default useLoadBooks;

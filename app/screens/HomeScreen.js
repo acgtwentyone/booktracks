@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Box, FlatList} from 'native-base';
 import {
   AppActivityIndicator,
@@ -21,7 +21,12 @@ const HomeScreen = () => {
   };
 
   const RecentBooks = ({isFavScreen, title}) => {
-    const {books, loading} = useLoadBooks(isFavScreen);
+    const {books, loading, subscriber} = useLoadBooks(isFavScreen);
+
+    useEffect(() => {
+      return () => subscriber;
+    });
+
     return (
       <Box pb={4}>
         {<ListTitle title={title} />}
