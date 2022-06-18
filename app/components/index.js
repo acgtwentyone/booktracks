@@ -11,6 +11,7 @@ export {default as ListBookItems} from './ListBookItems';
 export {default as ListItem} from './ListItem';
 export {default as ListNoteItems} from './ListNoteItems';
 export {default as ListTitle} from './ListTitle';
+export {default as NoteForm} from './NoteForm';
 export {default as NoteItem} from './NoteItem';
 export {default as Screen} from './Screen';
 export {default as SelectBookOptions} from './SelectBookOptions';

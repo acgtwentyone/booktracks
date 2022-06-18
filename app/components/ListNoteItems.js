@@ -1,36 +1,23 @@
-import {
-  useDisclose,
-  FormControl,
-  useToast,
-  Text,
-  Box,
-  Button,
-} from 'native-base';
+import {useDisclose, Text, Box, Button} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useForm, Controller} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import firestore from '@react-native-firebase/firestore';
-import {uuid} from '../Utils';
 
 import {
   ActionSheet,
   AppFab,
-  AppInput,
+  NoteForm,
   NoteItem,
   ListTitle,
   Screen,
-  SubmitButton,
   VList,
 } from '.';
 import {NoteSchema} from '../validation/Validations';
-import {
-  COLLECTION_NAMES,
-  serTimestamp,
-  ItemStatus,
-} from '../firebase/FirebaseUtils';
+import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
 import {useRef} from 'react';
-import {useLoadNotes} from '../hooks';
+import {useAlertError, useLoadNotes, useShowMessage} from '../hooks';
 import SelectBookOptions from './SelectBookOptions';
 import {getObjData} from '../data/AsyncStorageUtils';
 
@@ -44,18 +31,19 @@ const ListNoteItems = () => {
   const {isOpen, onOpen, onClose} = useDisclose();
   const [currentId, setCurrentId] = useState(null);
   const [edit, setEdit] = useState(false);
-  const toast = useToast();
   const addEditAS = useRef();
   const [currentAS, setCurrentAS] = useState(null);
   const [noteToDelete, setnoteToDelete] = useState(null);
   const [selectedBook, setSelectedBook] = useState(null);
 
   const {notes, loading, refreshing, _loadNotes, _onRefresh} = useLoadNotes();
+  const {_alertError} = useAlertError();
+  const {_showToastMsg} = useShowMessage();
 
   const {
     control,
     handleSubmit,
-    formState: {errors, isSubmitting, isValidating},
+    formState: {errors},
     reset,
     setValue,
   } = useForm({
@@ -68,64 +56,11 @@ const ListNoteItems = () => {
   useEffect(() => {
     _loadNotes();
     return firestore;
-  }, []);
-
-  const _showToastMsg = msg => {
-    toast.show({
-      title: msg,
-      placement: 'top',
-    });
-  };
-
-  const _alertError = () => {
-    _showToastMsg('Oppss... Something went wrong.');
-  };
+  });
 
   const _onSuccess = msg => {
     _onClose();
     _showToastMsg(msg);
-  };
-
-  const onSubmit = data => {
-    const {note} = data;
-    getObjData('user', e => {})
-      .then(u => {
-        if (edit) {
-          firestore()
-            .collection('users')
-            .doc(u.uid)
-            .collection(COLLECTION_NAMES.books)
-            .doc(selectedBook.id)
-            .collection(COLLECTION_NAMES.notes)
-            .update({
-              note: note,
-            })
-            .then(() => _onSuccess(`note ${note} updated`))
-            .catch(error => _alertError());
-        } else {
-          if (selectedBook !== null) {
-            firestore()
-              .collection('users')
-              .doc(u.uid)
-              .collection(COLLECTION_NAMES.books)
-              .doc(selectedBook.id)
-              .collection(COLLECTION_NAMES.notes)
-              .add({
-                id: uuid(),
-                note: note,
-                created_at: serTimestamp,
-                updated_at: serTimestamp,
-                book_id: selectedBook.id,
-                status: ItemStatus.active,
-              })
-              .then(() => _onSuccess(`note ${note} added`))
-              .catch(error => _alertError());
-          } else {
-            _showToastMsg('Please select a book first');
-          }
-        }
-      })
-      .catch(error => _alertError());
   };
 
   const _editnote = item => {
@@ -188,33 +123,6 @@ const ListNoteItems = () => {
     }
   };
 
-  const RenderForm = () => {
-    return (
-      <FormControl>
-        <Controller
-          control={control}
-          render={({field: {onChange, onBlur, value}}) => (
-            <AppInput
-              placeholder="note number"
-              props={{keyboardType: 'numeric'}}
-              control={control}
-              rules={{required: true}}
-              onChangeText={onChange}
-              value={value}
-              onBlur={onBlur}
-            />
-          )}
-          name="note"
-        />
-        <SubmitButton
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          title={edit && currentId ? 'Update note' : 'Add note'}
-        />
-      </FormControl>
-    );
-  };
-
   return (
     <Screen style={styles.container}>
       <VList
@@ -256,7 +164,16 @@ const ListNoteItems = () => {
               selectedBook={selectedBook}
               setSelectedBook={setSelectedBook}
             />
-            <RenderForm />
+            <NoteForm
+              edit={edit}
+              control={control}
+              currentId={currentId}
+              errors={errors}
+              handleSubmit={handleSubmit}
+              onSuccess={_onSuccess}
+              selectedBook={selectedBook}
+              alertError={_alertError}
+            />
           </Box>
         </ActionSheet>
       )}
