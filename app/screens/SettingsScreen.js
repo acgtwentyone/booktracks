@@ -1,5 +1,5 @@
 import {Box, Button, HStack, Switch, Text, useColorMode} from 'native-base';
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {StyleSheet} from 'react-native';
 import auth from '@react-native-firebase/auth';
 
@@ -10,9 +10,14 @@ import {useShowMessage} from '../hooks';
 const SettingsScreen = ({navigation}) => {
   const {colorMode, toggleColorMode} = useColorMode();
   const {_showToastMsg} = useShowMessage();
+  const subscriber = useRef(null);
+
+  useEffect(() => {
+    return () => subscriber;
+  }, []);
 
   const _signout = () => {
-    auth()
+    subscriber.current = auth()
       .signOut()
       .then(() => navigation.replace(NAVIGATORS_NAME.auth))
       .catch(error => _showToastMsg(FIREBASE_ERRORS[error.code]));

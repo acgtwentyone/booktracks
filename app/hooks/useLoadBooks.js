@@ -16,6 +16,7 @@ const useLoadBooks = isFavourities => {
 
   const _onRefresh = () => {
     _loadBooks();
+    return subscriber;
   };
 
   const _loadBooks = () => {
