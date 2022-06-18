@@ -31,6 +31,10 @@ const BookForm = ({
         ? Number(last_readed_page)
         : '';
     const y = undefined !== year && year !== '' ? Number(year) : '';
+    const t =
+      title.length > 25
+        ? `Note: ${title.substring(0, 24)}...`
+        : `Note: ${title}`;
     getObjData('user', e => _alertError()).then(u => {
       edit
         ? firestore()
@@ -47,7 +51,7 @@ const BookForm = ({
               note: note,
             })
             .then(() => {
-              onSuccess(`Book ${title} updated`);
+              onSuccess(`Book ${t} updated`);
             })
             .catch(error => _alertError())
         : firestore()
@@ -68,7 +72,7 @@ const BookForm = ({
               favourity: false,
             })
             .then(() => {
-              onSuccess(`Book ${title} added`);
+              onSuccess(`Book ${t} added`);
             })
             .catch(error => _alertError());
     });
@@ -77,7 +81,7 @@ const BookForm = ({
   const ErrorMessage = ({name}) => (
     <>
       {errors && errors[name] && (
-        <Text mx={4} my={2} color={errorColor}>
+        <Text mx={4} my={2} color={errorColor} fontSize="md">
           {errors[name]?.message}
         </Text>
       )}
