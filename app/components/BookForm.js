@@ -26,6 +26,11 @@ const BookForm = ({
 
   const onSubmit = data => {
     const {author, isbn, last_readed_page, note, title, year} = data;
+    const lastReaded =
+      undefined !== last_readed_page && last_readed_page !== ''
+        ? Number(last_readed_page)
+        : '';
+    const y = undefined !== year && year !== '' ? Number(year) : '';
     getObjData('user', e => _alertError()).then(u => {
       edit
         ? firestore()
@@ -36,9 +41,9 @@ const BookForm = ({
             .update({
               title: title,
               author: author,
-              year: Number(year),
+              year: y,
               isbn: isbn,
-              last_readed_page: Number(last_readed_page),
+              last_readed_page: lastReaded,
               note: note,
             })
             .then(() => {
@@ -53,9 +58,9 @@ const BookForm = ({
               id: uuid(),
               title: title,
               author: author,
-              year: Number(year),
+              year: y,
               isbn: isbn,
-              last_readed_page: Number(last_readed_page),
+              last_readed_page: lastReaded,
               note: note,
               created_at: serTimestamp,
               updated_at: serTimestamp,
