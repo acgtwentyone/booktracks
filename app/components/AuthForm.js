@@ -12,7 +12,6 @@ import {
   useColorModeValue,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import auth from '@react-native-firebase/auth';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -141,7 +140,7 @@ const AuthForm = ({navigation, signin = true}) => {
   }
 
   return (
-    <Screen style={styles.container}>
+    <Screen>
       <ScrollView>
         <HStack justifyContent="center" p={8}>
           <Image
@@ -266,9 +265,5 @@ const AuthForm = ({navigation, signin = true}) => {
     </Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default AuthForm;
