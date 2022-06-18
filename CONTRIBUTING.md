@@ -10,7 +10,7 @@ Submitting a Pull Request If you wish to submit a pull request for a new feature
 
 Make sure you have [Node.js](https://nodejs.org/en/) installed in your machine. (We suggest you to use node v16.x.x). 
 
-Fork the repo by running 
+## Fork and work localy
 
 ```
 git clone https://github.com/*yourusername*/booktracks.git
@@ -34,6 +34,23 @@ OR
 npm install npm test
 ```
 
-Once you have done this, create a new branch with a name that loosely describes the issue on which you will be working. 
+## Setup Firebase
+
+1. Since we are using [React Native Firebase](https://rnfirebase.io/), please check it's documentation in order to setup firebase for your local development.
+2. Once you have firebase ready to go, you have to create a file named ```.env``` on your project's root directory, and paste the following content 
+
+```javascript 
+FIREBASE_BOOKS_PATH=books
+FIREBASE_NOTES_PATH=notes
+FIREBASE_USERS_PATH=users
+```
+
+Note: Since those are the firebase collections name it must match books, notes and users, otherwise, you probabily will have problem when trying list them.
+
+3. Run your project by running the following command: ```npx react-native run-android```. You should be all setup. 
+
+Any throuble, please contact [acgtwentyone@gmail.com](mailto:acgtwentyone@gmail.com) or use our [discord](https://discord.gg/UnbhMw9D) channel.
+
+Once you have done this, create a new branch with a name that loosely describes the issue on which you will be working, otherwise pick one if it already exists. 
 
 Once you think you have addressed the issue in question, submit a pull request to the main branch.
