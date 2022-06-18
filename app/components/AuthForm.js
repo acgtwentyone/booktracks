@@ -25,7 +25,7 @@ import {SigninSchema, SignupSchema} from '../validation/Validations';
 import {set} from '../firebase/FirebaseUtils';
 
 const AuthForm = ({navigation, signin = true}) => {
-  const [starting, setStarting] = useState(true);
+  const [loading, setLoading] = useState(false);
   const errorColor = useColorModeValue('red.500', 'white');
   const defaultValues = signin
     ? {
@@ -60,10 +60,6 @@ const AuthForm = ({navigation, signin = true}) => {
       netInfo.isConnected
     );
   };
-
-  useEffect(() => {
-    setStarting(false);
-  }, []);
 
   const NoInternetAlert = () => {
     const bgColor = useColorModeValue('coolGray.500', 'coolGray.900');
@@ -135,8 +131,8 @@ const AuthForm = ({navigation, signin = true}) => {
     </>
   );
 
-  if (starting) {
-    return null;
+  if (loading) {
+    return <></>;
   }
 
   return (
