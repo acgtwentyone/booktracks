@@ -97,7 +97,7 @@ const HomeScreen = () => {
             <RecentBooks title="Recent favourities books" isFavScreen={true} />
           </>
         }
-        keyExtractor={item => item.toString()}
+        keyExtractor={(item, index) => index.toString()}
       />
     </Screen>
   );
