@@ -15,8 +15,9 @@ const useLoadBooks = isFavourities => {
   }, []);
 
   const _onRefresh = () => {
+    setLoading(true);
+    setBooks([]);
     _loadBooks();
-    return subscriber;
   };
 
   const _loadBooks = () => {

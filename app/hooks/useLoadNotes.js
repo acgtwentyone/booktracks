@@ -10,25 +10,25 @@ const useLoadNotes = () => {
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const subscriber = useRef(null);
+  const dataSubscriber = useRef(null);
   const [refreshing, setRefreshing] = useState(false);
-  const _notes = useRef([]);
 
   useEffect(() => {
-    _loadNotes();
-    return () => subscriber;
-  }, []);
+    subscriber.current = _loadNotes();
+    return () => {
+      subscriber;
+      dataSubscriber;
+    };
+  });
 
   const _onRefresh = () => {
+    setLoading(true);
+    setNotes([]);
     _loadNotes();
-  };
-
-  const _trigger = data => {
-    _notes.current.push(data);
-    setNotes(_notes.current);
   };
 
   const _loadNotes = () => {
-    getObjData('user', e => {})
+    dataSubscriber.current = getObjData('user', e => {})
       .then(u => {
         subscriber.current = firestore()
           .collection('users')
@@ -41,11 +41,13 @@ const useLoadNotes = () => {
                 b.ref
                   .collection(COLLECTION_NAMES.notes)
                   .get()
-                  .then(n =>
-                    n.docs.forEach(v => {
-                      _trigger(v);
-                    }),
-                  );
+                  .then(n => {
+                    if (n.docs.length > 0) {
+                      n.docs.forEach(doc => {
+                        // setNotes(no => no.concat(doc));
+                      });
+                    }
+                  });
               }
             });
           })
@@ -55,7 +57,15 @@ const useLoadNotes = () => {
     setLoading(false);
   };
 
-  return {notes, loading, refreshing, _loadNotes, _onRefresh};
+  return {
+    notes,
+    loading,
+    refreshing,
+    _loadNotes,
+    _onRefresh,
+    subscriber,
+    dataSubscriber,
+  };
 };
 
 export default useLoadNotes;

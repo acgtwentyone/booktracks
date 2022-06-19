@@ -37,7 +37,7 @@ const HomeScreen = () => {
           renderItem={({item}) => (
             <BookItem item={item} isFavScreen={isFavScreen} recent={true} />
           )}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item, index) => index.toString()}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={emptyStyle(books, loading)}
@@ -60,7 +60,15 @@ const HomeScreen = () => {
   };
 
   const RecentNotes = () => {
-    const {notes, loading} = useLoadNotes();
+    const {notes, loading, subscriber, dataSubscriber} = useLoadNotes();
+
+    useEffect(() => {
+      return () => {
+        subscriber;
+        dataSubscriber;
+      };
+    }, []);
+
     return (
       <Box pb={4}>
         {<ListTitle title="Recent notes" />}
@@ -69,7 +77,7 @@ const HomeScreen = () => {
           px={2}
           data={notes}
           renderItem={({item}) => <NoteItem item={item} recent={true} />}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item, index) => index.toString()}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={emptyStyle(notes, loading)}
@@ -101,7 +109,6 @@ const HomeScreen = () => {
             />
           </>
         }
-        keyExtractor={(item, index) => index.toString()}
       />
     </Screen>
   );

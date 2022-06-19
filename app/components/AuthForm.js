@@ -51,11 +51,10 @@ const AuthForm = ({navigation, signin = true}) => {
   const netInfo = useNetInfo();
 
   useEffect(() => {
-    return () => subscriber;
-  });
-
-  useEffect(() => {
-    return () => setSubscriber;
+    return () => {
+      subscriber;
+      setSubscriber;
+    };
   });
 
   const navigateTab = () => {

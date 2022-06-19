@@ -36,7 +36,15 @@ const ListNoteItems = () => {
   const [noteToDelete, setnoteToDelete] = useState(null);
   const [selectedBook, setSelectedBook] = useState(null);
 
-  const {notes, loading, refreshing, _loadNotes, _onRefresh} = useLoadNotes();
+  const {
+    notes,
+    loading,
+    refreshing,
+    _loadNotes,
+    _onRefresh,
+    subscriber,
+    dataSubscriber,
+  } = useLoadNotes();
   const {_alertError} = useAlertError();
   const {_showToastMsg} = useShowMessage();
 
@@ -55,7 +63,10 @@ const ListNoteItems = () => {
 
   useEffect(() => {
     _loadNotes();
-    return firestore;
+    return () => {
+      subscriber;
+      dataSubscriber;
+    };
   });
 
   const _onSuccess = msg => {
