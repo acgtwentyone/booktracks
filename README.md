@@ -11,12 +11,14 @@ Let's build it together.
 This app is open source. Please see the [code-of-conduting](https://github.com/acgtwentyone/booktracks/blob/main/CODE_OF_CONDUCT.md) 
 
 ## Some app screenshots
-<img src="https://user-images.githubusercontent.com/94224806/163692860-a45c97ea-78d9-4997-840a-5beb06811ecb.jpg" width="200" />&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/94224806/163692867-4d32f24b-c1db-4ea8-b42a-802f8ab0331d.jpg" width="200" />&nbsp;&nbsp;&nbsp;
-<img src="https://user-images.githubusercontent.com/94224806/163692876-b5b09047-6513-493e-8c0a-ed14b1d78ea3.jpg" width="200" /><br /><br />
-<img src="https://user-images.githubusercontent.com/94224806/163692893-017e475e-c838-404f-acdd-eec1da9d4037.jpg" width="200" />&nbsp;&nbsp;&nbsp;
-<img src="https://user-images.githubusercontent.com/94224806/163692901-a1f382a7-669c-4b18-a5dd-432c6125c897.jpg" width="200" />&nbsp;&nbsp;&nbsp;
-<img src="https://user-images.githubusercontent.com/94224806/163692912-5f783ced-40f0-4c9e-ab5f-efaa3b14cb9f.jpg" width="200" />
 
+<div align="center">
+<img src="https://user-images.githubusercontent.com/94224806/174486977-71af7a98-d7f0-49dc-89dd-3fdd572bd2c4.jpg" alt="SPLASH"     width="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/94224806/174486993-4a1e064a-641f-4562-a39b-18371a8e0bb2.jpg" alt="SIGNUP" width="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/94224806/174487021-c020b9aa-4689-4ac5-bf0b-6a8c5429483a.jpg" alt="HOME" width="200">
+</div></br>
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/94224806/174487034-9e225ef2-c5a3-488d-aaf2-605c79081616.jpg" alt="BOOKS" width="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/94224806/174487039-178df2a7-44a1-494c-85d5-bedc3d9bd87c.jpg" alt="FAVOURITIES" width="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/94224806/174487050-08ea84a3-3e75-4975-bab8-a3aef603ff0a.jpg" alt="SETTINGS" width="200">
+</div>
 
 ## Techs we use
 
