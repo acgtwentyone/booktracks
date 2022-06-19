@@ -100,7 +100,6 @@ const NoteForm = ({
           render={({field: {onChange, onBlur, value}}) => (
             <AppTextArea
               placeholder="Your note"
-              props={{keyboardType: 'numeric'}}
               control={control}
               rules={{required: true}}
               onChangeText={onChange}
