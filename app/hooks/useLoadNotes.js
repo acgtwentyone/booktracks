@@ -24,9 +24,7 @@ const useLoadNotes = () => {
 
   const _trigger = data => {
     _notes.current.push(data);
-    if (_notes.current.length <= 4) {
-      setNotes(_notes.current);
-    }
+    setNotes(_notes.current);
   };
 
   const _loadNotes = () => {
