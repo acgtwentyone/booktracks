@@ -92,9 +92,13 @@ const HomeScreen = () => {
       <FlatList
         ListHeaderComponent={
           <>
-            <RecentBooks title="Recent books" isFavScreen={false} />
-            <RecentNotes />
-            <RecentBooks title="Recent favourities books" isFavScreen={true} />
+            <RecentBooks title="Recent books" isFavScreen={false} key="books" />
+            <RecentNotes key="notes" />
+            <RecentBooks
+              title="Recent favourities books"
+              isFavScreen={true}
+              key="fav"
+            />
           </>
         }
         keyExtractor={(item, index) => index.toString()}
