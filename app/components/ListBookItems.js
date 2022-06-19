@@ -45,7 +45,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
       year: '',
       isbn: '',
       last_readed_page: '',
-      note: '',
+      description: '',
     },
     resolver: yupResolver(BookSchema),
   });
@@ -84,7 +84,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   const _editBook = item => {
     if (undefined !== item) {
       const {
-        _data: {author, isbn, last_readed_page, note, title, year},
+        _data: {author, isbn, last_readed_page, description, title, year},
         id,
       } = item;
       if (
@@ -98,7 +98,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
         setValue('title', title);
         setValue('year', year.toString());
         setValue('last_readed_page', last_readed_page.toString());
-        setValue('note', note.toString());
+        setValue('description', description.toString());
         setCurrentId(id);
         setEdit(true);
         setCurrentAS('editAddAS');

@@ -3,7 +3,7 @@ import {Controller} from 'react-hook-form';
 import {FormControl, Stack, Text, useColorModeValue} from 'native-base';
 import firestore from '@react-native-firebase/firestore';
 
-import {AppInput, SubmitButton} from './';
+import {AppInput, AppTextArea, SubmitButton} from './';
 import {getObjData} from '../data/AsyncStorageUtils';
 import {useAlertError} from '../hooks';
 import {uuid} from '../Utils';
@@ -25,16 +25,13 @@ const BookForm = ({
   const errorColor = useColorModeValue('red.500', 'white');
 
   const onSubmit = data => {
-    const {author, isbn, last_readed_page, note, title, year} = data;
+    const {author, isbn, last_readed_page, description, title, year} = data;
     const lastReaded =
       undefined !== last_readed_page && last_readed_page !== ''
         ? Number(last_readed_page)
         : '';
     const y = undefined !== year && year !== '' ? Number(year) : '';
-    const t =
-      title.length > 25
-        ? `Note: ${title.substring(0, 24)}...`
-        : `Note: ${title}`;
+    const t = title.length > 25 ? `${title.substring(0, 24)}...` : `${title}`;
     getObjData('user', e => _alertError()).then(u => {
       edit
         ? firestore()
@@ -48,7 +45,7 @@ const BookForm = ({
               year: y,
               isbn: isbn,
               last_readed_page: lastReaded,
-              note: note,
+              description: description,
             })
             .then(() => {
               onSuccess(`Book ${t} updated`);
@@ -65,7 +62,7 @@ const BookForm = ({
               year: y,
               isbn: isbn,
               last_readed_page: lastReaded,
-              note: note,
+              description: description,
               created_at: serTimestamp,
               updated_at: serTimestamp,
               status: ItemStatus.active,
@@ -183,17 +180,17 @@ const BookForm = ({
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
-            <AppInput
-              placeholder="Note"
+            <AppTextArea
+              placeholder="Another description"
               control={control}
               onChangeText={onChange}
               value={value}
               onBlur={onBlur}
             />
           )}
-          name="note"
+          name="description"
         />
-        <ErrorMessage name="note" />
+        <ErrorMessage name="description" />
       </Stack>
       <SubmitButton
         handleSubmit={handleSubmit}
