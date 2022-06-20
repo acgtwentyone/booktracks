@@ -6,9 +6,7 @@ Test the application and don't forget to give your contribution. We count on you
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/acgtwentyone/booktracks)&nbsp;&nbsp;![GitHub issues](https://img.shields.io/github/issues-raw/acgtwentyone/booktracks)&nbsp;&nbsp;![GitHub last commit](https://img.shields.io/github/last-commit/acgtwentyone/booktracks)
 
-Let's build it together.
-
-This app is open source. Please see the [code-of-conduting](https://github.com/acgtwentyone/booktracks/blob/main/CODE_OF_CONDUCT.md) 
+This app is open source. Please see the [code-of-conduting](https://github.com/acgtwentyone/booktracks/blob/main/CODE_OF_CONDUCT.md). Let's build it together.
 
 ## Some app screenshots
 
