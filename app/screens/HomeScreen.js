@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Box, FlatList} from 'native-base';
 import {
   AppActivityIndicator,
@@ -9,6 +9,7 @@ import {
   Screen,
 } from '../components';
 import {useLoadBooks, useLoadNotes} from '../hooks';
+import {SCREEN_WIDTH} from '../Utils';
 
 const HomeScreen = () => {
   const emptyStyle = (data, loading) => {
@@ -30,7 +31,12 @@ const HomeScreen = () => {
           px={2}
           data={books}
           renderItem={({item}) => (
-            <BookItem item={item} isFavScreen={isFavScreen} recent={true} />
+            <BookItem
+              item={item}
+              isFavScreen={isFavScreen}
+              recent={true}
+              limit={SCREEN_WIDTH / 30}
+            />
           )}
           keyExtractor={(item, index) => index.toString()}
           horizontal={true}
@@ -63,7 +69,9 @@ const HomeScreen = () => {
         <FlatList
           px={2}
           data={notes}
-          renderItem={({item}) => <NoteItem item={item} recent={true} />}
+          renderItem={({item}) => (
+            <NoteItem item={item} recent={true} limit={SCREEN_WIDTH / 25} />
+          )}
           keyExtractor={(item, index) => index.toString()}
           horizontal={true}
           showsHorizontalScrollIndicator={false}

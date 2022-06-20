@@ -24,7 +24,7 @@ const VList = ({
       style={[styles.container, {...style}]}
       data={data}
       renderItem={renderItem}
-      keyExtractor={(item, index) => index.toString()}
+      keyExtractor={item => item.id.toString()}
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={
         data.length === 0 && !loading ? <EmptyView /> : ListHeaderComponent

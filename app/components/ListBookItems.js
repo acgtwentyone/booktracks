@@ -1,5 +1,5 @@
 import {useDisclose, Text, Button} from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
@@ -18,6 +18,7 @@ import {BookSchema} from '../validation/Validations';
 import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
 import {useAlertError, useLoadBooks, useShowMessage} from '../hooks';
 import {getObjData} from '../data/AsyncStorageUtils';
+import {SCREEN_WIDTH} from '../Utils';
 
 const ListBookItems = ({isFavourities = false, subtitle}) => {
   const {isOpen, onOpen, onClose} = useDisclose();
@@ -155,6 +156,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
             onStarPress={() => _onStarPress(item)}
             onDotPress={() => _onDotPress(item)}
             isFavScreen={isFavourities}
+            limit={SCREEN_WIDTH / 16}
           />
         )}
         ListHeaderComponent={<ListTitle title={subtitle} />}

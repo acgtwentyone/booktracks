@@ -1,5 +1,5 @@
 import {useDisclose, Text, Box, Button} from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
@@ -20,6 +20,7 @@ import {useRef} from 'react';
 import {useAlertError, useLoadNotes, useShowMessage} from '../hooks';
 import SelectBookOptions from './SelectBookOptions';
 import {getObjData} from '../data/AsyncStorageUtils';
+import {SCREEN_WIDTH} from '../Utils';
 
 const ACTION_SHEET_STATUS = {
   add_edit: 'ADD_EDIT',
@@ -129,6 +130,7 @@ const ListNoteItems = () => {
             item={item}
             onEditPress={() => _editnote(item)}
             onDotPress={() => _onDotPress(item)}
+            limit={SCREEN_WIDTH / 14}
           />
         )}
         ListHeaderComponent={<ListTitle title="My notes" />}

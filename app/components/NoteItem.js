@@ -3,6 +3,7 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ListItem} from '.';
+import {limitStr} from '../Utils';
 
 const NoteItem = ({
   style,
@@ -11,6 +12,7 @@ const NoteItem = ({
   recent = false,
   onEditPress,
   onDotPress,
+  limit,
 }) => {
   const {
     _data: {note},
@@ -34,7 +36,7 @@ const NoteItem = ({
     <>
       <Box>
         <Text fontSize="lg" fontWeight="bold">
-          {note}
+          {limit ? limitStr(note, limit) : note}
         </Text>
       </Box>
       {!recent && (

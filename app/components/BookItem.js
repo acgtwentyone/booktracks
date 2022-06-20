@@ -1,8 +1,9 @@
 import {Box, HStack, Icon, Text, useColorModeValue} from 'native-base';
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ListItem} from '.';
+import {limitStr} from '../Utils';
 
 const BookItem = ({
   style,
@@ -13,6 +14,7 @@ const BookItem = ({
   onStarPress,
   onDotPress,
   isFavScreen = false,
+  limit,
 }) => {
   const _favColor = useColorModeValue('yellow.500', 'yellow.500');
   const _notFavColor = useColorModeValue('black', 'white');
@@ -57,7 +59,7 @@ const BookItem = ({
     <>
       <Box>
         <Text fontSize="lg" fontWeight="bold">
-          {title}
+          {limit ? limitStr(title, limit) : title}
         </Text>
         <Text
           mt={2}
@@ -68,7 +70,7 @@ const BookItem = ({
           _light={{
             color: 'gray.600',
           }}>
-          {author}
+          {limit ? limitStr(author, limit) : author}
         </Text>
       </Box>
       {!recent && !isFavScreen ? (
@@ -87,9 +89,5 @@ const BookItem = ({
 
   return <ListItem content={<Content />} recent={recent} />;
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default React.memo(BookItem);
