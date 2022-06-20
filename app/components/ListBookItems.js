@@ -26,8 +26,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   const [currentAS, setCurrentAS] = useState(null);
   const [itemToDelete, setItemToDelete] = useState(null);
 
-  const {books, loading, refreshing, _loadBooks, _onRefresh} =
-    useLoadBooks(isFavourities);
+  const {books, loading, refreshing, _onRefresh} = useLoadBooks(isFavourities);
 
   const {_alertError} = useAlertError();
   const {_showToastMsg} = useShowMessage();
@@ -49,11 +48,6 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
     },
     resolver: yupResolver(BookSchema),
   });
-
-  useEffect(() => {
-    _loadBooks();
-    return firestore;
-  }, []);
 
   const _onSuccess = msg => {
     _onClose();

@@ -1,4 +1,4 @@
-import {useEffect, useState, useRef} from 'react';
+import {useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 
 import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
@@ -9,28 +9,28 @@ const useLoadNotes = () => {
   const {_alertError} = useAlertError();
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const subscriber = useRef(null);
-  const dataSubscriber = useRef(null);
   const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    subscriber.current = _loadNotes();
-    return () => {
-      subscriber;
-      dataSubscriber;
-    };
-  });
-
   const _onRefresh = () => {
-    setLoading(true);
-    setNotes([]);
+    setRefreshing(true);
     _loadNotes();
   };
 
+  const trigger = data => {
+    setNotes(n => n.concat(data));
+  };
+
+  useEffect(() => {
+    _loadNotes();
+    return () => {};
+  }, []);
+
   const _loadNotes = () => {
-    dataSubscriber.current = getObjData('user', e => {})
+    setLoading(true);
+    setNotes([]);
+    getObjData('user', e => {})
       .then(u => {
-        subscriber.current = firestore()
+        firestore()
           .collection('users')
           .doc(u.uid)
           .collection(COLLECTION_NAMES.books)
@@ -44,27 +44,25 @@ const useLoadNotes = () => {
                   .then(n => {
                     if (n.docs.length > 0) {
                       n.docs.forEach(doc => {
-                        // setNotes(no => no.concat(doc));
+                        trigger(doc);
                       });
                     }
                   });
               }
             });
+            setLoading(false);
+            setRefreshing(false);
           })
           .catch(e => _alertError());
       })
       .catch(error => _alertError());
-    setLoading(false);
   };
 
   return {
     notes,
     loading,
     refreshing,
-    _loadNotes,
     _onRefresh,
-    subscriber,
-    dataSubscriber,
   };
 };
 

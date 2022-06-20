@@ -21,12 +21,7 @@ const HomeScreen = () => {
   };
 
   const RecentBooks = ({isFavScreen, title}) => {
-    const {books, loading, subscriber} = useLoadBooks(isFavScreen);
-
-    useEffect(() => {
-      return () => subscriber;
-    });
-
+    const {books, loading} = useLoadBooks(isFavScreen);
     return (
       <Box pb={4}>
         {<ListTitle title={title} />}
@@ -60,15 +55,7 @@ const HomeScreen = () => {
   };
 
   const RecentNotes = () => {
-    const {notes, loading, subscriber, dataSubscriber} = useLoadNotes();
-
-    useEffect(() => {
-      return () => {
-        subscriber;
-        dataSubscriber;
-      };
-    }, []);
-
+    const {notes, loading} = useLoadNotes();
     return (
       <Box pb={4}>
         {<ListTitle title="Recent notes" />}

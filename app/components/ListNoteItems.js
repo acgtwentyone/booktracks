@@ -21,10 +21,10 @@ import {useAlertError, useLoadNotes, useShowMessage} from '../hooks';
 import SelectBookOptions from './SelectBookOptions';
 import {getObjData} from '../data/AsyncStorageUtils';
 
-const AS_STATUS = {
-  add_edit: 'EDIT_ADD_AS',
-  delete: 'DELETE_note_AS',
-  select_book: 'SELECT_BOOK_AS',
+const ACTION_SHEET_STATUS = {
+  add_edit: 'ADD_EDIT',
+  delete: 'DELETE',
+  select_book: 'SELECT_BOOK',
 };
 
 const ListNoteItems = () => {
@@ -35,16 +35,8 @@ const ListNoteItems = () => {
   const [currentAS, setCurrentAS] = useState(null);
   const [noteToDelete, setnoteToDelete] = useState(null);
   const [selectedBook, setSelectedBook] = useState(null);
+  const {notes, loading, refreshing, _onRefresh} = useLoadNotes();
 
-  const {
-    notes,
-    loading,
-    refreshing,
-    _loadNotes,
-    _onRefresh,
-    subscriber,
-    dataSubscriber,
-  } = useLoadNotes();
   const {_alertError} = useAlertError();
   const {_showToastMsg} = useShowMessage();
 
@@ -59,14 +51,6 @@ const ListNoteItems = () => {
       note: '',
     },
     resolver: yupResolver(NoteSchema),
-  });
-
-  useEffect(() => {
-    _loadNotes();
-    return () => {
-      subscriber;
-      dataSubscriber;
-    };
   });
 
   const _onSuccess = msg => {
@@ -91,13 +75,13 @@ const ListNoteItems = () => {
   };
 
   const _openSelectBook = () => {
-    setCurrentAS(AS_STATUS.select_book);
+    setCurrentAS(ACTION_SHEET_STATUS.select_book);
     onOpen();
   };
 
   const _onDotPress = item => {
     setnoteToDelete(item);
-    setCurrentAS(AS_STATUS.delete);
+    setCurrentAS(ACTION_SHEET_STATUS.delete);
     onOpen();
   };
 
@@ -151,7 +135,7 @@ const ListNoteItems = () => {
         loading={loading}
       />
       <AppFab onPress={_openSelectBook} />
-      {noteToDelete !== null && currentAS === AS_STATUS.delete && (
+      {noteToDelete !== null && currentAS === ACTION_SHEET_STATUS.delete && (
         <ActionSheet isOpen={isOpen} onClose={_onClose}>
           <Text mt={4} fontSize="md">
             {noteToDelete._data !== null
@@ -168,7 +152,7 @@ const ListNoteItems = () => {
           </Button>
         </ActionSheet>
       )}
-      {currentAS !== null && currentAS === AS_STATUS.select_book && (
+      {currentAS !== null && currentAS === ACTION_SHEET_STATUS.select_book && (
         <ActionSheet isOpen={isOpen} onClose={_onClose} reference={addEditAS}>
           <Box flexDirection="column">
             <SelectBookOptions
