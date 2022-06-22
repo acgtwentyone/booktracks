@@ -186,6 +186,7 @@ const BookForm = ({
               onChangeText={onChange}
               value={value}
               onBlur={onBlur}
+              h={30}
             />
           )}
           name="description"
