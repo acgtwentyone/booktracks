@@ -1,18 +1,15 @@
 import {Box, HStack, Icon, Text, useColorModeValue} from 'native-base';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ListItem} from '.';
 import {limitStr} from '../Utils';
+import {AppTouchableOpacity} from './';
 
 const BookItem = ({
-  style,
-  props,
   item,
   recent = false,
-  onEditPress,
   onStarPress,
-  onDotPress,
+  onItemPress,
   isFavScreen = false,
   limit,
 }) => {
@@ -22,41 +19,24 @@ const BookItem = ({
     _data: {title, author, favourity},
   } = item;
 
-  const Touchable = ({onPress, children}) => (
-    <TouchableOpacity
-      onPress={onPress}
-      hitSlop={{top: 20, right: 10, bottom: 20, left: 12}}>
-      {children}
-    </TouchableOpacity>
-  );
-
   const __renderStarBtn = () => (
-    <Touchable onPress={onStarPress}>
+    <AppTouchableOpacity onPress={onStarPress}>
       <Icon
         as={MaterialCommunityIcons}
         name="star-outline"
         size="xs"
         m={2}
-        onPress={onStarPress}
         color={favourity ? _favColor : _notFavColor}
       />
-    </Touchable>
-  );
-
-  const __renderIcon = (name, onPress) => (
-    <Touchable onPress={onPress}>
-      <Icon
-        as={MaterialCommunityIcons}
-        name={name}
-        size="xs"
-        m={2}
-        onPress={onPress}
-      />
-    </Touchable>
+    </AppTouchableOpacity>
   );
 
   const Content = () => (
-    <>
+    <HStack
+      flexDirection="row"
+      alignItems="center"
+      justifyContent="space-between"
+      w="full">
       <Box>
         <Text fontSize="lg" fontWeight="bold">
           {limit ? limitStr(title, limit) : title}
@@ -76,18 +56,18 @@ const BookItem = ({
       {!recent && !isFavScreen ? (
         <HStack justifyContent="flex-end" justifyItems="center">
           {__renderStarBtn()}
-          {__renderIcon('pencil', onEditPress)}
-          {__renderIcon('dots-vertical', onDotPress)}
         </HStack>
       ) : !recent ? (
         __renderStarBtn()
       ) : (
         <></>
       )}
-    </>
+    </HStack>
   );
 
-  return <ListItem content={<Content />} recent={recent} />;
+  return (
+    <ListItem content={<Content />} recent={recent} onItemPress={onItemPress} />
+  );
 };
 
 export default React.memo(BookItem);

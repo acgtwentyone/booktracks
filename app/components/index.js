@@ -1,5 +1,6 @@
 export {default as AuthForm} from './AuthForm';
 export {default as AppActivityIndicator} from './AppActivityIndicator';
+export {default as AppTouchableOpacity} from './AppTouchableOpacity';
 export {default as ActionSheet} from './ActionSheet';
 export {default as AppFab} from './AppFab';
 export {default as AppInput} from './AppInput';
