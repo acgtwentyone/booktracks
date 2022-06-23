@@ -1,11 +1,11 @@
 import React from 'react';
 import {Controller} from 'react-hook-form';
-import {FormControl, Stack, Text, useColorModeValue} from 'native-base';
+import {FormControl, Stack, Text} from 'native-base';
 import firestore from '@react-native-firebase/firestore';
 
 import {AppInput, AppTextArea, SubmitButton} from './';
 import {getObjData} from '../data/AsyncStorageUtils';
-import {useAlertError} from '../hooks';
+import {useAlertError, useErrorColor} from '../hooks';
 import {uuid} from '../Utils';
 import {
   COLLECTION_NAMES,
@@ -22,7 +22,7 @@ const BookForm = ({
   errors,
 }) => {
   const {_alertError} = useAlertError();
-  const errorColor = useColorModeValue('red.500', 'white');
+  const {errorColor} = useErrorColor();
 
   const onSubmit = data => {
     const {author, isbn, last_readed_page, description, title, year} = data;
