@@ -18,4 +18,5 @@ export {default as NoteItem} from './NoteItem';
 export {default as Screen} from './Screen';
 export {default as SelectBookOptions} from './SelectBookOptions';
 export {default as SubmitButton} from './SubmitButton';
+export {default as UpdateLastReadedPage} from './UpdateLastReadedPage';
 export {default as VList} from './VList';

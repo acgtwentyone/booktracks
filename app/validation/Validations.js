@@ -11,6 +11,10 @@ const BookSchema = yup.object({
   note: yup.string().notRequired(),
 });
 
+const UpdateLastReadedPageSchema = yup.object({
+  last_readed_page: yup.string().required(),
+});
+
 const NoteSchema = yup.object({
   note: yup.string().notRequired(),
 });
@@ -39,4 +43,10 @@ const SignupSchema = yup
   })
   .required();
 
-export {BookSchema, NoteSchema, SigninSchema, SignupSchema};
+export {
+  BookSchema,
+  UpdateLastReadedPageSchema,
+  NoteSchema,
+  SigninSchema,
+  SignupSchema,
+};

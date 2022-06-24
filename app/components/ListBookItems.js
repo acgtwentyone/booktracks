@@ -20,7 +20,7 @@ import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
 import {useAlertError, useLoadBooks, useShowMessage} from '../hooks';
 import {getObjData} from '../data/AsyncStorageUtils';
 import {SCREEN_WIDTH} from '../Utils';
-import AppTouchableOpacity from './AppTouchableOpacity';
+import {AppTouchableOpacity, UpdateLastReadedPage} from './';
 
 const ACTION_SHEET_TYPES = {
   add_edit: 'ADD_EDIT',
@@ -173,6 +173,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
       }
     />
   );
+
   const DeleteOption = () => (
     <ItemPressedOption
       title="Remove this Book ?"
@@ -237,6 +238,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
       )}
       {!isFavourities && actionSheetType === ACTION_SHEET_TYPES.item_pressed && (
         <ActionSheet isOpen={isOpen} onClose={_onClose}>
+          <UpdateLastReadedPage item={itemPressed} />
           <EditOption />
           <DeleteOption />
         </ActionSheet>
