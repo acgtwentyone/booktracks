@@ -13,7 +13,7 @@ Make sure you have [Node.js](https://nodejs.org/en/) installed in your machine. 
 ## Fork and work localy
 
 ```
-git clone https://github.com/*yourusername*/booktracks.git
+git clone https://github.com/acgtwentyone/booktracks.git
 ``` 
 
 Then navigate to the project by running the following command 
