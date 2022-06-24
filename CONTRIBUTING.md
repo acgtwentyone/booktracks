@@ -28,12 +28,6 @@ And then type
 npm install
 ```
 
-OR 
-
-```
-npm install npm test
-```
-
 ## Setup Firebase
 
 1. Since we are using [React Native Firebase](https://rnfirebase.io/), please check it's documentation in order to setup firebase for your local development.
