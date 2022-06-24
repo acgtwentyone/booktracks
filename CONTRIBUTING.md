@@ -25,7 +25,7 @@ cd booktracks
 And then type
 
 ```
-yarn install
+npm install
 ```
 
 OR 
