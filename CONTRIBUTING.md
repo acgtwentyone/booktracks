@@ -30,7 +30,7 @@ npm install
 
 ## Setup Firebase
 
-1. Since we are using [React Native Firebase](https://rnfirebase.io/), please check it's documentation in order to setup firebase for your local development.
+1. Since we are using [React Native Firebase](https://rnfirebase.io/), we encourage you to check it's documentation.
 2. Once you have firebase ready to go, you have to create a file named ```.env``` on your project's root directory, and paste the following content 
 
 ```javascript 
@@ -41,9 +41,13 @@ FIREBASE_USERS_PATH=users
 
 Note: Since those are the firebase collections name it must match books, notes and users, otherwise, you probabily will have problem when trying list them.
 
-3. Run your project by running the following command: ```npx react-native run-android```. You should be all setup. 
+## Run the application
+
+Run your project by running the following command: ```npx react-native run-android```. You should be all setup. Note that we assume that you have setup up the development environment for react native and ready to go. If not please check [here](https://reactnative.dev/docs/environment-setup).
 
 Any throuble, please contact [acgtwentyone@gmail.com](mailto:acgtwentyone@gmail.com) or use our [discord](https://discord.gg/UnbhMw9D) channel.
+
+## Make your changes
 
 Once you have done this, create a new branch with a name that loosely describes the issue on which you will be working, otherwise pick one if it already exists. 
 
