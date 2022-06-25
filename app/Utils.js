@@ -82,7 +82,7 @@ export const uuid = () => {
 };
 
 export const limitStr = (str, limit = 25, end = '...') => {
-  return str.length > limit ? `${str.substring(0, limit - 1)} ${end}` : str;
+  return str.length > limit ? `${str.substring(0, limit - 1)}${end}` : str;
 };
 
 export {
