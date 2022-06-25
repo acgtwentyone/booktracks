@@ -20,7 +20,7 @@ const SubmitButton = ({
     shadow={2}>
     <HStack alignItems="center">
       {progress && showProgressIndicator && <AppActivityIndicator m={0} />}
-      <Text>{title}</Text>
+      {!progress && <Text>{title}</Text>}
     </HStack>
   </Button>
 );
