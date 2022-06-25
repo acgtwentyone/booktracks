@@ -17,7 +17,7 @@ import auth from '@react-native-firebase/auth';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useNetInfo} from '@react-native-community/netinfo';
 
-import {Screen} from '.';
+import {SubmitButton, Screen} from '.';
 import {FIREBASE_ERRORS, NAVIGATORS_NAME, ROUTES_NAME} from '../Utils';
 import {Controller, useForm} from 'react-hook-form';
 import {useShowMessage} from '../hooks';
@@ -49,6 +49,7 @@ const AuthForm = ({navigation, signin = true}) => {
   });
   const {_showToastMsg} = useShowMessage();
   const netInfo = useNetInfo();
+  const submitTitle = signin ? 'Sign in' : 'Sign up';
 
   useEffect(() => {
     return () => {
@@ -91,13 +92,16 @@ const AuthForm = ({navigation, signin = true}) => {
 
   const __processSiginOrSignup = async ({email, password, username = null}) => {
     if (isInternet()) {
+      setLoading(true);
       if (signin) {
         subscriber.current = auth()
           .signInWithEmailAndPassword(email, password)
           .then(() => {
+            setLoading(false);
             navigateTab();
           })
           .catch(error => {
+            setLoading(false);
             _showToastMsg(FIREBASE_ERRORS[error.code]);
           });
       } else {
@@ -110,8 +114,10 @@ const AuthForm = ({navigation, signin = true}) => {
               user.uid,
               navigateTab(),
             );
+            setLoading(false);
           })
           .catch(error => {
+            setLoading(false);
             _showToastMsg(FIREBASE_ERRORS[error.code]);
           });
       }
@@ -144,10 +150,6 @@ const AuthForm = ({navigation, signin = true}) => {
       )}
     </>
   );
-
-  if (loading) {
-    return <></>;
-  }
 
   return (
     <Screen>
@@ -220,19 +222,27 @@ const AuthForm = ({navigation, signin = true}) => {
               <ErrorMessage name="password" />
             </Stack>
             <HStack justifyContent="center" mt={8}>
-              <Button
-                shadow={2}
+              {/* <Button
+                  shadow={2}
+                  size="lg"
+                  endIcon={
+                    <Icon
+                      as={MaterialCommunityIcons}
+                      name="arrow-right"
+                      size="xs"
+                    />
+                  }
+                  onPress={handleSubmit(__processSiginOrSignup)}>
+                  {signin ? 'Sign in' : 'Sign up'}
+                </Button> */}
+              <SubmitButton
+                title={submitTitle}
+                handleSubmit={handleSubmit}
+                onSubmit={__processSiginOrSignup}
                 size="lg"
-                endIcon={
-                  <Icon
-                    as={MaterialCommunityIcons}
-                    name="arrow-right"
-                    size="xs"
-                  />
-                }
-                onPress={handleSubmit(__processSiginOrSignup)}>
-                {signin ? 'Sign in' : 'Sign up'}
-              </Button>
+                progress={loading}
+                showProgressIndicator={true}
+              />
             </HStack>
           </FormControl>
           {signin && (
