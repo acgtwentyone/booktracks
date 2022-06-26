@@ -1,9 +1,10 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 
-const AppTouchableOpacity = ({children, hitSlop, props, onPress}) => {
+const AppTouchableOpacity = ({children, hitSlop, props, onPress, style}) => {
   return (
     <TouchableOpacity
+      style={[styles.container, {...style}]}
       {...props}
       onPress={onPress}
       hitSlop={hitSlop ? hitSlop : {top: 20, right: 10, bottom: 20, left: 12}}>
@@ -11,5 +12,9 @@ const AppTouchableOpacity = ({children, hitSlop, props, onPress}) => {
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {},
+});
 
 export default React.memo(AppTouchableOpacity);
