@@ -15,6 +15,10 @@ const COLORS = {
 const ROUTES_NAME = {
   account: 'ACCOUNT',
   books: 'BOOKS',
+  book_detail: 'BOOK_DETAIL',
+  note_detail: 'NOTE_DETAIL',
+  add_edit_book: 'ADD_EDIT_BOOK',
+  add_edit_note: 'ADD_EDIT_NOTE',
   favourities: 'FAVOURITIES',
   home: 'HOME',
   notes: 'NOTES',
@@ -26,10 +30,16 @@ const ROUTES_NAME = {
 
 const SCREEN_TITLES = {
   account: 'Account',
+  book_detail: 'Book Detail',
+  note_detail: 'Note Detail',
   books: 'Books',
+  edit_book: 'Edit Book',
+  edit_note: 'Edit Note',
   favourities: 'Favourities',
   home: 'Home',
   notes: 'Notes',
+  new_book: 'New Book',
+  new_note: 'New Note',
   search: 'Search',
   settings: 'Settings',
 };
@@ -81,7 +91,7 @@ export const uuid = () => {
   });
 };
 
-export const limitStr = (str, limit = 25, end = '...') => {
+export const limitStr = (str, limit = SCREEN_WIDTH / 25, end = '...') => {
   return str.length > limit ? `${str.substring(0, limit - 1)}${end}` : str;
 };
 
