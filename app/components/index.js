@@ -7,6 +7,7 @@ export {default as AppInput} from './AppInput';
 export {default as AppTextArea} from './AppTextArea';
 export {default as BookForm} from './BookForm';
 export {default as BookItem} from './BookItem';
+export {default as BookItemOptions} from './BookItemOptions';
 export {default as EmptyView} from './EmptyView';
 export {default as ErrorMessage} from './ErrorMessage';
 export {default as ListBookItems} from './ListBookItems';

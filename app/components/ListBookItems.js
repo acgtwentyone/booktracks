@@ -1,10 +1,9 @@
-import {useDisclose, Button, Text, VStack, HStack, Icon} from 'native-base';
+import {useDisclose, Button, Text, VStack} from 'native-base';
 import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
 import firestore from '@react-native-firebase/firestore';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
   ActionSheet,
@@ -17,10 +16,11 @@ import {
 } from '.';
 import {BookSchema} from '../validation/Validations';
 import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
-import {useAlertError, useLoadBooks, useShowMessage} from '../hooks';
+import {useAlertError, useLoadBooks, useOnStarPress, useShowMessage} from '../hooks';
 import {getObjData} from '../data/AsyncStorageUtils';
-import {SCREEN_WIDTH} from '../Utils';
-import {AppTouchableOpacity, UpdateLastReadedPage} from './';
+import {limitStr, ROUTES_NAME, SCREEN_WIDTH} from '../Utils';
+import {UpdateLastReadedPage} from './';
+import {useNavigation} from '@react-navigation/native';
 
 const ACTION_SHEET_TYPES = {
   add_edit: 'ADD_EDIT',
@@ -37,6 +37,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   const {books, loading, refreshing, _onRefresh} = useLoadBooks(isFavourities);
   const {_alertError} = useAlertError();
   const {_showToastMsg} = useShowMessage();
+  const navigation = useNavigation();
 
   const {
     control,
@@ -73,7 +74,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
         })
         .then(() => {
           _onSuccess(
-            `Book ${title} ${
+            `Book "${limitStr(title)}" ${
               favourity ? 'removed from' : 'added to'
             } favourity`,
           );
@@ -83,30 +84,25 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   };
 
   const _onFabPress = () => {
-    setActionSheetType(ACTION_SHEET_TYPES.add_edit);
-    onOpen();
+    navigation.navigate(ROUTES_NAME.add_edit_book);
   };
 
   const _onItemPress = item => {
-    setItemPressed(item);
-    setActionSheetType(ACTION_SHEET_TYPES.item_pressed);
-    onOpen();
+    navigation.navigate(ROUTES_NAME.book_detail, {
+      data: item._data,
+      id: item.id,
+    });
   };
 
   const _onClose = () => {
-    setEdit(false);
-    setCurrentId(null);
-    reset();
-    setActionSheetType(null);
     onClose();
   };
 
   const _onDeletePress = () => {
-    setActionSheetType(ACTION_SHEET_TYPES.confirm_remove_item);
-    onOpen();
+    console.log('on delete press');
   };
 
-  const _onConfirmDeletePress = () => {
+  const _onDeleteConfirmPress = () => {
     const {
       _data: {title},
       id,
@@ -124,18 +120,6 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
       })
       .catch(e => _alertError());
   };
-
-  const ItemPressedOption = ({title, right}) => (
-    <HStack
-      m={2}
-      flexDirection="row"
-      justifyContent="space-between"
-      alignItems="center"
-      w="full">
-      <Text>{title}</Text>
-      {right}
-    </HStack>
-  );
 
   const _onEditPress = () => {
     if (undefined !== itemPressed) {
@@ -163,41 +147,12 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
     }
   };
 
-  const EditOption = () => (
-    <ItemPressedOption
-      title="Edit this book"
-      right={
-        <AppTouchableOpacity onPress={() => _onEditPress()}>
-          <Icon as={MaterialCommunityIcons} name="pencil" size="xs" m={2} />
-        </AppTouchableOpacity>
-      }
-    />
-  );
-
-  const DeleteOption = () => (
-    <ItemPressedOption
-      title="Remove this Book ?"
-      right={
-        <Button
-          size="sm"
-          onPress={() => _onDeletePress()}
-          _dark={{background: 'red.500'}}
-          _light={{background: 'red.100'}}>
-          YES
-        </Button>
-      }
-    />
-  );
-
   const DeleteConfirmation = () => (
     <VStack>
-      <Text>
-        Note that this operation can not be undone. And this record can not be
-        accessed again. Procced ?
-      </Text>
+      <Text>Note that this record can not be accessed again. Procced ?</Text>
       <Button
         mt={4}
-        onPress={() => _onConfirmDeletePress()}
+        onPress={() => _onDeleteConfirmPress()}
         _dark={{background: 'red.500'}}
         _light={{background: 'red.100'}}>
         Delete
@@ -236,19 +191,12 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
           />
         </ActionSheet>
       )}
-      {!isFavourities && actionSheetType === ACTION_SHEET_TYPES.item_pressed && (
+      {/* {!isFavourities && actionSheetType === ACTION_SHEET_TYPES.item_pressed && (
         <ActionSheet isOpen={isOpen} onClose={_onClose}>
           <UpdateLastReadedPage item={itemPressed} />
-          <EditOption />
-          <DeleteOption />
+          <DeleteConfirmation />
         </ActionSheet>
-      )}
-      {!isFavourities &&
-        actionSheetType === ACTION_SHEET_TYPES.confirm_remove_item && (
-          <ActionSheet isOpen={isOpen} onClose={_onClose}>
-            <DeleteConfirmation />
-          </ActionSheet>
-        )}
+      )} */}
     </Screen>
   );
 };

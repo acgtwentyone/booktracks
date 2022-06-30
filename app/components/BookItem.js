@@ -1,10 +1,7 @@
-import {Box, HStack, Icon, Text, useColorModeValue, VStack} from 'native-base';
+import {Box, HStack, Text} from 'native-base';
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {ListItem} from '.';
+import {BookItemOptions, ListItem} from '.';
 import {limitStr} from '../Utils';
-import {AppTouchableOpacity} from './';
 
 const BookItem = ({
   item,
@@ -14,29 +11,9 @@ const BookItem = ({
   isFavScreen = false,
   limit,
 }) => {
-  const _favColor = useColorModeValue('yellow.500', 'yellow.500');
-  const _notFavColor = useColorModeValue('black', 'white');
   const {
     _data: {title, author, favourity, last_readed_page},
   } = item;
-
-  const __renderOptions = () => (
-    <VStack
-      display="flex"
-      flexDirection="column"
-      justifyContent="space-between"
-      alignItems="flex-end">
-      <Text fontSize="sm">Page {last_readed_page}</Text>
-      <AppTouchableOpacity onPress={onStarPress} style={styles.favIcon}>
-        <Icon
-          as={MaterialCommunityIcons}
-          name="star-outline"
-          size="xs"
-          color={favourity ? _favColor : _notFavColor}
-        />
-      </AppTouchableOpacity>
-    </VStack>
-  );
 
   const Content = () => (
     <HStack
@@ -60,7 +37,13 @@ const BookItem = ({
           {limit ? limitStr(author, limit) : author}
         </Text>
       </Box>
-      {!recent && !isFavScreen && __renderOptions()}
+      {!recent && !isFavScreen && (
+        <BookItemOptions
+          favourity={favourity}
+          onStarPress={onStarPress}
+          last_readed_page={last_readed_page}
+        />
+      )}
     </HStack>
   );
 
@@ -68,11 +51,5 @@ const BookItem = ({
     <ListItem content={<Content />} recent={recent} onItemPress={onItemPress} />
   );
 };
-
-const styles = StyleSheet.create({
-  favIcon: {
-    marginTop: 16,
-  },
-});
 
 export default React.memo(BookItem);

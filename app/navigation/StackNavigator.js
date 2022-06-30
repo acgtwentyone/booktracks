@@ -1,6 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
+  AddEditBookScreen,
   SigninScreen,
   SignupScreen,
   BooksScreen,
@@ -8,6 +9,7 @@ import {
   FavScreen,
   HomeScreen,
   SettingsScreen,
+  BookDetailScreen,
 } from '../screens';
 import {NAVIGATORS_NAME, ROUTES_NAME, SCREEN_TITLES} from '../Utils';
 import {useScreenOptions} from '../hooks';
@@ -44,6 +46,20 @@ const BooksStack = () => {
         component={BooksScreen}
         options={{
           title: SCREEN_TITLES.books,
+        }}
+      />
+      <BooksStk.Screen
+        name={ROUTES_NAME.book_detail}
+        component={BookDetailScreen}
+        options={{
+          title: SCREEN_TITLES.book_detail,
+        }}
+      />
+      <BooksStk.Screen
+        name={ROUTES_NAME.add_edit_book}
+        component={AddEditBookScreen}
+        options={{
+          title: SCREEN_TITLES.edit_book,
         }}
       />
     </BooksStk.Navigator>

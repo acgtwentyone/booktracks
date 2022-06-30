@@ -12,11 +12,11 @@ const useScreenOptions = (search = true) => {
       fontWeight: 'bold',
     },
     headerTitleAlign: 'center',
-    headerLeft: () => (
-      <Avatar bg="indigo.500" size="sm">
-        AV
-      </Avatar>
-    ),
+    // headerLeft: () => (
+    //   <Avatar bg="indigo.500" size="sm">
+    //     AV
+    //   </Avatar>
+    // ),
   };
 
   if (search) {
