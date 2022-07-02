@@ -14,15 +14,16 @@ const AppTextArea = ({
   maxW,
 }) => {
   return (
-    <Stack mx="4" {...props}>
+    <Stack mx="4">
       <TextArea
-        h={h ? h : 20}
+        h={h ? h : '100%'}
         w={w ? w : '100%'}
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
         onBlur={onBlur}
         size="lg"
+        {...props}
       />
     </Stack>
   );
