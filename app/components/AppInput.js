@@ -10,6 +10,7 @@ const AppInput = ({
   size,
   type,
   value,
+  variant,
 }) => {
   return (
     <Stack mx={mx ? mx : '4'} {...props}>
@@ -21,6 +22,7 @@ const AppInput = ({
         onChangeText={onChangeText}
         onBlur={onBlur}
         size={size ? size : 'lg'}
+        variant={variant ? variant : 'unstyled'}
       />
     </Stack>
   );
