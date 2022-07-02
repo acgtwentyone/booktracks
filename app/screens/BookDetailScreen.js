@@ -56,7 +56,7 @@ const BookDetailScreen = () => {
           title="Update last page"
           onPress={() => __onEditLastPagePress()}
         />
-        <AppMenuOption icon="comment-plus" title="New Note" />
+        {/* <AppMenuOption icon="comment-plus" title="New Note" /> */}
         <AppMenuOption icon="delete" title="Delete" />
       </Menu.Item>
     </AppMenu>
