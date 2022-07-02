@@ -1,15 +1,7 @@
-import {
-  Badge,
-  HStack,
-  Icon,
-  Text,
-  useColorModeValue,
-  VStack,
-} from 'native-base';
+import {HStack, Icon, Text, useColorModeValue, VStack} from 'native-base';
 import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AppBadge, AppTouchableOpacity} from '.';
-import {limitStr} from '../Utils';
 
 const BookItemContent = ({onStarPress, item, recent = false}) => {
   const _favColor = useColorModeValue('yellow.500', 'yellow.500');
