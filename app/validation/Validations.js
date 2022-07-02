@@ -12,7 +12,7 @@ const BookSchema = yup.object({
 });
 
 const UpdateLastReadedPageSchema = yup.object({
-  last_readed_page: yup.string().required(),
+  last_readed_page: yup.string().required('Page is required.'),
 });
 
 const NoteSchema = yup.object({

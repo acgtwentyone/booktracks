@@ -1,12 +1,6 @@
 import React, {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
-import {
-  FormControl,
-  HStack,
-  Text,
-  VStack,
-  useColorModeValue,
-} from 'native-base';
+import {FormControl, HStack, Text, VStack} from 'native-base';
 import firestore from '@react-native-firebase/firestore';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {AppInput, SubmitButton} from '.';
@@ -15,12 +9,11 @@ import {useAlertError, useErrorColor, useShowMessage} from '../hooks';
 import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
 import {UpdateLastReadedPageSchema} from '../validation/Validations';
 
-const UpdateLastReadedPage = ({item}) => {
+const UpdateLastReadedPage = ({item, id, onClose}) => {
   const [updating, setUpdataing] = useState(false);
   const {_alertError} = useAlertError();
   const {errorColor} = useErrorColor();
   const {_showToastMsg} = useShowMessage();
-  const activityIndicatorBg = useColorModeValue('#000', '#FFF');
 
   const {
     control,
@@ -30,7 +23,7 @@ const UpdateLastReadedPage = ({item}) => {
     formState: {errors},
   } = useForm({
     defaultValues: {
-      last_readed_page: item._data.last_readed_page.toString(),
+      last_readed_page: item.last_readed_page.toString(),
     },
     resolver: yupResolver(UpdateLastReadedPageSchema),
   });
@@ -43,13 +36,14 @@ const UpdateLastReadedPage = ({item}) => {
         .collection(COLLECTION_NAMES.users)
         .doc(u.uid)
         .collection(COLLECTION_NAMES.books)
-        .doc(item.id)
+        .doc(id)
         .update({
           last_readed_page: last_readed_page,
         })
         .then(() => {
           setUpdataing(false);
           _showToastMsg('Last readed page updated');
+          onClose();
         })
         .catch(error => {
           setUpdataing(false);

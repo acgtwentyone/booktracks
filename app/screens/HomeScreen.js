@@ -96,7 +96,7 @@ const HomeScreen = () => {
         ListHeaderComponent={
           <>
             <RecentBooks title="Recent books" isFavScreen={false} key="books" />
-            <RecentNotes key="notes" />
+            {/* <RecentNotes key="notes" /> */}
             <RecentBooks
               title="Recent favourities books"
               isFavScreen={true}
