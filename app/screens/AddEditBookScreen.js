@@ -163,6 +163,7 @@ const AddEditBookScreen = () => {
     _getBook();
     if (!edit) {
       __showSaveButton();
+      setLoading(false);
     }
     return () => {};
   }, []);

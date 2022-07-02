@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Menu, ScrollView, Text, useDisclose, VStack} from 'native-base';
+import {Button, Menu, ScrollView, Text, useDisclose, VStack} from 'native-base';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
+
+import {useAlertError, useShowMessage} from '../hooks';
 
 import {
   AppBadge,
@@ -29,6 +31,9 @@ const BookDetailScreen = () => {
   const [loading, setLoading] = useState(true);
   const [actionSheetType, setActionSheetType] = useState(null);
 
+  const {_alertError} = useAlertError();
+  const {_showToastMsg} = useShowMessage();
+
   const {id} = route.params;
 
   const __onEditPress = () => {
@@ -40,6 +45,11 @@ const BookDetailScreen = () => {
 
   const __onEditLastPagePress = () => {
     setActionSheetType(ACTION_SHEET_TYPES.update_last_page);
+    onOpen();
+  };
+
+  const __onDeletePress = () => {
+    setActionSheetType(ACTION_SHEET_TYPES.delete_book);
     onOpen();
   };
 
@@ -57,7 +67,11 @@ const BookDetailScreen = () => {
           onPress={() => __onEditLastPagePress()}
         />
         {/* <AppMenuOption icon="comment-plus" title="New Note" /> */}
-        <AppMenuOption icon="delete" title="Delete" />
+        <AppMenuOption
+          icon="delete"
+          title="Delete"
+          onPress={() => __onDeletePress()}
+        />
       </Menu.Item>
     </AppMenu>
   );
@@ -83,6 +97,39 @@ const BookDetailScreen = () => {
   const onStarPress = () => {
     console.log('onStarPress');
   };
+
+  const _onDeleteConfirmPress = () => {
+    getObjData('user', e => _alertError())
+      .then(u => {
+        firestore()
+          .collection(COLLECTION_NAMES.users)
+          .doc(u.uid)
+          .collection(COLLECTION_NAMES.books)
+          .doc(id)
+          .delete()
+          .then(() => {
+            _showToastMsg(`Book ${item.title} deleted`);
+            navigation.navigate(ROUTES_NAME.books);
+          })
+          .catch(error => _alertError());
+      })
+      .catch(e => _alertError());
+  };
+
+  const DeleteConfirmation = () => (
+    <VStack>
+      <Text>
+        Note that this record can not be accessed again. Do you want Procced ?
+      </Text>
+      <Button
+        mt={4}
+        onPress={() => _onDeleteConfirmPress()}
+        _dark={{background: 'red.500'}}
+        _light={{background: 'red.100'}}>
+        Delete
+      </Button>
+    </VStack>
+  );
 
   if (loading) {
     return <AppActivityIndicator m={0} />;
@@ -116,6 +163,11 @@ const BookDetailScreen = () => {
             <UpdateLastReadedPage item={item} id={id} onClose={onClose} />
           </ActionSheet>
         )}
+      {ACTION_SHEET_TYPES.delete_book === actionSheetType && item !== null && (
+        <ActionSheet isOpen={isOpen} onClose={onClose}>
+          <DeleteConfirmation />
+        </ActionSheet>
+      )}
     </Screen>
   );
 };
