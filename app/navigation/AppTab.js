@@ -18,14 +18,14 @@ const AppTab = () => {
   const defaultOptions = {tabBarLabel: ''};
 
   return (
-    <Tab.Navigator initialRouteName={home} screenOptions={screenOptions}>
-      <Tab.Screen name={home} component={HomeStack} options={defaultOptions} />
+    <Tab.Navigator initialRouteName={books} screenOptions={screenOptions}>
+      {/* <Tab.Screen name={home} component={HomeStack} options={defaultOptions} /> */}
       <Tab.Screen
         name={books}
         component={BooksStack}
         options={defaultOptions}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name={favourities}
         component={FavStack}
         options={defaultOptions}
@@ -39,7 +39,7 @@ const AppTab = () => {
         name={settings}
         component={SettingsStack}
         options={defaultOptions}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };

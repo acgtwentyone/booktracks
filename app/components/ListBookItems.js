@@ -16,7 +16,12 @@ import {
 } from '.';
 import {BookSchema} from '../validation/Validations';
 import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
-import {useAlertError, useLoadBooks, useOnStarPress, useShowMessage} from '../hooks';
+import {
+  useAlertError,
+  useLoadBooks,
+  useOnStarPress,
+  useShowMessage,
+} from '../hooks';
 import {getObjData} from '../data/AsyncStorageUtils';
 import {limitStr, ROUTES_NAME, SCREEN_WIDTH} from '../Utils';
 import {UpdateLastReadedPage} from './';
@@ -89,7 +94,6 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
 
   const _onItemPress = item => {
     navigation.navigate(ROUTES_NAME.book_detail, {
-      data: item._data,
       id: item.id,
     });
   };

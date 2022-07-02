@@ -7,7 +7,7 @@ const BookItemContent = ({onStarPress, item, recent = false}) => {
   const _favColor = useColorModeValue('yellow.500', 'yellow.500');
   const _notFavColor = useColorModeValue('black', 'white');
 
-  const {title, last_readed_page, author, created_at, favourity} = item;
+  const {title, last_readed_page, author, favourity} = item;
 
   return (
     <HStack

@@ -1,79 +1,12 @@
 import React from 'react';
 import {Controller} from 'react-hook-form';
 import {FormControl, Stack, Text} from 'native-base';
-import firestore from '@react-native-firebase/firestore';
 
-import {AppInput, AppTextArea, SubmitButton} from './';
-import {getObjData} from '../data/AsyncStorageUtils';
-import {useAlertError, useErrorColor} from '../hooks';
-import {uuid} from '../Utils';
-import {
-  COLLECTION_NAMES,
-  serTimestamp,
-  ItemStatus,
-} from '../firebase/FirebaseUtils';
+import {AppInput, AppTextArea} from './';
+import {useErrorColor} from '../hooks';
 
-const BookForm = ({
-  control,
-  currentId,
-  edit,
-  handleSubmit,
-  onSuccess,
-  errors,
-}) => {
-  const {_alertError} = useAlertError();
+const BookForm = ({control, errors}) => {
   const {errorColor} = useErrorColor();
-
-  const onSubmit = data => {
-    const {author, isbn, last_readed_page, description, title, year} = data;
-    const lastReaded =
-      undefined !== last_readed_page && last_readed_page !== ''
-        ? Number(last_readed_page)
-        : '';
-    const y = undefined !== year && year !== '' ? Number(year) : '';
-    const t = title.length > 25 ? `${title.substring(0, 24)}...` : `${title}`;
-    getObjData('user', e => _alertError()).then(u => {
-      edit
-        ? firestore()
-            .collection(COLLECTION_NAMES.users)
-            .doc(u.uid)
-            .collection(COLLECTION_NAMES.books)
-            .doc(currentId)
-            .update({
-              title: title,
-              author: author,
-              year: y,
-              isbn: isbn,
-              last_readed_page: lastReaded,
-              description: description,
-            })
-            .then(() => {
-              onSuccess(`Book ${t} updated`);
-            })
-            .catch(error => _alertError())
-        : firestore()
-            .collection(COLLECTION_NAMES.users)
-            .doc(u.uid)
-            .collection(COLLECTION_NAMES.books)
-            .add({
-              id: uuid(),
-              title: title,
-              author: author,
-              year: y,
-              isbn: isbn,
-              last_readed_page: lastReaded,
-              description: description,
-              created_at: serTimestamp,
-              updated_at: serTimestamp,
-              status: ItemStatus.active,
-              favourity: false,
-            })
-            .then(() => {
-              onSuccess(`Book ${t} added`);
-            })
-            .catch(error => _alertError());
-    });
-  };
 
   const ErrorMessage = ({name}) => (
     <>
@@ -86,7 +19,7 @@ const BookForm = ({
   );
 
   return (
-    <FormControl>
+    <FormControl h="100%">
       <Stack my={2}>
         <Controller
           control={control}
@@ -186,18 +119,12 @@ const BookForm = ({
               onChangeText={onChange}
               value={value}
               onBlur={onBlur}
-              h={30}
             />
           )}
           name="description"
         />
         <ErrorMessage name="description" />
       </Stack>
-      <SubmitButton
-        handleSubmit={handleSubmit}
-        onSubmit={onSubmit}
-        title={edit && currentId ? 'Update Book' : 'Add Book'}
-      />
     </FormControl>
   );
 };
