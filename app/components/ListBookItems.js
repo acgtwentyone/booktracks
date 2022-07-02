@@ -24,47 +24,17 @@ import {
 } from '../hooks';
 import {getObjData} from '../data/AsyncStorageUtils';
 import {limitStr, ROUTES_NAME, SCREEN_WIDTH} from '../Utils';
-import {UpdateLastReadedPage} from './';
 import {useNavigation} from '@react-navigation/native';
 
-const ACTION_SHEET_TYPES = {
-  add_edit: 'ADD_EDIT',
-  item_pressed: 'ITEM_PRESSED',
-  confirm_remove_item: 'CONFIRM_REMOVE_ITEM',
-};
-
 const ListBookItems = ({isFavourities = false, subtitle}) => {
-  const {isOpen, onOpen, onClose} = useDisclose();
-  const [currentId, setCurrentId] = useState(null);
-  const [edit, setEdit] = useState(false);
-  const [actionSheetType, setActionSheetType] = useState(null);
   const [itemPressed, setItemPressed] = useState(null);
   const {books, loading, refreshing, _onRefresh} = useLoadBooks(isFavourities);
   const {_alertError} = useAlertError();
   const {_showToastMsg} = useShowMessage();
   const navigation = useNavigation();
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    setValue,
-    formState: {errors},
-  } = useForm({
-    defaultValues: {
-      title: '',
-      author: '',
-      year: '',
-      isbn: '',
-      last_readed_page: '',
-      description: '',
-    },
-    resolver: yupResolver(BookSchema),
-  });
-
   const _onSuccess = msg => {
     _showToastMsg(msg);
-    _onClose();
   };
 
   const _onStarPress = ({_data: {title, favourity}, id}) => {
@@ -78,7 +48,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
           favourity: !favourity,
         })
         .then(() => {
-          _onSuccess(
+          _showToastMsg(
             `Book "${limitStr(title)}" ${
               favourity ? 'removed from' : 'added to'
             } favourity`,
@@ -96,10 +66,6 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
     navigation.navigate(ROUTES_NAME.book_detail, {
       id: item.id,
     });
-  };
-
-  const _onClose = () => {
-    onClose();
   };
 
   const _onDeletePress = () => {
@@ -123,32 +89,6 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
           .catch(error => _alertError());
       })
       .catch(e => _alertError());
-  };
-
-  const _onEditPress = () => {
-    if (undefined !== itemPressed) {
-      const {
-        _data: {author, isbn, last_readed_page, description, title, year},
-        id,
-      } = itemPressed;
-      if (
-        undefined !== title &&
-        undefined !== isbn &&
-        undefined !== author &&
-        undefined !== year
-      ) {
-        setValue('author', author);
-        setValue('isbn', isbn);
-        setValue('title', title);
-        setValue('year', year.toString());
-        setValue('last_readed_page', last_readed_page.toString());
-        setValue('description', description.toString());
-        setCurrentId(id);
-        setEdit(true);
-        setActionSheetType(ACTION_SHEET_TYPES.add_edit);
-        onOpen();
-      }
-    }
   };
 
   const DeleteConfirmation = () => (
@@ -183,24 +123,6 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
         loading={loading}
       />
       {!isFavourities && <AppFab onPress={_onFabPress} />}
-      {!isFavourities && actionSheetType === ACTION_SHEET_TYPES.add_edit && (
-        <ActionSheet isOpen={isOpen} onClose={_onClose}>
-          <BookForm
-            control={control}
-            currentId={currentId}
-            edit={edit}
-            handleSubmit={handleSubmit}
-            onSuccess={_onSuccess}
-            errors={errors}
-          />
-        </ActionSheet>
-      )}
-      {/* {!isFavourities && actionSheetType === ACTION_SHEET_TYPES.item_pressed && (
-        <ActionSheet isOpen={isOpen} onClose={_onClose}>
-          <UpdateLastReadedPage item={itemPressed} />
-          <DeleteConfirmation />
-        </ActionSheet>
-      )} */}
     </Screen>
   );
 };
