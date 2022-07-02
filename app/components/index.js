@@ -5,6 +5,8 @@ export {default as AppTouchableOpacity} from './AppTouchableOpacity';
 export {default as ActionSheet} from './ActionSheet';
 export {default as AppFab} from './AppFab';
 export {default as AppInput} from './AppInput';
+export {default as AppMenu} from './AppMenu';
+export {default as AppMenuOption} from './AppMenuOption';
 export {default as AppTextArea} from './AppTextArea';
 export {default as BookForm} from './BookForm';
 export {default as BookItem} from './BookItem';
