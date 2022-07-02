@@ -12,6 +12,7 @@ const AppTextArea = ({
   h,
   w,
   maxW,
+  variant,
 }) => {
   return (
     <Stack mx="4">
@@ -24,6 +25,7 @@ const AppTextArea = ({
         onBlur={onBlur}
         size="lg"
         {...props}
+        variant={variant ? variant : 'unstyled'}
       />
     </Stack>
   );
