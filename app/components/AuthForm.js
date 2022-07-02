@@ -170,7 +170,7 @@ const AuthForm = ({navigation, signin = true}) => {
           }}>
           <FormControl isRequired>
             {!signin && (
-              <Stack mx={8} my={2}>
+              <Stack mx={8} my={4}>
                 <Controller
                   name="username"
                   control={control}
@@ -181,13 +181,14 @@ const AuthForm = ({navigation, signin = true}) => {
                       onChangeText={onChange}
                       value={value}
                       size="lg"
+                      variant="underlined"
                     />
                   )}
                 />
                 <ErrorMessage name="username" />
               </Stack>
             )}
-            <Stack mx={8} my={2}>
+            <Stack mx={8} my={4}>
               <Controller
                 name="email"
                 control={control}
@@ -198,13 +199,14 @@ const AuthForm = ({navigation, signin = true}) => {
                     onChangeText={onChange}
                     value={value}
                     size="lg"
+                    variant="underlined"
                   />
                 )}
               />
               <ErrorMessage name="email" />
             </Stack>
 
-            <Stack mx={8} my={2}>
+            <Stack mx={8} my={4}>
               <Controller
                 name="password"
                 control={control}
@@ -216,6 +218,7 @@ const AuthForm = ({navigation, signin = true}) => {
                     onChangeText={onChange}
                     value={value}
                     size="lg"
+                    variant="underlined"
                   />
                 )}
               />
