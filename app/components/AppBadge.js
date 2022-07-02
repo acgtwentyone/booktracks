@@ -6,18 +6,14 @@ const AppBadge = ({children, inverse = false, title}) => {
     <HStack mt={4}>
       {inverse && (
         <>
-          <Badge ml={2} variant="solid">
-            {children}
-          </Badge>
+          <Badge ml={2}>{children}</Badge>
           <Text fontSize="md">{title}</Text>
         </>
       )}
       {!inverse && (
         <>
           <Text fontSize="md">{title}</Text>
-          <Badge ml={2} variant="solid">
-            {children}
-          </Badge>
+          <Badge ml={2}>{children}</Badge>
         </>
       )}
     </HStack>
