@@ -11,11 +11,7 @@ This app is open source. Please see the [code-of-conduting](https://github.com/a
 ## Some app screenshots
 
 <div align="center">
-<img src="https://user-images.githubusercontent.com/94224806/174486977-71af7a98-d7f0-49dc-89dd-3fdd572bd2c4.jpg" alt="SPLASH"     width="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/94224806/174486993-4a1e064a-641f-4562-a39b-18371a8e0bb2.jpg" alt="SIGNUP" width="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/94224806/174487021-c020b9aa-4689-4ac5-bf0b-6a8c5429483a.jpg" alt="HOME" width="200">
-</div></br>
-
-<div align="center">
-<img src="https://user-images.githubusercontent.com/94224806/174487034-9e225ef2-c5a3-488d-aaf2-605c79081616.jpg" alt="BOOKS" width="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/94224806/174487039-178df2a7-44a1-494c-85d5-bedc3d9bd87c.jpg" alt="FAVOURITIES" width="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/94224806/174487050-08ea84a3-3e75-4975-bab8-a3aef603ff0a.jpg" alt="SETTINGS" width="200">
+<img src="https://user-images.githubusercontent.com/94224806/174486977-71af7a98-d7f0-49dc-89dd-3fdd572bd2c4.jpg" alt="SPLASH" width="200">
 </div>
 
 ## Techs we use
