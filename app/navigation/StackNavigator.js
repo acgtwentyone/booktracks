@@ -2,14 +2,16 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   AddEditBookScreen,
-  SigninScreen,
-  SignupScreen,
+  AddEditNoteScreen,
+  BookDetailScreen,
   BooksScreen,
-  NotesScreen,
   FavScreen,
   HomeScreen,
+  NoteDetailScreen,
+  NotesScreen,
   SettingsScreen,
-  BookDetailScreen,
+  SigninScreen,
+  SignupScreen,
 } from '../screens';
 import {NAVIGATORS_NAME, ROUTES_NAME, SCREEN_TITLES} from '../Utils';
 import {useScreenOptions} from '../hooks';
@@ -111,6 +113,20 @@ const NotesStack = () => {
         component={NotesScreen}
         options={{
           title: SCREEN_TITLES.notes,
+        }}
+      />
+      <NotesStk.Screen
+        name={ROUTES_NAME.note_detail}
+        component={NoteDetailScreen}
+        options={{
+          title: SCREEN_TITLES.note_detail,
+        }}
+      />
+      <NotesStk.Screen
+        name={ROUTES_NAME.add_edit_note}
+        component={AddEditNoteScreen}
+        options={{
+          title: SCREEN_TITLES.edit_note,
         }}
       />
     </NotesStk.Navigator>

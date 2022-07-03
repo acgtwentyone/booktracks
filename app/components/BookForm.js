@@ -109,7 +109,7 @@ const BookForm = ({control, errors}) => {
         />
         <ErrorMessage name="last_readed_page" />
       </Stack>
-      <Stack my={2}>
+      <Stack my={2} mx={2}>
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}}) => (

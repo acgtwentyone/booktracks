@@ -1,86 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Controller} from 'react-hook-form';
 import {
+  Button,
   FormControl,
+  HStack,
   Stack,
   Text,
-  useColorModeValue,
-  useToast,
+  useDisclose,
 } from 'native-base';
-import firestore from '@react-native-firebase/firestore';
 
-import {AppTextArea, SubmitButton} from '.';
-import {getObjData} from '../data/AsyncStorageUtils';
-import {uuid} from '../Utils';
-import {
-  COLLECTION_NAMES,
-  serTimestamp,
-  ItemStatus,
-} from '../firebase/FirebaseUtils';
+import {ActionSheet, AppInput, AppTextArea, SelectBookOptions} from './';
+import {useErrorColor} from '../hooks';
 
-const NoteForm = ({
-  control,
-  currentId,
-  edit,
-  handleSubmit,
-  onSuccess,
-  errors,
-  selectedBook,
-  alertError,
-}) => {
-  const errorColor = useColorModeValue('red.500', 'white');
-  const toast = useToast();
+const ACTION_SHEET_TYPES = {
+  select_book: 'SELECT_BOOK',
+};
 
-  const _showToastMsg = msg => {
-    toast.show({
-      title: msg,
-      placement: 'top',
-    });
-  };
-
-  const onSubmit = data => {
-    const {note} = data;
-    const n =
-      note.length > 25 ? `Note: ${note.substring(0, 24)}...` : `Note: ${note}`;
-    getObjData('user', e => alertError())
-      .then(u => {
-        if (edit) {
-          firestore()
-            .collection('users')
-            .doc(u.uid)
-            .collection(COLLECTION_NAMES.books)
-            .doc(selectedBook.id)
-            .collection(COLLECTION_NAMES.notes)
-            .update({
-              note: note,
-            })
-            .then(() => onSuccess(`${n} updated`))
-            .catch(error => alertError());
-        } else {
-          if (selectedBook !== null) {
-            firestore()
-              .collection('users')
-              .doc(u.uid)
-              .collection(COLLECTION_NAMES.books)
-              .doc(selectedBook.id)
-              .collection(COLLECTION_NAMES.notes)
-              .add({
-                id: uuid(),
-                note: note,
-                created_at: serTimestamp,
-                updated_at: serTimestamp,
-                book_id: selectedBook.id,
-                status: ItemStatus.active,
-              })
-              .then(() => onSuccess(`${n} added`))
-              .catch(error => alertError());
-          } else {
-            _showToastMsg('Please select a book first');
-          }
-        }
-      })
-      .catch(error => alertError());
-  };
+const NoteForm = ({control, errors, selectedBook, setSelectedBook}) => {
+  const {isOpen, onOpen, onClose} = useDisclose();
+  const {errorColor} = useErrorColor();
+  const [actionSheetType, setActionSheetType] = useState(null);
 
   const ErrorMessage = ({name}) => (
     <>
@@ -92,9 +31,43 @@ const NoteForm = ({
     </>
   );
 
+  const __onSelectBookPress = () => {
+    setActionSheetType(ACTION_SHEET_TYPES.select_book);
+    onOpen();
+  };
+
   return (
     <FormControl>
-      <Stack>
+      <HStack
+        p={4}
+        w="full"
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center">
+        <Text>Select a book (required)</Text>
+        <Button onPress={() => __onSelectBookPress()}>SELECT</Button>
+      </HStack>
+      <HStack p={4} w="full" display="flex" alignItems="center">
+        <Text>Page (optional)</Text>
+        <Stack>
+          <Controller
+            control={control}
+            render={({field: {onChange, onBlur, value}}) => (
+              <AppInput
+                placeholder="enter a page"
+                control={control}
+                rules={{required: true}}
+                onChangeText={onChange}
+                value={value}
+                onBlur={onBlur}
+              />
+            )}
+            name="page"
+          />
+          <ErrorMessage name="page" />
+        </Stack>
+      </HStack>
+      <Stack my={2}>
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
@@ -105,17 +78,21 @@ const NoteForm = ({
               onChangeText={onChange}
               value={value}
               onBlur={onBlur}
+              m={0}
             />
           )}
           name="note"
         />
         <ErrorMessage name="note" />
       </Stack>
-      <SubmitButton
-        handleSubmit={handleSubmit}
-        onSubmit={onSubmit}
-        title={edit && currentId ? 'Update note' : 'Add note'}
-      />
+      {ACTION_SHEET_TYPES.select_book === actionSheetType && (
+        <ActionSheet isOpen={isOpen} onClose={onClose}>
+          <SelectBookOptions
+            selectedBook={selectedBook}
+            setSelectedBook={setSelectedBook}
+          />
+        </ActionSheet>
+      )}
     </FormControl>
   );
 };

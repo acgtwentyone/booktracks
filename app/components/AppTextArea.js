@@ -13,9 +13,10 @@ const AppTextArea = ({
   w,
   maxW,
   variant,
+  m,
 }) => {
   return (
-    <Stack mx="4">
+    <Stack m={m ? m : '2'}>
       <TextArea
         h={h ? h : '100%'}
         w={w ? w : '100%'}

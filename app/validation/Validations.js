@@ -17,6 +17,7 @@ const UpdateLastReadedPageSchema = yup.object({
 
 const NoteSchema = yup.object({
   note: yup.string().notRequired(),
+  page: yup.string().notRequired(),
 });
 
 const SigninSchema = yup

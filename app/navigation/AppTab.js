@@ -30,11 +30,11 @@ const AppTab = () => {
         component={FavStack}
         options={defaultOptions}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name={notes}
         component={NotesStack}
         options={defaultOptions}
-      />*/}
+      />
       <Tab.Screen
         name={settings}
         component={SettingsStack}

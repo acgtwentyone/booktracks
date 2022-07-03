@@ -61,9 +61,6 @@ const SelectBookOptions = ({selectedBook, setSelectedBook}) => {
         renderItem={({item}) => <BookItem item={item} />}
         showsHorizontalScrollIndicator={false}
       />
-      <Text px={2} mt={6} mb={2} fontSize="md">
-        Please fill the note details (Optional)
-      </Text>
     </Box>
   ) : (
     <Box

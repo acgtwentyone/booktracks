@@ -11,6 +11,7 @@ export {default as AppTextArea} from './AppTextArea';
 export {default as BookForm} from './BookForm';
 export {default as BookItem} from './BookItem';
 export {default as BookItemContent} from './BookItemContent';
+export {default as NoteItemContent} from './NoteItemContent';
 export {default as EmptyView} from './EmptyView';
 export {default as ErrorMessage} from './ErrorMessage';
 export {default as ListBookItems} from './ListBookItems';
