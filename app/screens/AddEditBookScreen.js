@@ -13,7 +13,7 @@ import {
 } from '../components';
 import {useAlertError, useShowMessage} from '../hooks';
 import {BookSchema} from '../validation/Validations';
-import {uuid} from '../Utils';
+import {ROUTES_NAME, uuid} from '../Utils';
 import {getObjData} from '../data/AsyncStorageUtils';
 import {
   COLLECTION_NAMES,
@@ -92,6 +92,9 @@ const AddEditBookScreen = () => {
   const _onSuccess = msg => {
     _showToastMsg(msg);
     setSaving(false);
+    if (!edit) {
+      navigation.navigate(ROUTES_NAME.books);
+    }
   };
 
   const __onErrorSaving = () => {
