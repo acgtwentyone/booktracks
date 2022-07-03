@@ -1,8 +1,7 @@
 import React from 'react';
 import {Actionsheet, Box} from 'native-base';
-import {StyleSheet} from 'react-native';
 
-const ActionSheet = ({style, props, isOpen, onClose, children, reference}) => {
+const ActionSheet = ({props, isOpen, onClose, children, reference}) => {
   return (
     <>
       <Actionsheet
@@ -10,7 +9,6 @@ const ActionSheet = ({style, props, isOpen, onClose, children, reference}) => {
         isOpen={isOpen}
         onClose={onClose}
         disableOverlay
-        style={[styles.container, {...style}]}
         {...props}>
         <Actionsheet.Content>
           <Box w="100%" px={4} justifyContent="center">
@@ -21,9 +19,5 @@ const ActionSheet = ({style, props, isOpen, onClose, children, reference}) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default React.memo(ActionSheet);

@@ -1,8 +1,7 @@
 import React from 'react';
 import {Avatar, SearchIcon, useColorModeValue} from 'native-base';
-import {HIT_SLOP} from '../Utils';
 
-const useScreenOptions = (search = true) => {
+const useScreenOptions = RightComponent => {
   let screenOptions = {
     headerStyle: {
       backgroundColor: useColorModeValue('#FFF', '#000'),
@@ -12,17 +11,15 @@ const useScreenOptions = (search = true) => {
       fontWeight: 'bold',
     },
     headerTitleAlign: 'center',
-    headerLeft: () => (
-      <Avatar bg="indigo.500" size="sm">
-        AV
-      </Avatar>
-    ),
+    // headerLeft: () => (
+    //   <Avatar bg="indigo.500" size="sm">
+    //     AV
+    //   </Avatar>
+    // ),
   };
 
-  if (search) {
-    screenOptions.headerRight = () => (
-      <SearchIcon hitSlop={HIT_SLOP} size="sm" />
-    );
+  if (RightComponent) {
+    screenOptions.headerRight = () => <RightComponent />;
   }
 
   return {screenOptions};

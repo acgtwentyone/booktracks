@@ -15,9 +15,13 @@ const COLORS = {
 const ROUTES_NAME = {
   account: 'ACCOUNT',
   books: 'BOOKS',
+  book_detail: 'BOOK_DETAIL',
+  note_detail: 'NOTE_DETAIL',
+  add_edit_book: 'ADD_EDIT_BOOK',
+  add_edit_note: 'ADD_EDIT_NOTE',
   favourities: 'FAVOURITIES',
   home: 'HOME',
-  pages: 'PAGES',
+  notes: 'NOTES',
   search: 'SEARCH',
   settings: 'SETTINGS',
   signin: 'SIGNIN',
@@ -26,10 +30,16 @@ const ROUTES_NAME = {
 
 const SCREEN_TITLES = {
   account: 'Account',
+  book_detail: 'Book Detail',
+  note_detail: 'Note Detail',
   books: 'Books',
+  edit_book: 'Edit Book',
+  edit_note: 'Edit Note',
   favourities: 'Favourities',
   home: 'Home',
-  pages: 'Pages',
+  notes: 'Notes',
+  new_book: 'New Book',
+  new_note: 'New Note',
   search: 'Search',
   settings: 'Settings',
 };
@@ -37,7 +47,7 @@ const SCREEN_TITLES = {
 const TABS_NAME = {
   home: 'HOME_TAB',
   books: 'BOOKS_TAB',
-  pages: 'PAGES_TAB',
+  notes: 'NOTES_TAB',
   favourities: 'FAV_TABS',
   settings: 'SETTINGS_TAB',
 };
@@ -51,13 +61,6 @@ const SCREEN_WIDTH = Dimensions.get('screen').width;
 const SCREEN_HEIGHT = Dimensions.get('screen').height;
 
 const HIT_SLOP = {top: 20, right: 20, bottom: 20, left: 20};
-
-const FONT_SIZE = {
-  font_16: 16,
-  font_15: 15,
-  font_18: 18,
-  font_20: 20,
-};
 
 const FIREBASE_ERRORS = {
   'auth/user-not-found': 'User not found!',
@@ -88,10 +91,13 @@ export const uuid = () => {
   });
 };
 
+export const limitStr = (str, limit = SCREEN_WIDTH / 25, end = '...') => {
+  return str.length > limit ? `${str.substring(0, limit - 1)}${end}` : str;
+};
+
 export {
   COLORS,
   FIREBASE_ERRORS,
-  FONT_SIZE,
   HIT_SLOP,
   NAVIGATORS_NAME,
   TABS_NAME,

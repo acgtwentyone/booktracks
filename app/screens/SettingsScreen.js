@@ -26,18 +26,22 @@ const SettingsScreen = ({navigation}) => {
   return (
     <Screen style={styles.container}>
       <Box>
-        <Text padding={4}>Theme</Text>
+        <Text padding={4} fontSize="lg">
+          Theme
+        </Text>
         <HStack justifyContent="space-between" alignItems="center" paddingX={4}>
-          <Text>Dark Mode</Text>
+          <Text fontSize="md">Dark Mode</Text>
           <Switch
-            size="sm"
+            size="lg"
             onToggle={toggleColorMode}
             isChecked={colorMode === 'dark'}
           />
         </HStack>
       </Box>
       <Box alignItems="center" position="absolute" bottom={8} width="100%">
-        <Button onPress={_signout}>Sign out</Button>
+        <Button onPress={_signout} size="lg">
+          Sign out
+        </Button>
       </Box>
     </Screen>
   );

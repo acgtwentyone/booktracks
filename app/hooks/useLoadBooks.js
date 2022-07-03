@@ -15,11 +15,14 @@ const useLoadBooks = isFavourities => {
   }, []);
 
   const _onRefresh = () => {
+    setRefreshing(true);
+    setLoading(true);
+    setBooks([]);
     _loadBooks();
-    return subscriber;
   };
 
   const _loadBooks = () => {
+    setLoading(true);
     getObjData('user', e => {}).then(u => {
       subscriber.current = firestore()
         .collection('users')
@@ -35,11 +38,12 @@ const useLoadBooks = isFavourities => {
         });
         setBooks(_books);
         setLoading(false);
+        setRefreshing(false);
       });
     });
   };
 
-  return {books, loading, refreshing, _loadBooks, _onRefresh};
+  return {books, loading, refreshing, _onRefresh, subscriber};
 };
 
 export default useLoadBooks;

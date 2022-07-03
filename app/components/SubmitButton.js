@@ -1,20 +1,28 @@
 import React from 'react';
-import {Button} from 'native-base';
-import {StyleSheet} from 'react-native';
+import {Button, HStack, Text} from 'native-base';
+import {AppActivityIndicator} from './';
 
-const SubmitButton = ({style, props, title, size, handleSubmit, onSubmit}) => (
+const SubmitButton = ({
+  style,
+  props,
+  title,
+  size,
+  handleSubmit,
+  onSubmit,
+  progress,
+  showProgressIndicator,
+}) => (
   <Button
-    size={size || 'sm'}
-    style={[styles.container, {...style}]}
+    size={size || 'lg'}
     {...props}
     onPress={handleSubmit(onSubmit)}
-    m={4}>
-    {title}
+    m={4}
+    shadow={2}>
+    <HStack alignItems="center">
+      {progress && showProgressIndicator && <AppActivityIndicator m={0} />}
+      {!progress && <Text>{title}</Text>}
+    </HStack>
   </Button>
 );
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default React.memo(SubmitButton);

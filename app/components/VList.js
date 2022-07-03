@@ -13,7 +13,6 @@ const VList = ({
   onRefresh,
   loading,
 }) => {
-
   if (loading) {
     return <AppActivityIndicator />;
   }
@@ -28,7 +27,7 @@ const VList = ({
       keyExtractor={item => item.id.toString()}
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={
-        data.length === 0 ? <EmptyView /> : ListHeaderComponent
+        data.length === 0 && !loading ? <EmptyView /> : ListHeaderComponent
       }
       {...props}
     />

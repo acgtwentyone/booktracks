@@ -1,13 +1,17 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
-  SigninScreen,
-  SignupScreen,
+  AddEditBookScreen,
+  AddEditNoteScreen,
+  BookDetailScreen,
   BooksScreen,
-  PagesScreen,
   FavScreen,
   HomeScreen,
+  NoteDetailScreen,
+  NotesScreen,
   SettingsScreen,
+  SigninScreen,
+  SignupScreen,
 } from '../screens';
 import {NAVIGATORS_NAME, ROUTES_NAME, SCREEN_TITLES} from '../Utils';
 import {useScreenOptions} from '../hooks';
@@ -17,7 +21,7 @@ const AuthStk = createNativeStackNavigator();
 const BooksStk = createNativeStackNavigator();
 const FavStk = createNativeStackNavigator();
 const HomeStk = createNativeStackNavigator();
-const PagesStk = createNativeStackNavigator();
+const NotesStk = createNativeStackNavigator();
 const SettingsStk = createNativeStackNavigator();
 const RootStk = createNativeStackNavigator();
 
@@ -44,6 +48,20 @@ const BooksStack = () => {
         component={BooksScreen}
         options={{
           title: SCREEN_TITLES.books,
+        }}
+      />
+      <BooksStk.Screen
+        name={ROUTES_NAME.book_detail}
+        component={BookDetailScreen}
+        options={{
+          title: SCREEN_TITLES.book_detail,
+        }}
+      />
+      <BooksStk.Screen
+        name={ROUTES_NAME.add_edit_book}
+        component={AddEditBookScreen}
+        options={{
+          title: SCREEN_TITLES.edit_book,
         }}
       />
     </BooksStk.Navigator>
@@ -84,21 +102,34 @@ const HomeStack = () => {
   );
 };
 
-const PagesStack = () => {
+const NotesStack = () => {
   const {screenOptions} = useScreenOptions();
+  const {notes} = ROUTES_NAME;
 
   return (
-    <PagesStk.Navigator
-      initialRouteName={ROUTES_NAME.pages}
-      screenOptions={screenOptions}>
-      <PagesStk.Screen
-        name={ROUTES_NAME.pages}
-        component={PagesScreen}
+    <NotesStk.Navigator initialRouteName={notes} screenOptions={screenOptions}>
+      <NotesStk.Screen
+        name={notes}
+        component={NotesScreen}
         options={{
-          title: SCREEN_TITLES.pages,
+          title: SCREEN_TITLES.notes,
         }}
       />
-    </PagesStk.Navigator>
+      <NotesStk.Screen
+        name={ROUTES_NAME.note_detail}
+        component={NoteDetailScreen}
+        options={{
+          title: SCREEN_TITLES.note_detail,
+        }}
+      />
+      <NotesStk.Screen
+        name={ROUTES_NAME.add_edit_note}
+        component={AddEditNoteScreen}
+        options={{
+          title: SCREEN_TITLES.edit_note,
+        }}
+      />
+    </NotesStk.Navigator>
   );
 };
 
@@ -144,7 +175,7 @@ export {
   BooksStack,
   FavStack,
   HomeStack,
-  PagesStack,
+  NotesStack,
   SettingsStack,
   RootNavigator,
 };

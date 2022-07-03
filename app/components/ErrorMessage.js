@@ -6,7 +6,7 @@ const ErrorMessage = ({props, error}) => {
   return (
     <>
       {error && (
-        <Text mt={2} color={color} {...props}>
+        <Text mt={2} color={color} {...props} fontSize="md">
           {error}
         </Text>
       )}

@@ -16,7 +16,7 @@ const useTabScreenOptions = () => {
         iconName = focused ? 'home' : 'home-outline';
       } else if (route.name === TABS_NAME.books) {
         iconName = focused ? 'book' : 'book-outline';
-      } else if (route.name === TABS_NAME.pages) {
+      } else if (route.name === TABS_NAME.notes) {
         iconName = focused ? 'page-next' : 'page-next-outline';
       } else if (route.name === TABS_NAME.favourities) {
         iconName = focused ? 'star-circle' : 'star-circle-outline';

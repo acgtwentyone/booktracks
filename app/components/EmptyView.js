@@ -12,7 +12,9 @@ const EmptyView = ({iconName, isIcon = true, props, title}) => {
           size={16}
         />
       )}
-      <Text m={2}>{title ? title : 'Não há registros ...'}</Text>
+      <Text m={2} fontSize="md">
+        {title ? title : 'Não há registros ...'}
+      </Text>
     </Box>
   );
 };

@@ -1,96 +1,27 @@
-import {Box, HStack, Icon, Text, useColorModeValue} from 'native-base';
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {ListItem} from '.';
-import {FONT_SIZE} from '../Utils';
+import {BookItemContent, ListItem} from '.';
 
 const BookItem = ({
-  style,
-  props,
   item,
   recent = false,
-  onEditPress,
   onStarPress,
-  onDotPress,
+  onItemPress,
   isFavScreen = false,
+  limit,
 }) => {
-  const _favColor = useColorModeValue('yellow.500', 'yellow.500');
-  const _notFavColor = useColorModeValue('black', 'white');
-  const {
-    _data: {title, author, favourity},
-  } = item;
-
-  const Touchable = ({onPress, children}) => (
-    <TouchableOpacity
-      onPress={onPress}
-      hitSlop={{top: 20, right: 10, bottom: 20, left: 12}}>
-      {children}
-    </TouchableOpacity>
+  return (
+    <ListItem
+      content={
+        <BookItemContent
+          onStarPress={onStarPress}
+          item={item._data}
+          recent={recent}
+        />
+      }
+      recent={recent}
+      onItemPress={onItemPress}
+    />
   );
-
-  const __renderStarBtn = () => (
-    <Touchable onPress={onStarPress}>
-      <Icon
-        as={MaterialCommunityIcons}
-        name="star-outline"
-        size="xs"
-        m={2}
-        onPress={onStarPress}
-        color={favourity ? _favColor : _notFavColor}
-      />
-    </Touchable>
-  );
-
-  const __renderIcon = (name, onPress) => (
-    <Touchable onPress={onPress}>
-      <Icon
-        as={MaterialCommunityIcons}
-        name={name}
-        size="xs"
-        m={2}
-        onPress={onPress}
-      />
-    </Touchable>
-  );
-
-  const Content = () => (
-    <>
-      <Box>
-        <Text fontSize={FONT_SIZE.font_18} fontWeight="bold">
-          {title}
-        </Text>
-        <Text
-          mt={2}
-          fontSize={FONT_SIZE.font_15}
-          _dark={{
-            color: 'white',
-          }}
-          _light={{
-            color: 'gray.600',
-          }}>
-          {author}
-        </Text>
-      </Box>
-      {!recent && !isFavScreen ? (
-        <HStack justifyContent="flex-end" justifyItems="center">
-          {__renderStarBtn()}
-          {__renderIcon('pencil', onEditPress)}
-          {__renderIcon('dots-vertical', onDotPress)}
-        </HStack>
-      ) : !recent ? (
-        __renderStarBtn()
-      ) : (
-        <></>
-      )}
-    </>
-  );
-
-  return <ListItem content={<Content />} recent={recent} />;
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default React.memo(BookItem);
