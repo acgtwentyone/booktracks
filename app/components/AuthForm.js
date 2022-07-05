@@ -225,19 +225,6 @@ const AuthForm = ({navigation, signin = true}) => {
               <ErrorMessage name="password" />
             </Stack>
             <HStack justifyContent="center" mt={8}>
-              {/* <Button
-                  shadow={2}
-                  size="lg"
-                  endIcon={
-                    <Icon
-                      as={MaterialCommunityIcons}
-                      name="arrow-right"
-                      size="xs"
-                    />
-                  }
-                  onPress={handleSubmit(__processSiginOrSignup)}>
-                  {signin ? 'Sign in' : 'Sign up'}
-                </Button> */}
               <SubmitButton
                 title={submitTitle}
                 handleSubmit={handleSubmit}

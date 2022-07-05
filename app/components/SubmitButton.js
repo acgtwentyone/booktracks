@@ -1,6 +1,5 @@
 import React from 'react';
-import {Button, HStack, Text} from 'native-base';
-import {AppActivityIndicator} from './';
+import {Button, Text} from 'native-base';
 
 const SubmitButton = ({
   style,
@@ -11,18 +10,36 @@ const SubmitButton = ({
   onSubmit,
   progress,
   showProgressIndicator,
+  isLoadingText = 'Submitting',
 }) => (
-  <Button
-    size={size || 'lg'}
-    {...props}
-    onPress={handleSubmit(onSubmit)}
-    m={4}
-    shadow={2}>
-    <HStack alignItems="center">
-      {progress && showProgressIndicator && <AppActivityIndicator m={0} />}
-      {!progress && <Text>{title}</Text>}
-    </HStack>
-  </Button>
+  <>
+    {!progress || !showProgressIndicator ? (
+      <Button
+        size={size || 'lg'}
+        {...props}
+        onPress={handleSubmit(onSubmit)}
+        m={4}
+        shadow={2}>
+        <Text>{title}</Text>
+      </Button>
+    ) : (
+      showProgressIndicator && (
+        <Button
+          isLoading
+          isLoadingText={isLoadingText}
+          _loading={{
+            bg: 'primary',
+            _text: {
+              color: 'white',
+            },
+          }}
+          _spinner={{
+            color: 'white',
+          }}
+        />
+      )
+    )}
+  </>
 );
 
 export default React.memo(SubmitButton);
