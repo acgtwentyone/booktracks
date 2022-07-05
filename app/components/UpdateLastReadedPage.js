@@ -95,6 +95,7 @@ const UpdateLastReadedPage = ({item, id, onClose}) => {
           title="Update"
           showProgressIndicator={true}
           progress={updating}
+          isLoadingText="Updating"
         />
       </HStack>
     </FormControl>
