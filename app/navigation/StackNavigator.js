@@ -60,9 +60,11 @@ const BooksStack = () => {
       <BooksStk.Screen
         name={ROUTES_NAME.add_edit_book}
         component={AddEditBookScreen}
-        options={{
-          title: SCREEN_TITLES.edit_book,
-        }}
+        options={({route}) => ({
+          title: route.params.edit
+            ? SCREEN_TITLES.edit_book
+            : SCREEN_TITLES.add_book,
+        })}
       />
     </BooksStk.Navigator>
   );
@@ -125,9 +127,11 @@ const NotesStack = () => {
       <NotesStk.Screen
         name={ROUTES_NAME.add_edit_note}
         component={AddEditNoteScreen}
-        options={{
-          title: SCREEN_TITLES.edit_note,
-        }}
+        options={({route}) => ({
+          title: route.params.edit
+            ? SCREEN_TITLES.edit_note
+            : SCREEN_TITLES.add_note,
+        })}
       />
     </NotesStk.Navigator>
   );

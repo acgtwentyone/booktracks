@@ -30,6 +30,8 @@ const ROUTES_NAME = {
 
 const SCREEN_TITLES = {
   account: 'Account',
+  add_book: 'New Book',
+  add_note: 'New Note',
   book_detail: 'Book Detail',
   note_detail: 'Note Detail',
   books: 'Books',
