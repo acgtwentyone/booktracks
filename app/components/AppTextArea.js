@@ -9,17 +9,18 @@ const AppTextArea = ({
   onChangeText,
   value,
   onBlur,
-  h,
-  w,
-  maxW,
+  h = '100%',
+  w = '100%',
   variant,
-  m,
+  m = '0',
+  fontSize = 'md',
 }) => {
   return (
-    <Stack m={m ? m : '2'}>
+    <Stack m={m}>
       <TextArea
-        h={h ? h : '100%'}
-        w={w ? w : '100%'}
+        fontSize={fontSize}
+        h={h}
+        w={w}
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}

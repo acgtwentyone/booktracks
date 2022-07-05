@@ -2,6 +2,7 @@ import {HStack, Icon, Text, useColorModeValue, VStack} from 'native-base';
 import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AppBadge, AppTouchableOpacity} from '.';
+import {limitStr} from '../Utils';
 
 const BookItemContent = ({onStarPress, item, recent = false}) => {
   const _favColor = useColorModeValue('yellow.500', 'yellow.500');
@@ -17,9 +18,11 @@ const BookItemContent = ({onStarPress, item, recent = false}) => {
       w="full">
       <VStack>
         <Text fontSize="lg" fontWeight="bold">
-          {title}
+          {limitStr(title)}
         </Text>
-        <AppBadge title="Last page">{last_readed_page}</AppBadge>
+        <AppBadge mt="4" title="Last page">
+          {last_readed_page}
+        </AppBadge>
       </VStack>
       {undefined !== recent && !recent && (
         <VStack
@@ -35,7 +38,9 @@ const BookItemContent = ({onStarPress, item, recent = false}) => {
               color={favourity ? _favColor : _notFavColor}
             />
           </AppTouchableOpacity>
-          <AppBadge title={author}>author</AppBadge>
+          <AppBadge mt="4" title={limitStr(author)}>
+            author
+          </AppBadge>
         </VStack>
       )}
     </HStack>

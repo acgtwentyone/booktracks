@@ -15,8 +15,12 @@ const NoteItemContent = ({item, recent = false, limit, detail = false}) => {
             display="flex"
             justifyContent="space-between"
             alignItems="center">
-            <AppBadge title={book_name}>book</AppBadge>
-            <AppBadge title="Page">{page}</AppBadge>
+            <AppBadge mt="2" title={book_name}>
+              book
+            </AppBadge>
+            <AppBadge mt="2" mx="2" title="Page">
+              {page}
+            </AppBadge>
           </HStack>
           <Text fontSize="lg" fontWeight="bold">
             {note}
@@ -32,9 +36,13 @@ const NoteItemContent = ({item, recent = false, limit, detail = false}) => {
             <Text fontSize="lg" fontWeight="bold">
               {limit ? limitStr(note, limit) : note}
             </Text>
-            <AppBadge title="Page">{page}</AppBadge>
+            <AppBadge mt="2" mx="2" title="Page">
+              {page}
+            </AppBadge>
           </HStack>
-          <AppBadge title={book_name}>book</AppBadge>
+          <AppBadge mt="2" title={book_name}>
+            book
+          </AppBadge>
         </VStack>
       )}
     </>

@@ -128,8 +128,9 @@ const NoteDetailScreen = () => {
       <ScrollView p={4}>
         <VStack>
           <NoteItemContent item={item} detail={true} />
-          <VStack mt={4}>
+          <VStack>
             <AppBadge
+              mt="6"
               title={item.created_at.toDate().toString().substring(0, 10)}>
               registered
             </AppBadge>

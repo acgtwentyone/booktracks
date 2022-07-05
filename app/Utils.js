@@ -57,6 +57,11 @@ const NAVIGATORS_NAME = {
   tab: 'TAB',
 };
 
+const APP_INPUT_ALIGN_LABEL = {
+  horizontal: 'horizontal',
+  vertical: 'vertical',
+};
+
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 const SCREEN_HEIGHT = Dimensions.get('screen').height;
 
@@ -96,6 +101,7 @@ export const limitStr = (str, limit = SCREEN_WIDTH / 25, end = '...') => {
 };
 
 export {
+  APP_INPUT_ALIGN_LABEL,
   COLORS,
   FIREBASE_ERRORS,
   HIT_SLOP,
