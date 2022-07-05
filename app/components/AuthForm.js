@@ -232,6 +232,7 @@ const AuthForm = ({navigation, signin = true}) => {
                 size="lg"
                 progress={loading}
                 showProgressIndicator={true}
+                isLoadingText={signin ? 'Validating' : 'Creating a new account'}
               />
             </HStack>
           </FormControl>
