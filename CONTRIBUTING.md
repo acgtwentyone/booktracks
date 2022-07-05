@@ -45,7 +45,7 @@ Note: Since those are the firebase collections name it must match books, notes a
 
 Run your project by running the following command: ```npx react-native run-android```. You should be all setup. Note that we assume that you have setup up the development environment for react native and ready to go. If not please check [here](https://reactnative.dev/docs/environment-setup).
 
-Any throuble, please contact [acgtwentyone@gmail.com](mailto:acgtwentyone@gmail.com) or use our [discord](https://discord.gg/UnbhMw9D) channel.
+Any throuble, please contact [acgtwentyone@gmail.com](mailto:acgtwentyone@gmail.com) or use our [discord](https://discord.gg/DJBcw7YTnB) channel.
 
 ## Make your changes
 
