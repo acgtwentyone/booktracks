@@ -11,6 +11,10 @@ const SubmitButton = ({
   progress,
   showProgressIndicator,
   isLoadingText = 'Submitting',
+  variant = 'solid',
+  m = '4',
+  px = '4',
+  py = '2',
 }) => (
   <>
     {!progress || !showProgressIndicator ? (
@@ -18,13 +22,20 @@ const SubmitButton = ({
         size={size || 'lg'}
         {...props}
         onPress={handleSubmit(onSubmit)}
-        m={4}
-        shadow={2}>
+        m={m}
+        px={px}
+        py={py}
+        shadow={2}
+        variant={variant}>
         <Text>{title}</Text>
       </Button>
     ) : (
       showProgressIndicator && (
         <Button
+          m={m}
+          px={px}
+          py={py}
+          variant={variant}
           isLoading
           isLoadingText={isLoadingText}
           _loading={{
