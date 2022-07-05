@@ -48,7 +48,7 @@ const SelectBookOptions = ({selectedBook, setSelectedBook}) => {
   };
 
   if (loading) {
-    return <AppActivityIndicator />;
+    return <AppActivityIndicator m="4" p="0" />;
   }
 
   return books.length > 0 ? (
