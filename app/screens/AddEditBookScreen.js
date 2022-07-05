@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, Text} from 'native-base';
+import {ScrollView} from 'native-base';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
@@ -7,9 +7,9 @@ import firestore from '@react-native-firebase/firestore';
 
 import {
   AppActivityIndicator,
-  AppTouchableOpacity,
   BookForm,
   Screen,
+  SubmitButton,
 } from '../components';
 import {useAlertError, useShowMessage} from '../hooks';
 import {BookSchema} from '../validation/Validations';
@@ -157,9 +157,18 @@ const AddEditBookScreen = () => {
   };
 
   const HeaderRight = () => (
-    <AppTouchableOpacity onPress={handleSubmit(onSubmit)}>
-      {saving ? <AppActivityIndicator m={0} /> : <Text>SAVE</Text>}
-    </AppTouchableOpacity>
+    <SubmitButton
+      title="SAVE"
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+      progress={saving}
+      showProgressIndicator={true}
+      isLoadingText="Saving"
+      variant="unstyled"
+      m={0}
+      px={0}
+      py={0}
+    />
   );
 
   useEffect(() => {
