@@ -1,9 +1,17 @@
 import React from 'react';
 import {Badge, HStack, Text} from 'native-base';
 
-const AppBadge = ({children, inverse = false, title}) => {
+const AppBadge = ({
+  children,
+  inverse = false,
+  title,
+  my = '0',
+  mx = '0',
+  mt = '0',
+  mb = '0',
+}) => {
   return (
-    <HStack mt={4}>
+    <HStack mt={mt} my={my} mx={mx} mb={mb}>
       {inverse && (
         <>
           <Badge ml={2}>{children}</Badge>

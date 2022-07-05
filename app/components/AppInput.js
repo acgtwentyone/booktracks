@@ -1,29 +1,59 @@
-import {Input, Stack} from 'native-base';
+import {HStack, Input, Stack, Text, VStack} from 'native-base';
 import React from 'react';
+import {APP_INPUT_ALIGN_LABEL} from '../Utils';
 
 const AppInput = ({
   mx,
   onBlur,
   onChangeText,
-  placeholder = 'placeholder',
+  placeholder = '',
   props,
   size,
   type,
   value,
   variant,
+  label,
+  alignLabel = APP_INPUT_ALIGN_LABEL.horizontal,
+  showLabel = false,
+  placeholderTextColor = 'gray',
+  inputW = 'full',
 }) => {
+  const __renderInput = () => (
+    <Input
+      type={type || 'text'}
+      placeholder={placeholder}
+      editable={true}
+      value={value}
+      onChangeText={onChangeText}
+      onBlur={onBlur}
+      size={size ? size : 'lg'}
+      variant={variant ? variant : 'unstyled'}
+      placeholderTextColor={placeholderTextColor}
+      w={inputW}
+    />
+  );
+
+  const labelAlign = APP_INPUT_ALIGN_LABEL[alignLabel];
+
   return (
     <Stack mx={mx ? mx : '4'} {...props}>
-      <Input
-        type={type || 'text'}
-        placeholder={placeholder}
-        editable={true}
-        value={value}
-        onChangeText={onChangeText}
-        onBlur={onBlur}
-        size={size ? size : 'lg'}
-        variant={variant ? variant : 'unstyled'}
-      />
+      {!label || !showLabel ? (
+        __renderInput()
+      ) : labelAlign === APP_INPUT_ALIGN_LABEL.horizontal ? (
+        <HStack display="flex" alignItems="center">
+          <Text fontSize="md" mr={4}>
+            {label}
+          </Text>
+          {__renderInput()}
+        </HStack>
+      ) : (
+        <VStack>
+          <Text fontSize="md" mb={2}>
+            {label}
+          </Text>
+          {__renderInput()}
+        </VStack>
+      )}
     </Stack>
   );
 };

@@ -25,12 +25,14 @@ const BookForm = ({control, errors}) => {
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
             <AppInput
-              placeholder="Book title"
               control={control}
               rules={{required: true}}
               onChangeText={onChange}
               value={value}
               onBlur={onBlur}
+              label="Title"
+              showLabel={true}
+              variant="underlined"
             />
           )}
           name="title"
@@ -43,12 +45,14 @@ const BookForm = ({control, errors}) => {
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
             <AppInput
-              placeholder="Author"
               control={control}
               rules={{required: true}}
               onChangeText={onChange}
               value={value}
               onBlur={onBlur}
+              label="Author"
+              showLabel={true}
+              variant="underlined"
             />
           )}
           name="author"
@@ -61,13 +65,16 @@ const BookForm = ({control, errors}) => {
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
             <AppInput
-              placeholder="Year"
               props={{keyboardType: 'numeric'}}
               control={control}
               rules={{required: true}}
               onChangeText={onChange}
               value={value}
               onBlur={onBlur}
+              label="Year"
+              showLabel={true}
+              variant="underlined"
+              inputW="1/4"
             />
           )}
           name="year"
@@ -80,12 +87,14 @@ const BookForm = ({control, errors}) => {
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
             <AppInput
-              placeholder="ISBN"
               control={control}
               rules={{required: true}}
               onChangeText={onChange}
               value={value}
               onBlur={onBlur}
+              label="ISBN"
+              showLabel={true}
+              variant="underlined"
             />
           )}
           name="isbn"
@@ -97,19 +106,22 @@ const BookForm = ({control, errors}) => {
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
             <AppInput
-              placeholder="Last readed page"
               props={{keyboardType: 'numeric'}}
               control={control}
               onChangeText={onChange}
               value={value}
               onBlur={onBlur}
+              label="Last readed page"
+              showLabel={true}
+              variant="underlined"
+              inputW="1/4"
             />
           )}
           name="last_readed_page"
         />
         <ErrorMessage name="last_readed_page" />
       </Stack>
-      <Stack my={2} mx={2}>
+      <Stack my={4} mx={2}>
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
