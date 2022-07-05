@@ -49,6 +49,6 @@ Any throuble, please contact [acgtwentyone@gmail.com](mailto:acgtwentyone@gmail.
 
 ## Make your changes
 
-Once you have done this, create a new branch with a name that loosely describes the issue on which you will be working, otherwise pick one if it already exists. 
+Once you have done this, create a new branch with a name that loosely describes the issue on which you will be working, otherwise pick one if it already exists and of course is linked to an issue. Please check this [issues](https://github.com/acgtwentyone/booktracks/issues) here.
 
 Once you think you have addressed the issue in question, submit a pull request to the main branch.
