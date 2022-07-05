@@ -164,7 +164,7 @@ const AddEditNoteScreen = () => {
   }, []);
 
   if (loading) {
-    return <AppActivityIndicator m={0} />;
+    return <AppActivityIndicator />;
   }
 
   return (
