@@ -49,6 +49,6 @@ Any throuble, please contact [acgtwentyone@gmail.com](mailto:acgtwentyone@gmail.
 
 ## Make your changes
 
-Once you have done this, create a new branch with a name that loosely describes the issue (Ex: replace-sign-in-text) on which you will be working, otherwise pick one if it already exists and of course is linked to an issue. Please check this [issues](https://github.com/acgtwentyone/booktracks/issues) here.
+Once you have done this, create a new branch with a name that loosely describes the issue (Ex: replace-sign-in-text) on which you will be working, otherwise pick one if it already exists and of course is linked to an issue. Please check this [issues](https://github.com/acgtwentyone/booktracks/issues) here. Note that your branch should be created based on the main branch (as the main is the base).
 
 Once you think you have addressed the issue in question, submit a pull request to the main branch.
