@@ -12,6 +12,7 @@ const VList = ({
   refreshing,
   onRefresh,
   loading,
+  mt = '0',
 }) => {
   if (loading) {
     return <AppActivityIndicator />;
@@ -19,6 +20,7 @@ const VList = ({
 
   return (
     <FlatList
+      mt={mt}
       refreshing={refreshing}
       onRefresh={onRefresh}
       style={[styles.container, {...style}]}

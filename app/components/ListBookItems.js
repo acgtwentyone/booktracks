@@ -49,6 +49,7 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
   return (
     <Screen style={styles.container}>
       <VList
+        mt="4"
         onRefresh={_onRefresh}
         refreshing={refreshing}
         data={books}
@@ -61,7 +62,6 @@ const ListBookItems = ({isFavourities = false, subtitle}) => {
             limit={SCREEN_WIDTH / 16}
           />
         )}
-        ListHeaderComponent={<ListTitle title={subtitle} />}
         loading={loading}
       />
       {!isFavourities && <AppFab onPress={_onFabPress} />}

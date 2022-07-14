@@ -90,12 +90,10 @@ const AddEditNoteScreen = () => {
   };
 
   const onSubmit = data => {
-    console.log(data);
     setSaving(true);
     const {note, page} = data;
     const p = undefined !== page && page !== '' ? Number(page) : '';
     const n = limitStr(note);
-    console.log(selectedBook);
     getObjData('user', e => _alertError())
       .then(u => {
         if (selectedBook !== null) {
@@ -161,10 +159,10 @@ const AddEditNoteScreen = () => {
       setLoading(false);
     }
     return () => {};
-  }, []);
+  }, [selectedBook]);
 
   if (loading) {
-    return <AppActivityIndicator m={0} />;
+    return <AppActivityIndicator />;
   }
 
   return (
