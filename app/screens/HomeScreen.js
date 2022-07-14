@@ -98,7 +98,7 @@ const HomeScreen = () => {
             <RecentBooks title="Recent books" isFavScreen={false} key="books" />
             {/* <RecentNotes key="notes" /> */}
             <RecentBooks
-              title="Recent favourities books"
+              title="Added recently to favourities"
               isFavScreen={true}
               key="fav"
             />

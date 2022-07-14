@@ -24,6 +24,7 @@ const ListNoteItems = () => {
   return (
     <Screen style={styles.container}>
       <VList
+        mt="4"
         onRefresh={_onRefresh}
         refreshing={refreshing}
         data={notes}
@@ -34,7 +35,6 @@ const ListNoteItems = () => {
             limit={SCREEN_WIDTH / 16}
           />
         )}
-        ListHeaderComponent={<ListTitle title="My notes" />}
         loading={loading}
       />
       <AppFab onPress={() => _onFabPress()} />
