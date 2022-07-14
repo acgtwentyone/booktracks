@@ -31,7 +31,7 @@ const ListNoteItems = () => {
           <NoteItem
             item={item}
             onItemPress={() => _onItemPress(item)}
-            limit={SCREEN_WIDTH / 14}
+            limit={SCREEN_WIDTH / 16}
           />
         )}
         ListHeaderComponent={<ListTitle title="My notes" />}
