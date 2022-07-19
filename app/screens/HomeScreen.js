@@ -24,7 +24,7 @@ const HomeScreen = () => {
   const RecentBooks = ({isFavScreen, title}) => {
     const {books, loading} = useLoadBooks(isFavScreen);
     return (
-      <Box pb={4}>
+      <Box pb={6}>
         {<ListTitle title={title} />}
         {(!books || books.length === 0) && loading && <AppActivityIndicator />}
         <FlatList
@@ -63,7 +63,7 @@ const HomeScreen = () => {
   const RecentNotes = () => {
     const {notes, loading} = useLoadNotes();
     return (
-      <Box pb={4}>
+      <Box pb={6}>
         {<ListTitle title="Recent notes" />}
         {(!notes || notes.length === 0) && loading && <AppActivityIndicator />}
         <FlatList
