@@ -18,7 +18,7 @@ const AppTab = () => {
   const defaultOptions = {tabBarLabel: ''};
 
   return (
-    <Tab.Navigator initialRouteName={books} screenOptions={screenOptions}>
+    <Tab.Navigator initialRouteName={home} screenOptions={screenOptions}>
       <Tab.Screen name={home} component={HomeStack} options={defaultOptions} />
       <Tab.Screen
         name={books}
