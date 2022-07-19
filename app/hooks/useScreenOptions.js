@@ -10,7 +10,7 @@ const useScreenOptions = RightComponent => {
     headerTitleStyle: {
       fontWeight: 'bold',
     },
-    headerTitleAlign: 'center',
+    // headerTitleAlign: 'center',
     // headerLeft: () => (
     //   <Avatar bg="indigo.500" size="sm">
     //     AV
