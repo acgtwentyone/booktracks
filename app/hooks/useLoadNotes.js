@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 
-import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
 import {getObjData} from '../data/AsyncStorageUtils';
 import {useAlertError} from '../hooks';
 
@@ -16,10 +15,6 @@ const useLoadNotes = () => {
     _loadNotes();
   };
 
-  const trigger = data => {
-    setNotes(n => n.concat(data));
-  };
-
   useEffect(() => {
     _loadNotes();
     return () => {};
@@ -27,33 +22,21 @@ const useLoadNotes = () => {
 
   const _loadNotes = () => {
     setLoading(true);
-    setNotes([]);
-    getObjData('user', e => {})
+    getObjData('user', e => () => _alertError())
       .then(u => {
-        firestore()
-          .collection('users')
-          .doc(u.uid)
-          .collection(COLLECTION_NAMES.books)
-          .get()
-          .then(bookSnaps => {
-            bookSnaps.forEach(b => {
-              if (b.exists) {
-                b.ref
-                  .collection(COLLECTION_NAMES.notes)
-                  .get()
-                  .then(n => {
-                    if (n.docs.length > 0) {
-                      n.docs.forEach(doc => {
-                        trigger(doc);
-                      });
-                    }
-                  });
-              }
-            });
-            setLoading(false);
-            setRefreshing(false);
-          })
-          .catch(e => _alertError());
+        let querySnap = firestore()
+          .collectionGroup('notes')
+          .where('user_id', '==', u.uid);
+
+        querySnap.onSnapshot(snapshot => {
+          const _notes = [];
+          snapshot.forEach(documentSnapshot => {
+            _notes.push(documentSnapshot);
+          });
+          setNotes(_notes);
+          setLoading(false);
+          setRefreshing(false);
+        });
       })
       .catch(error => _alertError());
   };
