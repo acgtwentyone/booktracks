@@ -97,11 +97,12 @@ const AddEditNoteScreen = () => {
     getObjData('user', e => _alertError())
       .then(u => {
         if (selectedBook !== null) {
+          const uid = u.uid;
           if (edit) {
             note.book_name = selectedBook._data.title;
             firestore()
               .collection('users')
-              .doc(u.uid)
+              .doc(uid)
               .collection(COLLECTION_NAMES.books)
               .doc(selectedBook.id)
               .collection(COLLECTION_NAMES.notes)
@@ -113,7 +114,7 @@ const AddEditNoteScreen = () => {
           } else {
             firestore()
               .collection('users')
-              .doc(u.uid)
+              .doc(uid)
               .collection(COLLECTION_NAMES.books)
               .doc(selectedBook.id)
               .collection(COLLECTION_NAMES.notes)
@@ -125,6 +126,7 @@ const AddEditNoteScreen = () => {
                 book_name: selectedBook._data.title,
                 status: ItemStatus.active,
                 page: p,
+                user_id: uid,
               })
               .then(() => _onSuccess(`${n} added`))
               .catch(error => __onErrorSaving());

@@ -15,4 +15,3 @@ const NoteItem = ({item, recent = false, onItemPress, limit}) => {
 };
 
 export default React.memo(NoteItem);
-
