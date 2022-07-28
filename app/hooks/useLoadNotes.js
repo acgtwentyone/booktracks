@@ -27,12 +27,20 @@ const useLoadNotes = () => {
         firestore()
           .collectionGroup('notes')
           .where('user_id', '==', u.uid)
-          .onSnapshot(snapshot => {
+          .get()
+          .then(snapshot => {
             const _notes = [];
-            snapshot.forEach(documentSnapshot => {
-              _notes.push(documentSnapshot);
-            });
+            if (!snapshot.empty) {
+              snapshot.forEach(documentSnapshot => {
+                _notes.push(documentSnapshot);
+              });
+            }
             setNotes(_notes);
+          })
+          .catch(error => {
+            _alertError();
+          })
+          .finally(() => {
             setLoading(false);
             setRefreshing(false);
           });
