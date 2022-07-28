@@ -24,19 +24,18 @@ const useLoadNotes = () => {
     setLoading(true);
     getObjData('user', e => () => _alertError())
       .then(u => {
-        let querySnap = firestore()
+        firestore()
           .collectionGroup('notes')
-          .where('user_id', '==', u.uid);
-
-        querySnap.onSnapshot(snapshot => {
-          const _notes = [];
-          snapshot.forEach(documentSnapshot => {
-            _notes.push(documentSnapshot);
+          .where('user_id', '==', u.uid)
+          .onSnapshot(snapshot => {
+            const _notes = [];
+            snapshot.forEach(documentSnapshot => {
+              _notes.push(documentSnapshot);
+            });
+            setNotes(_notes);
+            setLoading(false);
+            setRefreshing(false);
           });
-          setNotes(_notes);
-          setLoading(false);
-          setRefreshing(false);
-        });
       })
       .catch(error => _alertError());
   };
