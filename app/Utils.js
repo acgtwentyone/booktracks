@@ -20,7 +20,6 @@ const ROUTES_NAME = {
   add_edit_book: 'ADD_EDIT_BOOK',
   add_edit_note: 'ADD_EDIT_NOTE',
   favourities: 'FAVOURITIES',
-  home: 'HOME',
   notes: 'NOTES',
   search: 'SEARCH',
   settings: 'SETTINGS',
@@ -38,7 +37,6 @@ const SCREEN_TITLES = {
   edit_book: 'Edit Book',
   edit_note: 'Edit Note',
   favourities: 'Favourities',
-  home: 'Home',
   notes: 'Notes',
   new_book: 'New Book',
   new_note: 'New Note',
@@ -47,7 +45,6 @@ const SCREEN_TITLES = {
 };
 
 const TABS_NAME = {
-  home: 'HOME_TAB',
   books: 'BOOKS_TAB',
   notes: 'NOTES_TAB',
   favourities: 'FAV_TABS',

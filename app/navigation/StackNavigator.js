@@ -6,7 +6,6 @@ import {
   BookDetailScreen,
   BooksScreen,
   FavScreen,
-  HomeScreen,
   NoteDetailScreen,
   NotesScreen,
   SettingsScreen,
@@ -20,7 +19,6 @@ import {AppTab} from '.';
 const AuthStk = createNativeStackNavigator();
 const BooksStk = createNativeStackNavigator();
 const FavStk = createNativeStackNavigator();
-const HomeStk = createNativeStackNavigator();
 const NotesStk = createNativeStackNavigator();
 const SettingsStk = createNativeStackNavigator();
 const RootStk = createNativeStackNavigator();
@@ -66,6 +64,13 @@ const BooksStack = () => {
             : SCREEN_TITLES.add_book,
         })}
       />
+      <BooksStk.Screen
+        name={ROUTES_NAME.settings}
+        component={SettingsScreen}
+        options={{
+          title: SCREEN_TITLES.settings,
+        }}
+      />
     </BooksStk.Navigator>
   );
 };
@@ -84,23 +89,14 @@ const FavStack = () => {
           title: SCREEN_TITLES.favourities,
         }}
       />
-    </FavStk.Navigator>
-  );
-};
-
-const HomeStack = () => {
-  const {screenOptions} = useScreenOptions();
-
-  return (
-    <HomeStk.Navigator
-      initialRouteName={ROUTES_NAME.home}
-      screenOptions={screenOptions}>
-      <HomeStk.Screen
-        name={ROUTES_NAME.home}
-        component={HomeScreen}
-        options={{title: SCREEN_TITLES.home}}
+      <FavStk.Screen
+        name={ROUTES_NAME.settings}
+        component={SettingsScreen}
+        options={{
+          title: SCREEN_TITLES.settings,
+        }}
       />
-    </HomeStk.Navigator>
+    </FavStk.Navigator>
   );
 };
 
@@ -132,6 +128,13 @@ const NotesStack = () => {
             ? SCREEN_TITLES.edit_note
             : SCREEN_TITLES.add_note,
         })}
+      />
+      <NotesStk.Screen
+        name={ROUTES_NAME.settings}
+        component={SettingsScreen}
+        options={{
+          title: SCREEN_TITLES.settings,
+        }}
       />
     </NotesStk.Navigator>
   );
@@ -178,7 +181,6 @@ export {
   AuthStack,
   BooksStack,
   FavStack,
-  HomeStack,
   NotesStack,
   SettingsStack,
   RootNavigator,
