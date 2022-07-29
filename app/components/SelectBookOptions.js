@@ -5,12 +5,17 @@ import {useLoadBooks} from '../hooks';
 import AppActivityIndicator from './AppActivityIndicator';
 import ListTitle from './ListTitle';
 
-const SelectBookOptions = ({selectedBook, setSelectedBook}) => {
+const SelectBookOptions = ({selectedBook, setSelectedBook, onBookPress}) => {
   const {books, loading, refreshing} = useLoadBooks(false);
+
+  const __onBookPress = item => {
+    setSelectedBook(item);
+    onBookPress();
+  };
 
   const BookItem = ({item}) => {
     return undefined !== item && item !== null ? (
-      <TouchableOpacity onPress={() => setSelectedBook(item)}>
+      <TouchableOpacity onPress={() => __onBookPress(item)}>
         <Box
           p={5}
           m={2}
