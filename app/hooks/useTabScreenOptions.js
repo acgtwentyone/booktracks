@@ -1,6 +1,6 @@
 import React from 'react';
-import {useColorModeValue, Icon} from 'native-base';
-import {TABS_NAME} from '../Utils';
+import {useColorModeValue, Icon, Text, VStack} from 'native-base';
+import {SCREEN_TITLES, TABS_NAME} from '../Utils';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -10,33 +10,37 @@ const useTabScreenOptions = () => {
 
   let screenOptions = ({route}) => ({
     tabBarIcon: ({focused, color, size}) => {
-      let iconName;
+      let iconName = null;
+      let name = null;
 
-      if (route.name === TABS_NAME.home) {
-        iconName = focused ? 'home' : 'home-outline';
-      } else if (route.name === TABS_NAME.books) {
+      if (route.name === TABS_NAME.books) {
         iconName = focused ? 'book' : 'book-outline';
+        name = SCREEN_TITLES.books;
       } else if (route.name === TABS_NAME.notes) {
         iconName = focused ? 'page-next' : 'page-next-outline';
+        name = SCREEN_TITLES.notes;
       } else if (route.name === TABS_NAME.favourities) {
         iconName = focused ? 'star-circle' : 'star-circle-outline';
-      } else if (route.name === TABS_NAME.settings) {
-        iconName = focused
-          ? 'dots-vertical-circle'
-          : 'dots-vertical-circle-outline';
+        name = SCREEN_TITLES.favourities;
       }
       return (
-        <Icon
-          as={MaterialCommunityIcons}
-          name={iconName}
-          color={iconColor}
-          size={size}
-        />
+        <VStack alignItems="center">
+          <Icon
+            as={MaterialCommunityIcons}
+            name={iconName}
+            color={iconColor}
+            size={size}
+          />
+          <Text>{name}</Text>
+        </VStack>
       );
     },
     headerShown: false,
     tabBarStyle: {
       backgroundColor: tabBg,
+      paddingHorizontal: 16,
+      paddingBottom: 16,
+      paddingTop: 16,
     },
   });
 
