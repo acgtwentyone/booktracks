@@ -36,6 +36,10 @@ const NoteForm = ({control, errors, selectedBook, setSelectedBook}) => {
     onOpen();
   };
 
+  const __onBookPress = () => {
+    onClose();
+  };
+
   return (
     <FormControl>
       <HStack
@@ -90,6 +94,7 @@ const NoteForm = ({control, errors, selectedBook, setSelectedBook}) => {
           <SelectBookOptions
             selectedBook={selectedBook}
             setSelectedBook={setSelectedBook}
+            onBookPress={__onBookPress}
           />
         </ActionSheet>
       )}
