@@ -17,6 +17,7 @@ const AppInput = ({
   showLabel = false,
   placeholderTextColor = 'gray',
   inputW = 'full',
+  keyboardType = 'default',
 }) => {
   const __renderInput = () => (
     <Input
@@ -30,6 +31,7 @@ const AppInput = ({
       variant={variant ? variant : 'unstyled'}
       placeholderTextColor={placeholderTextColor}
       w={inputW}
+      keyboardType={keyboardType}
     />
   );
 

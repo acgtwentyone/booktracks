@@ -139,7 +139,14 @@ const BookDetailScreen = () => {
     <Screen>
       <ScrollView p={4}>
         <VStack>
-          <BookItemContent item={item} onStarPress={onStarPress} />
+          <BookItemContent
+            item={item}
+            onStarPress={onStarPress}
+            isDetail={true}
+          />
+          <AppBadge mt="6" title={item.author}>
+            author
+          </AppBadge>
           <VStack>
             {undefined !== item.year && item.year !== '' && (
               <AppBadge mt="6" title={item.year}>

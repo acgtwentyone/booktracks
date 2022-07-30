@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 
-import {AppFab, BookItem, ListTitle, Screen, VList} from '.';
+import {AppFab, BookItem, Screen, VList} from '.';
 import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
 import {useAlertError, useLoadBooks, useShowMessage} from '../hooks';
 import {getObjData} from '../data/AsyncStorageUtils';

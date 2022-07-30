@@ -3,12 +3,12 @@ import React from 'react';
 import {AppBadge} from '.';
 import {limitStr} from '../Utils';
 
-const NoteItemContent = ({item, recent = false, limit, detail = false}) => {
+const NoteItemContent = ({item, isDetail = false}) => {
   const {book_name, note, page} = item;
 
   return (
     <>
-      {detail ? (
+      {isDetail ? (
         <VStack>
           <HStack
             w="full"
@@ -34,7 +34,7 @@ const NoteItemContent = ({item, recent = false, limit, detail = false}) => {
             justifyContent="space-between"
             alignItems="center">
             <Text fontSize="lg" fontWeight="bold">
-              {limit ? limitStr(note, limit) : note}
+              {isDetail ? limitStr(note) : note}
             </Text>
             <AppBadge mt="2" mx="2" title="Page">
               {page}

@@ -1,24 +1,17 @@
 import React from 'react';
 import {BookItemContent, ListItem} from '.';
 
-const BookItem = ({
-  item,
-  recent = false,
-  onStarPress,
-  onItemPress,
-  isFavScreen = false,
-  limit,
-}) => {
+const BookItem = ({item, isDetail = false, onStarPress, onItemPress}) => {
   return (
     <ListItem
       content={
         <BookItemContent
           onStarPress={onStarPress}
           item={item._data}
-          recent={recent}
+          isDetail={isDetail}
+          itemId={item.id}
         />
       }
-      recent={recent}
       onItemPress={onItemPress}
     />
   );
