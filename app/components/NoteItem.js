@@ -2,13 +2,10 @@ import React from 'react';
 import {ListItem} from '.';
 import NoteItemContent from './NoteItemContent';
 
-const NoteItem = ({item, recent = false, onItemPress, limit}) => {
+const NoteItem = ({item, isDetail = false, onItemPress}) => {
   return (
     <ListItem
-      content={
-        <NoteItemContent recent={recent} limit={limit} item={item._data} />
-      }
-      recent={recent}
+      content={<NoteItemContent isDetail={isDetail} item={item._data} />}
       onItemPress={onItemPress}
     />
   );

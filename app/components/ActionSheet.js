@@ -11,7 +11,7 @@ const ActionSheet = ({props, isOpen, onClose, children, reference}) => {
         disableOverlay
         {...props}>
         <Actionsheet.Content>
-          <Box w="100%" px={4} justifyContent="center">
+          <Box w="100%" p="4" justifyContent="center">
             {children}
           </Box>
         </Actionsheet.Content>

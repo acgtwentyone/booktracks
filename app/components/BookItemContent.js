@@ -1,14 +1,37 @@
-import {HStack, Icon, Text, useColorModeValue, VStack} from 'native-base';
-import React from 'react';
+import {
+  HStack,
+  Icon,
+  Text,
+  useColorModeValue,
+  useDisclose,
+  VStack,
+} from 'native-base';
+import React, {useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {AppBadge, AppTouchableOpacity} from '.';
+import {
+  AppBadge,
+  ActionSheet,
+  AppTouchableOpacity,
+  UpdateLastReadedPage,
+} from '.';
 import {limitStr} from '../Utils';
 
-const BookItemContent = ({onStarPress, item, recent = false}) => {
+const ACTION_SHEET_TYPES = {
+  update_last_page: 'UPDATE_LAST_PAGE',
+};
+
+const BookItemContent = ({onStarPress, item, isDetail = false, itemId}) => {
   const _favColor = useColorModeValue('yellow.500', 'yellow.500');
   const _notFavColor = useColorModeValue('black', 'white');
+  const [actionSheetType, setActionSheetType] = useState(null);
+  const {isOpen, onOpen, onClose} = useDisclose();
 
   const {title, last_readed_page, author, favourity} = item;
+
+  const __onEditLastPagePress = () => {
+    setActionSheetType(ACTION_SHEET_TYPES.update_last_page);
+    onOpen();
+  };
 
   return (
     <HStack
@@ -20,29 +43,46 @@ const BookItemContent = ({onStarPress, item, recent = false}) => {
         <Text fontSize="lg" fontWeight="bold">
           {limitStr(title)}
         </Text>
-        <AppBadge mt="4" title="Last page">
-          {last_readed_page}
-        </AppBadge>
+        <HStack mt="6" alignItems="center">
+          <AppBadge title="Last page">{last_readed_page}</AppBadge>
+          {!isDetail && (
+            <AppTouchableOpacity onPress={() => __onEditLastPagePress()}>
+              <Icon
+                as={MaterialCommunityIcons}
+                size="sm"
+                name="file-document-edit"
+                ml={2}
+              />
+            </AppTouchableOpacity>
+          )}
+        </HStack>
       </VStack>
-      {undefined !== recent && !recent && (
-        <VStack
-          display="flex"
-          flexDirection="column"
-          justifyContent="space-between"
-          alignItems="flex-end">
-          <AppTouchableOpacity onPress={onStarPress}>
-            <Icon
-              as={MaterialCommunityIcons}
-              name="star-outline"
-              size="xs"
-              color={favourity ? _favColor : _notFavColor}
-            />
-          </AppTouchableOpacity>
-          <AppBadge mt="4" title={limitStr(author)}>
-            author
-          </AppBadge>
-        </VStack>
-      )}
+      <VStack
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-between"
+        alignItems="flex-end">
+        <AppTouchableOpacity onPress={onStarPress}>
+          <Icon
+            as={MaterialCommunityIcons}
+            name="star-outline"
+            size="xs"
+            color={favourity ? _favColor : _notFavColor}
+          />
+        </AppTouchableOpacity>
+        {!isDetail && (
+          <Text mt="6" fontSize="md">
+            {limitStr(author)}
+          </Text>
+        )}
+        {ACTION_SHEET_TYPES.update_last_page === actionSheetType &&
+          item !== null &&
+          !isDetail && (
+            <ActionSheet isOpen={isOpen} onClose={onClose}>
+              <UpdateLastReadedPage item={item} id={itemId} onClose={onClose} />
+            </ActionSheet>
+          )}
+      </VStack>
     </HStack>
   );
 };

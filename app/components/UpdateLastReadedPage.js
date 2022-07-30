@@ -10,7 +10,7 @@ import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
 import {UpdateLastReadedPageSchema} from '../validation/Validations';
 import {APP_INPUT_ALIGN_LABEL} from '../Utils';
 
-const UpdateLastReadedPage = ({item, id, onClose}) => {
+const UpdateLastReadedPage = ({item, id, onClose, isVisible = false}) => {
   const [updating, setUpdataing] = useState(false);
   const {_alertError} = useAlertError();
   const {errorColor} = useErrorColor();
@@ -87,6 +87,7 @@ const UpdateLastReadedPage = ({item, id, onClose}) => {
                 showLabel={true}
                 variant="underlined"
                 inputW="2/4"
+                keyboardType="numeric"
               />
             )}
             name="last_readed_page"
