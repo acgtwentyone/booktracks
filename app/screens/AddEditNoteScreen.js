@@ -126,6 +126,7 @@ const AddEditNoteScreen = () => {
                 book_name: selectedBook._data.title,
                 status: ItemStatus.active,
                 page: p,
+                book_id: selectedBook.id,
                 user_id: uid,
               })
               .then(() => _onSuccess(`${n} added`))

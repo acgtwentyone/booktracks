@@ -41,7 +41,7 @@ const BookItemContent = ({onStarPress, item, isDetail = false, itemId}) => {
       w="full">
       <VStack>
         <Text fontSize="lg" fontWeight="bold">
-          {limitStr(title)}
+          {!isDetail ? limitStr(title) : title}
         </Text>
         <HStack mt="6" alignItems="center">
           <AppBadge title="Last page">{last_readed_page}</AppBadge>

@@ -8,43 +8,43 @@ const NoteItemContent = ({item, isDetail = false}) => {
 
   return (
     <>
-      {isDetail ? (
-        <VStack>
-          <HStack
-            w="full"
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center">
-            <AppBadge mt="2" title={book_name}>
+      <HStack
+        w="full"
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="space-between">
+        {!isDetail ? (
+          <>
+            <VStack>
+              <Text fontSize="lg" fontWeight="bold">
+                {limitStr(note)}
+              </Text>
+              <AppBadge mt="6" title={limitStr(book_name)}>
+                book
+              </AppBadge>
+            </VStack>
+            {undefined !== page && (
+              <AppBadge mt="6" title="Page">
+                {page}
+              </AppBadge>
+            )}
+          </>
+        ) : (
+          <VStack>
+            <Text fontSize="lg" fontWeight="bold">
+              {note}
+            </Text>
+            <AppBadge mt="6" title={book_name}>
               book
             </AppBadge>
-            <AppBadge mt="2" mx="2" title="Page">
-              {page}
-            </AppBadge>
-          </HStack>
-          <Text fontSize="lg" fontWeight="bold">
-            {note}
-          </Text>
-        </VStack>
-      ) : (
-        <VStack>
-          <HStack
-            w="full"
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center">
-            <Text fontSize="lg" fontWeight="bold">
-              {isDetail ? limitStr(note) : note}
-            </Text>
-            <AppBadge mt="2" mx="2" title="Page">
-              {page}
-            </AppBadge>
-          </HStack>
-          <AppBadge mt="2" title={book_name}>
-            book
-          </AppBadge>
-        </VStack>
-      )}
+            {undefined !== page && (
+              <AppBadge mt="6" title="Page">
+                {page}
+              </AppBadge>
+            )}
+          </VStack>
+        )}
+      </HStack>
     </>
   );
 };
