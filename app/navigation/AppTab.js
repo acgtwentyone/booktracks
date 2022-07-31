@@ -28,11 +28,6 @@ const AppTab = () => {
         component={NotesStack}
         options={defaultOptions}
       />
-      {/* <Tab.Screen
-        name={settings}
-        component={SettingsStack}
-        options={defaultOptions}
-      /> */}
     </Tab.Navigator>
   );
 };

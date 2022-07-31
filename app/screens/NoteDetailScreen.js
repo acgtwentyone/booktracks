@@ -127,7 +127,7 @@ const NoteDetailScreen = () => {
     <Screen>
       <ScrollView p={4}>
         <VStack>
-          <NoteItemContent item={item} detail={true} />
+          <NoteItemContent item={item} isDetail={true} />
           <VStack>
             <AppBadge
               mt="6"

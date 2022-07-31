@@ -17,7 +17,7 @@ const ListNoteItems = () => {
   const _onItemPress = item => {
     navigation.navigate(ROUTES_NAME.note_detail, {
       id: item.id,
-      book_id: item.book_id,
+      book_id: item._data.book_id,
     });
   };
 
