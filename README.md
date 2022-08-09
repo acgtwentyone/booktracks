@@ -11,9 +11,9 @@ This app is open source. Please see the [code-of-conduting](https://github.com/a
 ## Some app screenshots
 
 <div align="center">
-<img src="https://user-images.githubusercontent.com/94224806/182044755-804f0114-9539-4789-9de4-04fa85de3a31.png" alt="Books" width="200">&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="https://user-images.githubusercontent.com/94224806/182044761-52140322-d716-476e-92fc-1ff4bf327090.png" alt="Book Detail" width="200">&nbsp;&nbsp;&nbsp;&nbsp
-<img src="https://user-images.githubusercontent.com/94224806/182044787-1de4f486-ad2e-4470-95ac-167e1d5bc38e.png" alt="Favourities" width="200">
+<img src="https://user-images.githubusercontent.com/94224806/182044755-804f0114-9539-4789-9de4-04fa85de3a31.png" alt="Books" width="320">&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="https://user-images.githubusercontent.com/94224806/182044761-52140322-d716-476e-92fc-1ff4bf327090.png" alt="Book Detail" width="320">&nbsp;&nbsp;&nbsp;&nbsp
+<img src="https://user-images.githubusercontent.com/94224806/182044787-1de4f486-ad2e-4470-95ac-167e1d5bc38e.png" alt="Favourities" width="320">
 </div>
 
 ## Techs we use
