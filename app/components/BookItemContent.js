@@ -20,7 +20,13 @@ const ACTION_SHEET_TYPES = {
   update_last_page: 'UPDATE_LAST_PAGE',
 };
 
-const BookItemContent = ({onStarPress, item, isDetail = false, itemId}) => {
+const BookItemContent = ({
+  onStarPress,
+  item,
+  isDetail = false,
+  isFavScreen = false,
+  itemId,
+}) => {
   const _favColor = useColorModeValue('yellow.500', 'yellow.500');
   const _notFavColor = useColorModeValue('black', 'white');
   const [actionSheetType, setActionSheetType] = useState(null);
@@ -45,7 +51,7 @@ const BookItemContent = ({onStarPress, item, isDetail = false, itemId}) => {
         </Text>
         <HStack mt="6" alignItems="center">
           <AppBadge title="Last page">{last_readed_page}</AppBadge>
-          {!isDetail && (
+          {!isDetail && !isFavScreen && (
             <AppTouchableOpacity onPress={() => __onEditLastPagePress()}>
               <Icon
                 as={MaterialCommunityIcons}
@@ -77,7 +83,8 @@ const BookItemContent = ({onStarPress, item, isDetail = false, itemId}) => {
         )}
         {ACTION_SHEET_TYPES.update_last_page === actionSheetType &&
           item !== null &&
-          !isDetail && (
+          !isDetail &&
+          !isFavScreen && (
             <ActionSheet isOpen={isOpen} onClose={onClose}>
               <UpdateLastReadedPage item={item} id={itemId} onClose={onClose} />
             </ActionSheet>
