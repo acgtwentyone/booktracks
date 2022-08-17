@@ -1,7 +1,13 @@
 import React from 'react';
 import {BookItemContent, ListItem} from '.';
 
-const BookItem = ({item, isDetail = false, onStarPress, onItemPress}) => {
+const BookItem = ({
+  item,
+  isDetail = false,
+  isFavScreen = false,
+  onStarPress,
+  onItemPress,
+}) => {
   return (
     <ListItem
       content={
@@ -10,6 +16,7 @@ const BookItem = ({item, isDetail = false, onStarPress, onItemPress}) => {
           item={item._data}
           isDetail={isDetail}
           itemId={item.id}
+          isFavScreen={isFavScreen}
         />
       }
       onItemPress={onItemPress}
