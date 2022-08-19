@@ -35,7 +35,7 @@ const NoteDetailScreen = () => {
   const {id, book_id} = route.params;
 
   const __onEditPress = () => {
-    navigation.navigate(ROUTES_NAME.add_edit_book, {
+    navigation.navigate(ROUTES_NAME.add_edit_note, {
       id: id,
       edit: true,
       book_id: book_id,
