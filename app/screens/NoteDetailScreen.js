@@ -13,7 +13,7 @@ import {
   NoteItemContent,
 } from '../components';
 import {AppActivityIndicator, AppMenuOption} from '../components';
-import {ROUTES_NAME} from '../Utils';
+import {limitStr, ROUTES_NAME} from '../Utils';
 import {COLLECTION_NAMES} from '../firebase/FirebaseUtils';
 import {getObjData} from '../data/AsyncStorageUtils';
 
@@ -96,8 +96,8 @@ const NoteDetailScreen = () => {
           .doc(id)
           .delete()
           .then(() => {
-            _showToastMsg(`Book ${item.title} deleted`);
-            navigation.navigate(ROUTES_NAME.books);
+            _showToastMsg(`Book ${limitStr(item.note)} deleted`);
+            navigation.navigate(ROUTES_NAME.notes);
           })
           .catch(error => _alertError());
       })
