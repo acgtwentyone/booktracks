@@ -1,12 +1,14 @@
 # Book Tracks
 
-If you are a book lover, after reading several books :page_with_curl:, surely you have already lost yourself in the middle of so many pages and you don't know where you stopped and then continue reading. My dear, if this is your case, I have great news for you. Book Tracks, a simple and thoughtful application that from now on will make your reading a lot easier. 
+If you're a book lover, after reading several books :page_with_curl:, specially if you did a litle break, maybe one weeek, one month, surely you have already lost yourself in the middle of so many pages and, you don't even know where you stopped and, then continue reading. My dear, if this is your case, I have great news for you. Book Tracks, a simple and thoughtful application that from now on will make your reading a lot easier. 
 
-Test the application and don't forget to give your contribution. We count on you. And good reading .
+Don't convinced ? You can help too, by [contributing](https://github.com/acgtwentyone/booktracks/blob/main/CONTRIBUTING.md) to this project.
+
+Test the application and don't forget to give your contribution. We count on you. And good reading :page_with_curl:.
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/acgtwentyone/booktracks)&nbsp;&nbsp;![GitHub issues](https://img.shields.io/github/issues-raw/acgtwentyone/booktracks)&nbsp;&nbsp;![GitHub last commit](https://img.shields.io/github/last-commit/acgtwentyone/booktracks)
 
-This app is open source. Please see the [code-of-conduting](https://github.com/acgtwentyone/booktracks/blob/main/CODE_OF_CONDUCT.md). Let's build it together.
+This project is open source. Please see the [code-of-conduting](https://github.com/acgtwentyone/booktracks/blob/main/CODE_OF_CONDUCT.md). Let's build it together.
 
 ## Some app screenshots
 
@@ -32,7 +34,7 @@ Small note: If editing the [README](README.md), please conform to the [standard-
 
 ## Community
 
-Community channels are great for you to ask questions and get help. Please join us on <a href="https://discord.gg/DJBcw7YTnB" target="_blank">discord</a>  and say hi :smile:
+Community channels are great for you to ask questions and get help. Please join us on <a href="https://discord.gg/DJBcw7YTnB" target="_blank">discord</a>  and say hi :smile:. We welcome you all.
 
 ## Support this project.
 
@@ -40,4 +42,4 @@ Community channels are great for you to ask questions and get help. Please join 
 
 ## License
 
-[MIT](https://github.com/acgtwentyone/booktracks/blob/main/LICENSE) © 2022 Antonio Goncalves
+[MIT](https://github.com/acgtwentyone/booktracks/blob/main/LICENSE) © 2022 [Antonio Goncalves](https://github.com/acgtwentyone)
