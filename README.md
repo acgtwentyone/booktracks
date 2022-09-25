@@ -1,6 +1,6 @@
 # Book Tracks
 
-If you are a book lover, after reading several books :page_with_curl:, surely you have already lost yourself in the middle of so many pages and you don't know where you stopped and then continue reading. My dear, if this is your case, I have great news for you. Book Tracks, a simple and thoughtful application that from now on will make your reading easier. 
+If you are a book lover, after reading several books :page_with_curl:, surely you have already lost yourself in the middle of so many pages and you don't know where you stopped and then continue reading. My dear, if this is your case, I have great news for you. Book Tracks, a simple and thoughtful application that from now on will make your reading a lot easier. 
 
 Test the application and don't forget to give your contribution. We count on you. And good reading .
 
