@@ -61,3 +61,5 @@ android/java_pid1280.hprof
 android/gradle.properties
 # android/app/google-services.json
 .env
+.vscode/
+.vscode/launch.json
