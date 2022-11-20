@@ -33,7 +33,6 @@ const AddEditNoteScreen = () => {
   const {
     control,
     handleSubmit,
-    reset,
     setValue,
     formState: {errors},
   } = useForm({
@@ -44,34 +43,50 @@ const AddEditNoteScreen = () => {
     resolver: yupResolver(NoteSchema),
   });
 
-  const {edit, id, book_id} = route.params;
+  useEffect(() => {
+    __getNote();
+    if (!edit) {
+      setLoading(false);
+    }
+    return () => {};
+  }, []);
 
-  const __showSaveButton = () => {
-    navigation.setOptions({
-      headerRight: () => <HeaderRight />,
-    });
-  };
+  useEffect(() => {
+    console.log('selected book changed');
+    return () => {};
+  }, [selectedBook]);
+
+  const {edit, id, book_id} = route.params;
 
   const __getNote = () => {
     if (undefined !== edit && edit) {
       setLoading(true);
       getObjData('user', e => {}).then(u => {
-        firestore()
+        const book = firestore()
           .collection('users')
           .doc(u.uid)
           .collection(COLLECTION_NAMES.books)
-          .doc(book_id)
-          .collection(COLLECTION_NAMES.notes)
-          .doc(id)
-          .onSnapshot(snapshot => {
-            const {note, page} = snapshot.data();
-            if (undefined !== note) {
-              setValue('note', note);
-              setValue('page', page.toString());
-            }
-            setLoading(false);
-            __showSaveButton();
+          .doc(book_id);
+
+        if (book) {
+          book.onSnapshot(bSnap => {
+            setSelectedBook(bSnap);
+            bSnap.ref
+              .collection(COLLECTION_NAMES.notes)
+              .doc(id)
+              .onSnapshot(snapshot => {
+                const {note, page} = snapshot.data();
+                if (undefined !== note) {
+                  setValue('note', note);
+                  setValue('page', page.toString());
+                }
+                setLoading(false);
+                navigation.setOptions({
+                  headerRight: () => <HeaderRight />,
+                });
+              });
           });
+        }
       });
     }
   };
@@ -94,50 +109,57 @@ const AddEditNoteScreen = () => {
     const {note, page} = data;
     const p = undefined !== page && page !== '' ? Number(page) : '';
     const n = limitStr(note);
-    getObjData('user', e => _alertError())
-      .then(u => {
-        if (selectedBook !== null) {
-          const uid = u.uid;
-          if (edit) {
-            note.book_name = selectedBook._data.title;
-            firestore()
-              .collection('users')
-              .doc(uid)
-              .collection(COLLECTION_NAMES.books)
-              .doc(selectedBook.id)
-              .collection(COLLECTION_NAMES.notes)
-              .update({
-                note: note,
-              })
-              .then(() => _onSuccess(`${n} updated`))
-              .catch(error => __onErrorSaving());
-          } else {
-            firestore()
-              .collection('users')
-              .doc(uid)
-              .collection(COLLECTION_NAMES.books)
-              .doc(selectedBook.id)
-              .collection(COLLECTION_NAMES.notes)
-              .add({
-                id: uuid(),
-                note: note,
-                created_at: serTimestamp,
-                updated_at: serTimestamp,
-                book_name: selectedBook._data.title,
-                status: ItemStatus.active,
-                page: p,
-                book_id: selectedBook.id,
-                user_id: uid,
-              })
-              .then(() => _onSuccess(`${n} added`))
-              .catch(error => __onErrorSaving());
-          }
-        } else {
-          _showToastMsg('Please select a book first');
-          setSaving(false);
-        }
-      })
-      .catch(error => __onErrorSaving());
+    console.log(selectedBook);
+    // getObjData('user', e => _alertError())
+    //   .then(u => {
+    //     console.log(selectedBook);
+    //     if (selectedBook !== null) {
+    //       const uid = u.uid;
+    //       if (edit) {
+    //         let newNote = {
+    //           note: note,
+    //           page: page,
+    //           book_name: selectedBook._data.title,
+    //           book_id: selectedBook.id,
+    //         };
+    //         firestore()
+    //           .collection('users')
+    //           .doc(uid)
+    //           .collection(COLLECTION_NAMES.books)
+    //           .doc(selectedBook.id)
+    //           .collection(COLLECTION_NAMES.notes)
+    //           .update({
+    //             note: newNote,
+    //           })
+    //           .then(() => _onSuccess(`${n} updated`))
+    //           .catch(error => __onErrorSaving());
+    //       } else {
+    //         firestore()
+    //           .collection('users')
+    //           .doc(uid)
+    //           .collection(COLLECTION_NAMES.books)
+    //           .doc(selectedBook.id)
+    //           .collection(COLLECTION_NAMES.notes)
+    //           .add({
+    //             id: uuid(),
+    //             note: note,
+    //             created_at: serTimestamp,
+    //             updated_at: serTimestamp,
+    //             book_name: selectedBook._data.title,
+    //             status: ItemStatus.active,
+    //             page: p,
+    //             book_id: selectedBook.id,
+    //             user_id: uid,
+    //           })
+    //           .then(() => _onSuccess(`${n} added`))
+    //           .catch(error => __onErrorSaving());
+    //       }
+    //     } else {
+    //       _showToastMsg('Please select a book first');
+    //       setSaving(false);
+    //     }
+    //   })
+    //   .catch(error => __onErrorSaving());
   };
 
   const HeaderRight = () => (
@@ -154,15 +176,6 @@ const AddEditNoteScreen = () => {
       py={0}
     />
   );
-
-  useEffect(() => {
-    __getNote();
-    if (!edit) {
-      __showSaveButton();
-      setLoading(false);
-    }
-    return () => {};
-  }, [selectedBook]);
 
   if (loading) {
     return <AppActivityIndicator />;
