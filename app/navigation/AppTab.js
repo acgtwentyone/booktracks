@@ -13,7 +13,7 @@ const AppTab = () => {
 
   return (
     <Tab.Navigator initialRouteName={books} screenOptions={screenOptions}>
-      <Tab.Screen
+      {/* <Tab.Screen
         name={books}
         component={BooksStack}
         options={defaultOptions}
@@ -22,7 +22,7 @@ const AppTab = () => {
         name={favourities}
         component={FavStack}
         options={defaultOptions}
-      />
+      /> */}
       <Tab.Screen
         name={notes}
         component={NotesStack}
